@@ -1,0 +1,28 @@
+{
+  "name": "stakestar-goerli",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ stakestar-goerli",
+    "create-local": "graph create --node http://localhost:8020/ stakestar-goerli",
+    "remove-local": "graph remove --node http://localhost:8020/ stakestar-goerli",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 stakestar-goerli",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.33.0",
+    "@graphprotocol/graph-ts": "0.27.0",
+    "@stakestar/contracts": "^0.1.3",
+    "as-wasi": "^0.5.1",
+    "typescript": "^4.8.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "eslint": "^8.23.0",
+    "matchstick-as": "0.5.0",
+    "mustache": "^4.2.0"
+  }
+}

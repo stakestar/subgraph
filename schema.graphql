@@ -1,0 +1,51 @@
+type StakeStarTvl @entity {
+  # StakeStar address
+  id: ID!
+
+  totalETH: BigInt!
+}
+
+type TokenRateDayAvg @entity {
+  id: ID! # timestamp rounded to current day by dividing by 86400
+  date: Int!
+
+  dailyAvgRate: BigInt!
+}type StakeStarReceiptApproval @entity {
+  id: ID!
+  owner: Bytes! # address
+  spender: Bytes! # address
+  value: BigInt! # uint256
+}
+
+type StakeStarReceiptRoleAdminChanged @entity {
+  id: ID!
+  role: Bytes! # bytes32
+  previousAdminRole: Bytes! # bytes32
+  newAdminRole: Bytes! # bytes32
+}
+
+type StakeStarReceiptRoleGranted @entity {
+  id: ID!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+}
+
+type StakeStarReceiptRoleRevoked @entity {
+  id: ID!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+}
+
+type StakeStarReceiptTransfer @entity {
+  id: ID!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+}
+
+type StakeStarReceiptUpdateRate @entity {
+  id: ID!
+  rate: BigInt! # uint256
+}

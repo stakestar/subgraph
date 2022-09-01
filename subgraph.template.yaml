@@ -1,0 +1,69 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: StakeStar
+    network: {{ network }}
+    source:
+      address: "{{ stakeStarAddress }}"
+      abi: StakeStar
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Initialized
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Stake
+      abis:
+        - name: StakeStar
+          file: ./abis/StakeStar.json
+      eventHandlers:
+        - event: Initialized(uint8)
+          handler: handleInitialized
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Stake(indexed address,uint256)
+          handler: handleStake
+      file: ./src/stake-star.ts
+  - kind: ethereum
+    name: StakeStarReceipt
+    network: {{ network }}
+    source:
+      address: "{{ stakeStarReceiptAddress }}"
+      abi: StakeStarReceipt
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - StakeStarReceiptApproval
+        - StakeStarReceiptRoleAdminChanged
+        - StakeStarReceiptRoleGranted
+        - StakeStarReceiptRoleRevoked
+        - StakeStarReceiptTransfer
+        - StakeStarReceiptUpdateRate
+      abis:
+        - name: StakeStarReceipt
+          file: ./abis/StakeStarReceipt.json
+      eventHandlers:
+        - event: StakeStarReceiptApproval(indexed address,indexed address,uint256)
+          handler: handleStakeStarReceiptApproval
+        - event: StakeStarReceiptRoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleStakeStarReceiptRoleAdminChanged
+        - event: StakeStarReceiptRoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleStakeStarReceiptRoleGranted
+        - event: StakeStarReceiptRoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleStakeStarReceiptRoleRevoked
+        - event: StakeStarReceiptTransfer(indexed address,indexed address,uint256)
+          handler: handleStakeStarReceiptTransfer
+        - event: StakeStarReceiptUpdateRate(uint256)
+          handler: handleStakeStarReceiptUpdateRate
+      file: ./src/stake-star-receipt.ts

@@ -1,0 +1,13 @@
+{
+  "goerli": {
+    "StakeStar": {
+      "address": "0x95e491106448207CA482DFbEd315b79892bD7648"
+    },
+    "ReceiptToken": {
+      "address": "0x83F5B32FB717a15E8f09fe66B8715C18553E7268"
+    },
+    "StakeStarReceipt": {
+      "address": "0x31D96Fd72b4d29727d5096Bdf542D7F6083d175c"
+    }
+  }
+}
