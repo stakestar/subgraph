@@ -14,25 +14,40 @@ test("Stake events emited", () => {
   handleUpdateRate(createUpdateRateEvent(rate1, timestamp))
   const dayID = timestamp.div(BigInt.fromI32(86400))
 
-  assert.entityCount("TokenRateDayAvg", 1)
+  assert.entityCount("TokenRateDaily", 1)
 
   assert.fieldEquals(
-    "TokenRateDayAvg",
+    "TokenRateDaily",
     dayID.toString(),
-    "dailyAvgRate",
+    "rate",
     rate1.toString()
   )
 
   const rate2 = BigInt.fromI32(200000)
   handleUpdateRate(createUpdateRateEvent(rate2, timestamp.plus(BigInt.fromI32(1000))))
 
-  assert.entityCount("TokenRateDayAvg", 1)
+  assert.entityCount("TokenRateDaily", 1)
 
   assert.fieldEquals(
-    "TokenRateDayAvg",
+    "TokenRateDaily",
     dayID.toString(),
-    "dailyAvgRate",
-    rate1.plus(rate2).div(BigInt.fromI32(2)).toString()
+    "rate",
+    rate2.toString()
+  )
+
+  const rate3 = BigInt.fromI32(300000)
+  const nextDayTimestamp = timestamp.plus(BigInt.fromI32(86900))
+  const nextDayID = nextDayTimestamp.div(BigInt.fromI32(86400))
+
+  handleUpdateRate(createUpdateRateEvent(rate3, nextDayTimestamp))
+
+  assert.entityCount("TokenRateDaily", 2)
+
+  assert.fieldEquals(
+    "TokenRateDaily",
+    nextDayID.toString(),
+    "rate",
+    rate3.toString()
   )
 
   clearStore()
