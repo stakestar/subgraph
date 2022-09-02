@@ -8,6 +8,7 @@ dataSources:
     source:
       address: "0x95e491106448207CA482DFbEd315b79892bD7648"
       abi: StakeStar
+      startBlock: 7514873
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -22,14 +23,6 @@ dataSources:
         - name: StakeStar
           file: ./abis/StakeStar.json
       eventHandlers:
-        - event: Initialized(uint8)
-          handler: handleInitialized
-        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleRoleAdminChanged
-        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleGranted
-        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleRoleRevoked
         - event: Stake(indexed address,uint256)
           handler: handleStake
       file: ./src/stake-star.ts
@@ -39,6 +32,7 @@ dataSources:
     source:
       address: "0x31D96Fd72b4d29727d5096Bdf542D7F6083d175c"
       abi: StakeStarReceipt
+      startBlock: 7514873
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -54,16 +48,6 @@ dataSources:
         - name: StakeStarReceipt
           file: ./abis/StakeStarReceipt.json
       eventHandlers:
-        - event: StakeStarReceiptApproval(indexed address,indexed address,uint256)
-          handler: handleStakeStarReceiptApproval
-        - event: StakeStarReceiptRoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-          handler: handleStakeStarReceiptRoleAdminChanged
-        - event: StakeStarReceiptRoleGranted(indexed bytes32,indexed address,indexed address)
-          handler: handleStakeStarReceiptRoleGranted
-        - event: StakeStarReceiptRoleRevoked(indexed bytes32,indexed address,indexed address)
-          handler: handleStakeStarReceiptRoleRevoked
-        - event: StakeStarReceiptTransfer(indexed address,indexed address,uint256)
-          handler: handleStakeStarReceiptTransfer
         - event: StakeStarReceiptUpdateRate(uint256)
           handler: handleStakeStarReceiptUpdateRate
       file: ./src/stake-star-receipt.ts
