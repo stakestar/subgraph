@@ -6,8 +6,15 @@ type StakeStarTvl @entity {
 }
 
 type TokenRateDaily @entity {
-  id: ID! # timestamp rounded to current day by dividing by 86400
+  # timestamp rounded to current day by dividing by 86400
+  id: ID!
   date: Int!
 
   rate: BigInt!
+}
+
+type OperatorAllowList @entity {
+  id: ID!
+
+  operatorId: BigInt! # uint32
 }

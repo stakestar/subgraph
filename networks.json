@@ -8,6 +8,9 @@
     },
     "StakeStarReceipt": {
       "address": "0x31D96Fd72b4d29727d5096Bdf542D7F6083d175c"
+    },
+    "StakeStarRegistry": {
+      "address": "0x3a9f01091C446bdE031E39ea8354647AFef091E7"
     }
   }
 }

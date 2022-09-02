@@ -7,8 +7,7 @@ import { BigInt } from "@graphprotocol/graph-ts"
 import { handleUpdateRate } from "../src/stake-star-receipt"
 import { createUpdateRateEvent } from "./stake-star-receipt-utils"
 
-
-test("Stake events emited", () => {
+test("Update rates", () => {
   const timestamp = BigInt.fromI32(1662041524)
   const rate1 = BigInt.fromI32(100000)
   handleUpdateRate(createUpdateRateEvent(rate1, timestamp))

@@ -101,3 +101,46 @@ export class TokenRateDaily extends Entity {
     this.set("rate", Value.fromBigInt(value));
   }
 }
+
+export class OperatorAllowList extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save OperatorAllowList entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type OperatorAllowList must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("OperatorAllowList", id.toString(), this);
+    }
+  }
+
+  static load(id: string): OperatorAllowList | null {
+    return changetype<OperatorAllowList | null>(
+      store.get("OperatorAllowList", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get operatorId(): BigInt {
+    let value = this.get("operatorId");
+    return value!.toBigInt();
+  }
+
+  set operatorId(value: BigInt) {
+    this.set("operatorId", Value.fromBigInt(value));
+  }
+}

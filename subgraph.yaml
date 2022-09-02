@@ -14,10 +14,6 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Initialized
-        - RoleAdminChanged
-        - RoleGranted
-        - RoleRevoked
         - Stake
       abis:
         - name: StakeStar
@@ -38,11 +34,6 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - StakeStarReceiptApproval
-        - StakeStarReceiptRoleAdminChanged
-        - StakeStarReceiptRoleGranted
-        - StakeStarReceiptRoleRevoked
-        - StakeStarReceiptTransfer
         - StakeStarReceiptUpdateRate
       abis:
         - name: StakeStarReceipt
@@ -51,3 +42,27 @@ dataSources:
         - event: StakeStarReceiptUpdateRate(uint256)
           handler: handleStakeStarReceiptUpdateRate
       file: ./src/stake-star-receipt.ts
+  - kind: ethereum
+    name: StakeStarRegistry
+    network: goerli
+    source:
+      address: "0x3a9f01091C446bdE031E39ea8354647AFef091E7"
+      abi: StakeStarRegistry
+      startBlock: 7514873
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - AddOperatorToAllowList
+        - RemoveOperatorFromAllowList
+      abis:
+        - name: StakeStarRegistry
+          file: ./abis/StakeStarRegistry.json
+      eventHandlers:
+        - event: AddOperatorToAllowList(uint32)
+          handler: handleAddOperatorToAllowList
+        - event: RemoveOperatorFromAllowList(uint32)
+          handler: handleRemoveOperatorFromAllowList
+      file: ./src/stake-star-registry.ts
+
