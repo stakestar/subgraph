@@ -4,10 +4,12 @@ import {
   Stake
 } from "../generated/StakeStar/StakeStar"
 
-export function createStakeEvent(staker: Address, amount: BigInt): Stake {
+export function createStakeEvent(staker: Address, amount: BigInt, timestamp: BigInt): Stake {
   const stakeEvent = changetype<Stake>(newMockEvent())
 
   stakeEvent.parameters = []
+
+  stakeEvent.block.timestamp = timestamp
 
   stakeEvent.parameters.push(
     new ethereum.EventParam("staker", ethereum.Value.fromAddress(staker))

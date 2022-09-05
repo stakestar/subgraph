@@ -4,7 +4,6 @@ import {
   StakeStarReceiptUpdateRate
 } from "../generated/StakeStarReceipt/StakeStarReceipt"
 
-// TODO: Add timestamp argument
 export function createUpdateRateEvent(rate: BigInt, timestamp: BigInt): StakeStarReceiptUpdateRate {
   const updateRateEvent = changetype<StakeStarReceiptUpdateRate>(newMockEvent())
 

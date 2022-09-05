@@ -42,6 +42,15 @@ export class StakeStarTvl extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get date(): i32 {
+    let value = this.get("date");
+    return value!.toI32();
+  }
+
+  set date(value: i32) {
+    this.set("date", Value.fromI32(value));
+  }
+
   get totalETH(): BigInt {
     let value = this.get("totalETH");
     return value!.toBigInt();

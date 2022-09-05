@@ -1,6 +1,7 @@
 type StakeStarTvl @entity {
-  # StakeStar address
+  # timestamp rounded to current day by dividing by 86400
   id: ID!
+  date: Int!
 
   totalETH: BigInt!
 }
