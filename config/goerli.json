@@ -1,6 +1,6 @@
 {
     "network": "goerli",
-    "stakeStarAddress": "0x95e491106448207CA482DFbEd315b79892bD7648",
+    "stakeStarAddress": "0x8109a33a617fb5d4d9934009f3d7520348e7e33e",
     "stakeStarReceiptAddress": "0x31D96Fd72b4d29727d5096Bdf542D7F6083d175c",
     "stakeStarRegistryAddress": "0x3a9f01091C446bdE031E39ea8354647AFef091E7"
 }

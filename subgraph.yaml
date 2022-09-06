@@ -6,7 +6,7 @@ dataSources:
     name: StakeStar
     network: goerli
     source:
-      address: "0x95e491106448207CA482DFbEd315b79892bD7648"
+      address: "0x8109a33a617fb5d4d9934009f3d7520348e7e33e"
       abi: StakeStar
       startBlock: 7514873
     mapping:
