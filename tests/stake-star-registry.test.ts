@@ -1,17 +1,9 @@
 import {
   assert,
-  describe,
   test,
-  clearStore,
-  beforeAll,
-  afterAll
+  clearStore
 } from "matchstick-as/assembly/index"
-import { BigInt, Bytes, Address } from "@graphprotocol/graph-ts"
-import { OperatorAllowList } from "../generated/schema"
-import { 
-  AddOperatorToAllowList as AddOperatorToAllowListEvent,
-  RemoveOperatorFromAllowList as RemoveOperatorFromAllowListEvent
- } from "../generated/StakeStarRegistry/StakeStarRegistry"
+import { BigInt } from "@graphprotocol/graph-ts"
 import { handleAddOperatorToAllowList, handleRemoveOperatorFromAllowList } from "../src/stake-star-registry"
 import { createAddOperatorToAllowListEvent, createRemoveOperatorFromAllowListEvent } from "./stake-star-registry-utils"
 
@@ -24,7 +16,7 @@ test("Add and remove operators", () => {
   assert.fieldEquals(
     "OperatorAllowList",
     operatorId1.toString(),
-    "operatorId",
+    "id",
     operatorId1.toString()
   )
 
@@ -36,7 +28,7 @@ test("Add and remove operators", () => {
   assert.fieldEquals(
     "OperatorAllowList",
     operatorId2.toString(),
-    "operatorId",
+    "id",
     operatorId2.toString()
   )
 

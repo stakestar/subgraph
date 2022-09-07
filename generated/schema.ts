@@ -143,13 +143,4 @@ export class OperatorAllowList extends Entity {
   set id(value: string) {
     this.set("id", Value.fromString(value));
   }
-
-  get operatorId(): BigInt {
-    let value = this.get("operatorId");
-    return value!.toBigInt();
-  }
-
-  set operatorId(value: BigInt) {
-    this.set("operatorId", Value.fromBigInt(value));
-  }
 }

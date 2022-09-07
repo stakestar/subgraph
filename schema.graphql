@@ -16,6 +16,4 @@ type TokenRateDaily @entity {
 
 type OperatorAllowList @entity {
   id: ID!
-
-  operatorId: BigInt! # uint32
 }

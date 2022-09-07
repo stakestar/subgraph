@@ -17,7 +17,6 @@ export function handleAddOperatorToAllowList(
   }
 
   const entity = new OperatorAllowList(operatorId.toString())
-  entity.operatorId = event.params.operatorId
 
   entity.save()
 }
