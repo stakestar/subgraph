@@ -1,7 +1,7 @@
 {
   "name": "subgraph-client",
   "description": "GraphQL client for consuming StakeStar's The Graph GraphQL API",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "StakeStar",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "scripts": {
     "start": "parcel watch",
     "lint": "eslint -c .eslintrc.js --ext .js,.ts .",
-    "bump": "bump --commit 'Release subgraph-client v' --tag",
+    "bump": "bump --commit 'Release subgraph-client v' --tag 'subgraph-client v'",
     "build:graphclient": "cd ./src && sh build.sh",
     "build:package": "parcel build"
   },
