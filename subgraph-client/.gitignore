@@ -1,0 +1,15 @@
+# dependencies
+**node_modules
+
+# production
+.parcel-cache
+dist
+
+# misc
+.DS_Store
+.idea
+.vscode
+.env
+.npmrc
+*.local
+*.log

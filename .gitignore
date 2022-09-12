@@ -1,6 +1,12 @@
 build/
 node_modules/
 src/types/
-.DS_STORE
-yarn-error.log
 tests/.bin
+
+# misc
+.DS_Store
+.idea
+.vscode
+.env
+*.local
+*.log

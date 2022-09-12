@@ -1,0 +1,6 @@
+query StakeStarTvls {
+  stakeStarTvls {
+    id
+    totalETH
+  }
+}
