@@ -21,7 +21,7 @@
   "scripts": {
     "start": "parcel watch",
     "lint": "eslint -c .eslintrc.js --ext .js,.ts .",
-    "bump": "bump --commit 'Release subgraph-client v' --tag 'subgraph-client v'",
+    "bump": "bump --commit 'Release subgraph-client v' --tag 'subgraph-client-v'",
     "build:graphclient": "cd ./src && sh build.sh",
     "build:package": "parcel build"
   },
