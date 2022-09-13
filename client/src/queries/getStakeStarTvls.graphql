@@ -1,4 +1,4 @@
-query StakeStarTvls {
+query getStakeStarTvls {
   stakeStarTvls {
     id
     totalETH
