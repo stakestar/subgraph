@@ -24,8 +24,5 @@
     "eslint": "^8.23.0",
     "matchstick-as": "0.5.0",
     "mustache": "^4.2.0"
-  },
-  "publishConfig": {
-    "@stakestar:registry": "https://npm.pkg.github.com"
   }
 }
