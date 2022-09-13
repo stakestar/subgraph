@@ -16,9 +16,13 @@ jobs:
         with:
           node-version: 'lts/*'
           registry-url: https://npm.pkg.github.com/
-      - run: cd ./subgraph-client && yarn
-      - run: cd ./subgraph-client && yarn build:graphclient
-      - run: cd ./subgraph-client && yarn build:package
-      - run: cd ./subgraph-client && yarn publish
+      - run: yarn
+        working-directory: ./client
+      - run: yarn build:graphclient
+        working-directory: ./client
+      - run: yarn build:package
+        working-directory: ./client
+      - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./client
