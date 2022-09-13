@@ -2,6 +2,7 @@
 **node_modules
 
 # production
+.graphclient
 .parcel-cache
 dist
 
