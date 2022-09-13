@@ -1,4 +1,4 @@
-# subgraph-client
+# @stakestar/subgraph-client
 
 GraphQL client for consuming StakeStar's The Graph GraphQL API
 
