@@ -11,10 +11,10 @@ test("Add and remove operators", () => {
   const operatorId1 = BigInt.fromI32(1)
   handleAddOperatorToAllowList(createAddOperatorToAllowListEvent(operatorId1))
 
-  assert.entityCount("OperatorAllowList", 1)
+  assert.entityCount("Operator", 1)
 
   assert.fieldEquals(
-    "OperatorAllowList",
+    "Operator",
     operatorId1.toString(),
     "id",
     operatorId1.toString()
@@ -23,10 +23,10 @@ test("Add and remove operators", () => {
   const operatorId2 = BigInt.fromI32(2)
   handleAddOperatorToAllowList(createAddOperatorToAllowListEvent(operatorId2))
 
-  assert.entityCount("OperatorAllowList", 2)
+  assert.entityCount("Operator", 2)
 
   assert.fieldEquals(
-    "OperatorAllowList",
+    "Operator",
     operatorId2.toString(),
     "id",
     operatorId2.toString()
@@ -34,7 +34,7 @@ test("Add and remove operators", () => {
 
   handleRemoveOperatorFromAllowList(createRemoveOperatorFromAllowListEvent(operatorId1))
 
-  assert.entityCount("OperatorAllowList", 1)
+  assert.entityCount("Operator", 1)
 
   clearStore()
 })

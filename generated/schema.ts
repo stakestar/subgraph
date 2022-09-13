@@ -111,7 +111,7 @@ export class TokenRateDaily extends Entity {
   }
 }
 
-export class OperatorAllowList extends Entity {
+export class Operator extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -119,19 +119,51 @@ export class OperatorAllowList extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save OperatorAllowList entity without an ID");
+    assert(id != null, "Cannot save Operator entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type OperatorAllowList must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Operator must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("OperatorAllowList", id.toString(), this);
+      store.set("Operator", id.toString(), this);
     }
   }
 
-  static load(id: string): OperatorAllowList | null {
-    return changetype<OperatorAllowList | null>(
-      store.get("OperatorAllowList", id)
+  static load(id: string): Operator | null {
+    return changetype<Operator | null>(store.get("Operator", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+}
+
+export class StakerAtMomentRate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save StakerAtMomentRate entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type StakerAtMomentRate must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("StakerAtMomentRate", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakerAtMomentRate | null {
+    return changetype<StakerAtMomentRate | null>(
+      store.get("StakerAtMomentRate", id)
     );
   }
 
@@ -142,5 +174,23 @@ export class OperatorAllowList extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get date(): i32 {
+    let value = this.get("date");
+    return value!.toI32();
+  }
+
+  set date(value: i32) {
+    this.set("date", Value.fromI32(value));
+  }
+
+  get atMomentRate(): BigInt {
+    let value = this.get("atMomentRate");
+    return value!.toBigInt();
+  }
+
+  set atMomentRate(value: BigInt) {
+    this.set("atMomentRate", Value.fromBigInt(value));
   }
 }

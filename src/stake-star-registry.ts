@@ -4,19 +4,19 @@ import {
   RemoveOperatorFromAllowList as RemoveOperatorFromAllowListEvent
 } from "../generated/StakeStarRegistry/StakeStarRegistry"
 import {
-  OperatorAllowList
+  Operator
 } from "../generated/schema"
 
 export function handleAddOperatorToAllowList(
   event: AddOperatorToAllowListEvent
 ): void {
   const operatorId = event.params.operatorId
-  if (OperatorAllowList.load(operatorId.toString()) !== null) {
+  if (Operator.load(operatorId.toString()) !== null) {
     log.warning("Operator {} is in allow list", [operatorId.toString()])
     return
   }
 
-  const entity = new OperatorAllowList(operatorId.toString())
+  const entity = new Operator(operatorId.toString())
 
   entity.save()
 }
@@ -25,10 +25,10 @@ export function handleRemoveOperatorFromAllowList(
   event: RemoveOperatorFromAllowListEvent
 ): void {
   const operatorId = event.params.operatorId
-  if (OperatorAllowList.load(operatorId.toString()) === null) {
+  if (Operator.load(operatorId.toString()) === null) {
     log.warning("Operator {} is not in allow list", [operatorId.toString()])
     return
   }
 
-  store.remove('OperatorAllowList', operatorId.toString())
+  store.remove('Operator', operatorId.toString())
 }

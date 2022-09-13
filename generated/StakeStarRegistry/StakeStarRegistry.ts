@@ -28,16 +28,16 @@ export class AddOperatorToAllowList__Params {
   }
 }
 
-export class StakeStarRegistryInitialized extends ethereum.Event {
-  get params(): StakeStarRegistryInitialized__Params {
-    return new StakeStarRegistryInitialized__Params(this);
+export class Initialized extends ethereum.Event {
+  get params(): Initialized__Params {
+    return new Initialized__Params(this);
   }
 }
 
-export class StakeStarRegistryInitialized__Params {
-  _event: StakeStarRegistryInitialized;
+export class Initialized__Params {
+  _event: Initialized;
 
-  constructor(event: StakeStarRegistryInitialized) {
+  constructor(event: Initialized) {
     this._event = event;
   }
 
@@ -64,16 +64,16 @@ export class RemoveOperatorFromAllowList__Params {
   }
 }
 
-export class StakeStarRegistryRoleAdminChanged extends ethereum.Event {
-  get params(): StakeStarRegistryRoleAdminChanged__Params {
-    return new StakeStarRegistryRoleAdminChanged__Params(this);
+export class RoleAdminChanged extends ethereum.Event {
+  get params(): RoleAdminChanged__Params {
+    return new RoleAdminChanged__Params(this);
   }
 }
 
-export class StakeStarRegistryRoleAdminChanged__Params {
-  _event: StakeStarRegistryRoleAdminChanged;
+export class RoleAdminChanged__Params {
+  _event: RoleAdminChanged;
 
-  constructor(event: StakeStarRegistryRoleAdminChanged) {
+  constructor(event: RoleAdminChanged) {
     this._event = event;
   }
 
@@ -90,16 +90,16 @@ export class StakeStarRegistryRoleAdminChanged__Params {
   }
 }
 
-export class StakeStarRegistryRoleGranted extends ethereum.Event {
-  get params(): StakeStarRegistryRoleGranted__Params {
-    return new StakeStarRegistryRoleGranted__Params(this);
+export class RoleGranted extends ethereum.Event {
+  get params(): RoleGranted__Params {
+    return new RoleGranted__Params(this);
   }
 }
 
-export class StakeStarRegistryRoleGranted__Params {
-  _event: StakeStarRegistryRoleGranted;
+export class RoleGranted__Params {
+  _event: RoleGranted;
 
-  constructor(event: StakeStarRegistryRoleGranted) {
+  constructor(event: RoleGranted) {
     this._event = event;
   }
 
@@ -116,16 +116,16 @@ export class StakeStarRegistryRoleGranted__Params {
   }
 }
 
-export class StakeStarRegistryRoleRevoked extends ethereum.Event {
-  get params(): StakeStarRegistryRoleRevoked__Params {
-    return new StakeStarRegistryRoleRevoked__Params(this);
+export class RoleRevoked extends ethereum.Event {
+  get params(): RoleRevoked__Params {
+    return new RoleRevoked__Params(this);
   }
 }
 
-export class StakeStarRegistryRoleRevoked__Params {
-  _event: StakeStarRegistryRoleRevoked;
+export class RoleRevoked__Params {
+  _event: RoleRevoked;
 
-  constructor(event: StakeStarRegistryRoleRevoked) {
+  constructor(event: RoleRevoked) {
     this._event = event;
   }
 

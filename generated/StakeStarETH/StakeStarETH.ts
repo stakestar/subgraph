@@ -10,16 +10,16 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class StakeStarReceiptApproval extends ethereum.Event {
-  get params(): StakeStarReceiptApproval__Params {
-    return new StakeStarReceiptApproval__Params(this);
+export class Approval extends ethereum.Event {
+  get params(): Approval__Params {
+    return new Approval__Params(this);
   }
 }
 
-export class StakeStarReceiptApproval__Params {
-  _event: StakeStarReceiptApproval;
+export class Approval__Params {
+  _event: Approval;
 
-  constructor(event: StakeStarReceiptApproval) {
+  constructor(event: Approval) {
     this._event = event;
   }
 
@@ -36,16 +36,68 @@ export class StakeStarReceiptApproval__Params {
   }
 }
 
-export class StakeStarReceiptRoleAdminChanged extends ethereum.Event {
-  get params(): StakeStarReceiptRoleAdminChanged__Params {
-    return new StakeStarReceiptRoleAdminChanged__Params(this);
+export class Burn extends ethereum.Event {
+  get params(): Burn__Params {
+    return new Burn__Params(this);
   }
 }
 
-export class StakeStarReceiptRoleAdminChanged__Params {
-  _event: StakeStarReceiptRoleAdminChanged;
+export class Burn__Params {
+  _event: Burn;
 
-  constructor(event: StakeStarReceiptRoleAdminChanged) {
+  constructor(event: Burn) {
+    this._event = event;
+  }
+
+  get from(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ssETH(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get rate(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class Mint extends ethereum.Event {
+  get params(): Mint__Params {
+    return new Mint__Params(this);
+  }
+}
+
+export class Mint__Params {
+  _event: Mint;
+
+  constructor(event: Mint) {
+    this._event = event;
+  }
+
+  get to(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get ssETH(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get rate(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class RoleAdminChanged extends ethereum.Event {
+  get params(): RoleAdminChanged__Params {
+    return new RoleAdminChanged__Params(this);
+  }
+}
+
+export class RoleAdminChanged__Params {
+  _event: RoleAdminChanged;
+
+  constructor(event: RoleAdminChanged) {
     this._event = event;
   }
 
@@ -62,16 +114,16 @@ export class StakeStarReceiptRoleAdminChanged__Params {
   }
 }
 
-export class StakeStarReceiptRoleGranted extends ethereum.Event {
-  get params(): StakeStarReceiptRoleGranted__Params {
-    return new StakeStarReceiptRoleGranted__Params(this);
+export class RoleGranted extends ethereum.Event {
+  get params(): RoleGranted__Params {
+    return new RoleGranted__Params(this);
   }
 }
 
-export class StakeStarReceiptRoleGranted__Params {
-  _event: StakeStarReceiptRoleGranted;
+export class RoleGranted__Params {
+  _event: RoleGranted;
 
-  constructor(event: StakeStarReceiptRoleGranted) {
+  constructor(event: RoleGranted) {
     this._event = event;
   }
 
@@ -88,16 +140,16 @@ export class StakeStarReceiptRoleGranted__Params {
   }
 }
 
-export class StakeStarReceiptRoleRevoked extends ethereum.Event {
-  get params(): StakeStarReceiptRoleRevoked__Params {
-    return new StakeStarReceiptRoleRevoked__Params(this);
+export class RoleRevoked extends ethereum.Event {
+  get params(): RoleRevoked__Params {
+    return new RoleRevoked__Params(this);
   }
 }
 
-export class StakeStarReceiptRoleRevoked__Params {
-  _event: StakeStarReceiptRoleRevoked;
+export class RoleRevoked__Params {
+  _event: RoleRevoked;
 
-  constructor(event: StakeStarReceiptRoleRevoked) {
+  constructor(event: RoleRevoked) {
     this._event = event;
   }
 
@@ -114,16 +166,16 @@ export class StakeStarReceiptRoleRevoked__Params {
   }
 }
 
-export class StakeStarReceiptTransfer extends ethereum.Event {
-  get params(): StakeStarReceiptTransfer__Params {
-    return new StakeStarReceiptTransfer__Params(this);
+export class Transfer extends ethereum.Event {
+  get params(): Transfer__Params {
+    return new Transfer__Params(this);
   }
 }
 
-export class StakeStarReceiptTransfer__Params {
-  _event: StakeStarReceiptTransfer;
+export class Transfer__Params {
+  _event: Transfer;
 
-  constructor(event: StakeStarReceiptTransfer) {
+  constructor(event: Transfer) {
     this._event = event;
   }
 
@@ -140,16 +192,16 @@ export class StakeStarReceiptTransfer__Params {
   }
 }
 
-export class StakeStarReceiptUpdateRate extends ethereum.Event {
-  get params(): StakeStarReceiptUpdateRate__Params {
-    return new StakeStarReceiptUpdateRate__Params(this);
+export class UpdateRate extends ethereum.Event {
+  get params(): UpdateRate__Params {
+    return new UpdateRate__Params(this);
   }
 }
 
-export class StakeStarReceiptUpdateRate__Params {
-  _event: StakeStarReceiptUpdateRate;
+export class UpdateRate__Params {
+  _event: UpdateRate;
 
-  constructor(event: StakeStarReceiptUpdateRate) {
+  constructor(event: UpdateRate) {
     this._event = event;
   }
 
@@ -158,9 +210,9 @@ export class StakeStarReceiptUpdateRate__Params {
   }
 }
 
-export class StakeStarReceipt extends ethereum.SmartContract {
-  static bind(address: Address): StakeStarReceipt {
-    return new StakeStarReceipt("StakeStarReceipt", address);
+export class StakeStarETH extends ethereum.SmartContract {
+  static bind(address: Address): StakeStarETH {
+    return new StakeStarETH("StakeStarETH", address);
   }
 
   DEFAULT_ADMIN_ROLE(): Bytes {
@@ -184,6 +236,27 @@ export class StakeStarReceipt extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  ETH_to_ssETH(ETH: BigInt): BigInt {
+    let result = super.call("ETH_to_ssETH", "ETH_to_ssETH(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(ETH)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_ETH_to_ssETH(ETH: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "ETH_to_ssETH",
+      "ETH_to_ssETH(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(ETH)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   allowance(owner: Address, spender: Address): BigInt {
@@ -400,6 +473,27 @@ export class StakeStarReceipt extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  ssETH_to_ETH(ssETH: BigInt): BigInt {
+    let result = super.call("ssETH_to_ETH", "ssETH_to_ETH(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(ssETH)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_ssETH_to_ETH(ssETH: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "ssETH_to_ETH",
+      "ssETH_to_ETH(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(ssETH)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   supportsInterface(interfaceId: Bytes): boolean {
     let result = super.call(
       "supportsInterface",
@@ -595,7 +689,7 @@ export class BurnCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ETH(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -739,7 +833,7 @@ export class MintCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get ETH(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -917,11 +1011,11 @@ export class UpdateRateCall__Inputs {
     this._call = call;
   }
 
-  get amount(): BigInt {
+  get ETHChange(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get positive(): boolean {
+  get positiveOrNegative(): boolean {
     return this._call.inputValues[1].value.toBoolean();
   }
 }

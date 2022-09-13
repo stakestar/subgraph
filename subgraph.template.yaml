@@ -3,45 +3,34 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: StakeStar
+    name: StakeStarETH
     network: {{ network }}
     source:
-      address: "{{ stakeStarAddress }}"
-      abi: StakeStar
+      address: "{{ StakeStarETHAddress }}"
+      abi: StakeStarETH
       startBlock: 7514873
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Stake
+        - UpdateRate
+        - Mint
+        - Burn
+        - Transfer
       abis:
-        - name: StakeStar
-          file: ./abis/StakeStar.json
+        - name: StakeStarETH
+          file: ./abis/StakeStarETH.json
       eventHandlers:
-        - event: Stake(indexed address,uint256)
-          handler: handleStake
-      file: ./src/stake-star.ts
-  - kind: ethereum
-    name: StakeStarReceipt
-    network: {{ network }}
-    source:
-      address: "{{ stakeStarReceiptAddress }}"
-      abi: StakeStarReceipt
-      startBlock: 7514873
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - StakeStarReceiptUpdateRate
-      abis:
-        - name: StakeStarReceipt
-          file: ./abis/StakeStarReceipt.json
-      eventHandlers:
-        - event: StakeStarReceiptUpdateRate(uint256)
-          handler: handleStakeStarReceiptUpdateRate
-      file: ./src/stake-star-receipt.ts
+        - event: UpdateRate(uint256)
+          handler: handleUpdateRate
+        - event: Mint(indexed address,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,uint256,uint256)
+          handler: handleBurn
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/stake-star-eth.ts
   - kind: ethereum
     name: StakeStarRegistry
     network: {{ network }}

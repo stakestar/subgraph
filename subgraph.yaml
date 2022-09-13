@@ -3,45 +3,34 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: StakeStar
-    network: goerli
-    source:
-      address: "0x8109a33a617fb5d4d9934009f3d7520348e7e33e"
-      abi: StakeStar
-      startBlock: 7514873
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - Stake
-      abis:
-        - name: StakeStar
-          file: ./abis/StakeStar.json
-      eventHandlers:
-        - event: Stake(indexed address,uint256)
-          handler: handleStake
-      file: ./src/stake-star.ts
-  - kind: ethereum
-    name: StakeStarReceipt
+    name: StakeStarETH
     network: goerli
     source:
       address: "0x31D96Fd72b4d29727d5096Bdf542D7F6083d175c"
-      abi: StakeStarReceipt
+      abi: StakeStarETH
       startBlock: 7514873
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - StakeStarReceiptUpdateRate
+        - UpdateRate
+        - Mint
+        - Burn
+        - Transfer
       abis:
-        - name: StakeStarReceipt
-          file: ./abis/StakeStarReceipt.json
+        - name: StakeStarETH
+          file: ./abis/StakeStarETH.json
       eventHandlers:
-        - event: StakeStarReceiptUpdateRate(uint256)
-          handler: handleStakeStarReceiptUpdateRate
-      file: ./src/stake-star-receipt.ts
+        - event: UpdateRate(uint256)
+          handler: handleUpdateRate
+        - event: Mint(indexed address,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,uint256,uint256)
+          handler: handleBurn
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/stake-star-eth.ts
   - kind: ethereum
     name: StakeStarRegistry
     network: goerli
