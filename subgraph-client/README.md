@@ -24,6 +24,6 @@ And run `yarn add @stakestar/subgraph-client`
     - `yarn bump` - Bump version + add version tag + commit package.json changes
     - `git push --tags` - Push your new version tag
 2. Publish
-    - Go to https://github.com/stakestar/subgraph-client/tags, select the latest tag and click the "Create release from tag" button. A new version of the GitHub Package will be automatically built and published to the GitHub Packages registry
+    - Go to https://github.com/stakestar/subgraph/tags, select the latest tag and click the "Create release from tag" button. A new version of the GitHub Package will be automatically built and published to the GitHub Packages registry
 3. Check
-    - Go to https://github.com/stakestar/subgraph-client/actions and make sure that the action was resolved successfully
+    - Go to https://github.com/stakestar/subgraph/actions and make sure that the action was resolved successfully
