@@ -24,7 +24,7 @@ sdk
   .catch(console.error)
 ```
 
-Make arbitrary request via execute
+Make arbitrary request via `execute`:
 ```typescript
 import { execute } from '@stakestar/subgraph-client'
 
