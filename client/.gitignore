@@ -3,7 +3,6 @@
 
 # production
 .graphclient
-.parcel-cache
 dist
 
 # misc

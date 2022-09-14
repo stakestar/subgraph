@@ -10,11 +10,42 @@ To use this package in your project add this line to your `.npmrc`:
 
 And run `yarn add @stakestar/subgraph-client`
 
+### Examples
+
+Make predefined request via `sdk`:
+```typescript
+import { getBuiltGraphSDK } from '@stakestar/subgraph-client'
+
+const sdk = getBuiltGraphSDK()
+
+sdk
+  .getStakeStarTvls() // Predefined methods are based on `client/queries/*.graphql`  
+  .then(({ stakeStarTvls }) => console.log('stakeStarTvls', stakeStarTvls))
+  .catch(console.error)
+```
+
+Make arbitrary request via execute
+```typescript
+import { execute } from '@stakestar/subgraph-client'
+
+execute(`
+   query tokenRateDaily($id: ID!) {
+     tokenRateDaily(id: $id) {
+       id
+       date
+       rate
+     }
+   }
+`, { id: 'contract-address' })
+  .then(({ data }) => console.log('rate', data))
+  .catch(console.error)
+```
+
 ## Development
 
 - `yarn` - install dependencies
 - `yarn build:graphclient` - build the GraphQL client (The Graph Client + GraphQL schema + TypeScript types) to `./src/.graphclient/` dir
-- `yarn lint` and `yarn lint:fix` - lint the code
+- `yarn build:package` - build the package
 - Install [Prettier extension for your IDE](https://prettier.io/docs/en/editors.html) and enable "Format On Save" feature
 - Enable ESLint for your IDE
  

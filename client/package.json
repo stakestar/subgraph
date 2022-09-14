@@ -10,8 +10,8 @@
   "license": "UNLICENSED",
   "source": "src/.graphclient/index.ts",
   "main": "dist/main.js",
-  "module": "dist/module.js",
-  "types": "dist/types.d.ts",
+  "module": "dist/module.mjs",
+  "typings": "dist/types.d.ts",
   "files": [
     "dist"
   ],
@@ -19,25 +19,27 @@
     "@stakestar:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
-    "start": "parcel watch",
-    "lint": "eslint -c .eslintrc.js --ext .js,.ts .",
-    "bump": "bump --commit 'Release subgraph-client v' --tag 'subgraph-client-v'",
-    "build:graphclient": "cd ./src && sh build.sh",
-    "build:package": "parcel build"
+    "bump": "bump --commit '[client] Release subgraph-client v' --tag 'subgraph-client-v'",
+    "build": "yarn build:graphclient && yarn build:package",
+    "build:graphclient": "cd ./src && graphclient build",
+    "build:package": "rollup -c"
   },
   "devDependencies": {
     "@graphprotocol/client-cli": "^2.2.9",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
-    "@parcel/packager-ts": "2.7.0",
-    "@parcel/transformer-typescript-types": "2.7.0",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^14.1.0",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
+    "esbuild": "^0.15.7",
     "eslint": "8.22.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.0.1",
-    "parcel": "^2.7.0",
     "prettier": "^2.7.1",
     "prettier-plugin-sorted": "^2.0.0",
+    "rollup": "^2.79.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-esbuild": "^4.10.1",
     "typescript": "4.7.4"
   },
   "importSort": {
@@ -53,10 +55,10 @@
   "dependencies": {
     "@graphql-mesh/cache-localforage": "^0.6.40",
     "@graphql-mesh/cross-helpers": "^0.2.6",
-    "@graphql-mesh/graphql": "^0.31.11",
-    "@graphql-mesh/http": "^0.1.8",
-    "@graphql-mesh/merger-bare": "^0.15.24",
-    "@graphql-mesh/runtime": "^0.44.5",
+    "@graphql-mesh/graphql": "^0.31.12",
+    "@graphql-mesh/http": "^0.1.10",
+    "@graphql-mesh/merger-bare": "^0.15.26",
+    "@graphql-mesh/runtime": "^0.44.7",
     "@graphql-mesh/store": "^0.8.43",
     "@graphql-mesh/types": "^0.83.5",
     "@graphql-mesh/utils": "^0.41.10",
