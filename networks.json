@@ -1,16 +1,13 @@
 {
   "goerli": {
     "StakeStar": {
-      "address": "0x8109a33a617fb5d4d9934009f3d7520348e7e33e"
-    },
-    "ReceiptToken": {
-      "address": "0x83F5B32FB717a15E8f09fe66B8715C18553E7268"
+      "address": "0xb30417Ce2054fA4C4FD715e6373A0B761776316e"
     },
     "StakeStarETH": {
-      "address": "0x31D96Fd72b4d29727d5096Bdf542D7F6083d175c"
+      "address": "0xF64C685E968B24f1CAC166361684613DeaBa47C3"
     },
     "StakeStarRegistry": {
-      "address": "0x22Ffa9Fa82596528e568FcDa8FAFFbd7802B429d"
+      "address": "0x394c27C8B92d517A6d5bD546b6050CE0C32cbcA7"
     }
   }
 }

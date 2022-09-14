@@ -5,10 +5,10 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ test",
-    "create-local": "graph create --node http://localhost:8020/ stakestar-goerli",
-    "remove-local": "graph remove --node http://localhost:8020/ stakestar-goerli",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 stakestar-goerli",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ stakestar-test",
+    "create-local": "graph create --node http://localhost:8020/ stakestar-test",
+    "remove-local": "graph remove --node http://localhost:8020/ stakestar-test",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 stakestar-test",
     "test": "graph test"
   },
   "dependencies": {

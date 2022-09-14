@@ -6,7 +6,7 @@ dataSources:
     name: StakeStarETH
     network: {{ network }}
     source:
-      address: "{{ StakeStarETHAddress }}"
+      address: "{{ stakeStarETHAddress }}"
       abi: StakeStarETH
       startBlock: 7514873
     mapping:
