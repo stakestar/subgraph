@@ -1,4 +1,6 @@
 {
+  "include": ["src/.graphclient/index.ts"],
+  "exclude": ["**/node_modules", "dist"],
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "esnext"
