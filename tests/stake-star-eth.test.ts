@@ -29,7 +29,7 @@ test("Mint events emited", () => {
 
   assert.fieldEquals(
     "StakerAtMomentRate",
-    staker.toString(),
+    staker.toHexString(),
     "atMomentRate",
     rate1.toString()
   )
@@ -56,7 +56,7 @@ test("Mint events emited", () => {
 
   assert.fieldEquals(
     "StakerAtMomentRate",
-    staker.toString(),
+    staker.toHexString(),
     "atMomentRate",
     weightedAverage(
       [rate1, rate2],
@@ -102,7 +102,7 @@ test("Transfer events", () => {
   const amount = BigInt.fromI32(123)
   const timestamp = BigInt.fromI32(1662041524)
 
-  const stakerAtMomentRate = new StakerAtMomentRate(fromAddress.toString())
+  const stakerAtMomentRate = new StakerAtMomentRate(fromAddress.toHexString())
   stakerAtMomentRate.atMomentRate = rate
   stakerAtMomentRate.date = timestamp.toI32()
   stakerAtMomentRate.save()
@@ -117,11 +117,11 @@ test("Transfer events", () => {
 
   handleTransfer(createTransferEvent(fromAddress, toAddress, amount, timestamp))
 
-  assert.entityCount("StakerAtMomentRate", 1)
+  assert.entityCount("StakerAtMomentRate", 2)
 
   assert.fieldEquals(
     "StakerAtMomentRate",
-    toAddress.toString(),
+    toAddress.toHexString(),
     "atMomentRate",
     rate.toString()
   )

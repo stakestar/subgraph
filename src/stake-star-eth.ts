@@ -63,15 +63,15 @@ function saveStakerAtMomentRate(event: MintEvent): void {
   const balance = stakeStarETH.balanceOf(stakerAddress)
   const rate = event.params.rate
 
-  let stakerAtMomentRate = StakerAtMomentRate.load(stakerAddress.toString())
+  let stakerAtMomentRate = StakerAtMomentRate.load(stakerAddress.toHexString())
 
   if (balance.equals(new BigInt(0))) {
-    log.error("Zero balance on mint event for address", [stakerAddress.toString()])
+    log.error("Zero balance on mint event for address", [stakerAddress.toHexString()])
     return
   }
 
   if (stakerAtMomentRate === null || balance.minus(event.params.ssETH).equals(new BigInt(0))) {
-    stakerAtMomentRate = new StakerAtMomentRate(stakerAddress.toString())
+    stakerAtMomentRate = new StakerAtMomentRate(stakerAddress.toHexString())
     stakerAtMomentRate.atMomentRate = rate
     stakerAtMomentRate.date = timestamp
     stakerAtMomentRate.save()
@@ -97,10 +97,10 @@ export function handleTransfer(event: Transfer): void {
   const timestamp = event.block.timestamp.toI32()
   const fromAddress = event.params.from
 
-  const stakerAtMomentRateFrom = StakerAtMomentRate.load(fromAddress.toString())
+  const stakerAtMomentRateFrom = StakerAtMomentRate.load(fromAddress.toHexString())
 
   if (stakerAtMomentRateFrom === null) {
-    log.error("There is no StakerAtMomentRate entity for address", [fromAddress.toString()])
+    log.error("There is no StakerAtMomentRate entity for address", [fromAddress.toHexString()])
     return
   }
 
@@ -109,10 +109,10 @@ export function handleTransfer(event: Transfer): void {
   const stakeStarETH = StakeStarETH.bind(event.address)
   const balance = stakeStarETH.balanceOf(toAddress)
 
-  let stakerAtMomentRateTo = StakerAtMomentRate.load(toAddress.toString())
+  let stakerAtMomentRateTo = StakerAtMomentRate.load(toAddress.toHexString())
 
   if (stakerAtMomentRateTo === null || balance.minus(amount).equals(new BigInt(0))) {
-    stakerAtMomentRateTo = new StakerAtMomentRate(toAddress.toString())
+    stakerAtMomentRateTo = new StakerAtMomentRate(toAddress.toHexString())
     stakerAtMomentRateTo.atMomentRate = stakerAtMomentRateFrom.atMomentRate
     stakerAtMomentRateTo.date = timestamp
     stakerAtMomentRateTo.save()
