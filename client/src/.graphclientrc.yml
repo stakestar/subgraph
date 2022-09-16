@@ -2,7 +2,7 @@ sources:
   - name: StakeStar
     handler:
       graphql:
-        endpoint: https://api.studio.thegraph.com/query/34630/stakestar-test/v0.1.2
+        endpoint: https://api.thegraph.com/subgraphs/name/arsoba/stakestar-test
 
 documents:
   - ./queries/*.graphql

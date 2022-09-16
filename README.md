@@ -8,4 +8,4 @@ yarn test
 
 ### @stakestar/subgraph-client
 
-This package located in the [client](client/) dir
+This package is located in the [client](client/) dir

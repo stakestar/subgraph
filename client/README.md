@@ -1,5 +1,7 @@
 # @stakestar/subgraph-client
 
+![package status](https://github.com/stakestar/subgraph/actions/workflows/publish-github-package.yml/badge.svg)
+
 GraphQL client for consuming StakeStar's The Graph GraphQL API
 
 ## How to use
