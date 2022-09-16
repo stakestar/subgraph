@@ -1,32 +1,32 @@
+import del from 'rollup-plugin-delete'
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
-// import resolve from '@rollup/plugin-node-resolve'
-// import commonjs  from '@rollup/plugin-commonjs'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const packageJson = require('./package.json')
 
 const bundle = config => ({
   ...config,
-  input: 'src/.graphclient/index.ts',
-  // external: id => !/^[./]/.test(id),
+  input: 'src/.graphclient/index.ts'
 })
 
 export default [
   bundle({
     plugins: [
-      // resolve({ extensions: [ '.mjs','.js', '.json', '.node' ] }),
-      // commonjs({ extensions: [ '.mjs','.js', '.json', '.node' ] }),
+      del({ targets: 'dist/*' }),
       esbuild()
     ],
     output: [
       {
-        dir: 'dist/main.js',
+        dir: packageJson.main,
         format: 'cjs',
-        // sourcemap: true,
+        sourcemap: false,
         exports: 'auto',
       },
       {
-        dir: 'dist/module.mjs',
+        dir: packageJson.module,
         format: 'es',
-        // sourcemap: true,
+        sourcemap: false,
         exports: 'auto',
       },
     ],

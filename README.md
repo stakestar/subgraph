@@ -6,6 +6,6 @@
 yarn test
 ```
 
-### @stakestar/subgraph-client
+## @stakestar/subgraph-client package
 
-This package is located in the [client](client/) dir
+See [client/](client/) dir
