@@ -6,6 +6,18 @@
 yarn test
 ```
 
-## @stakestar/subgraph-client package
+## Prepare goerli config
 
-See [client/](client/) dir
+```
+yarn prepare:goerli
+```
+
+## Deploy hosted
+
+```
+yarn deploy:hosted
+```
+
+### @stakestar/subgraph-client
+
+This package located in the [client](client/) dir
