@@ -20,7 +20,7 @@ dataSources:
         - Transfer
       abis:
         - name: StakeStarETH
-          file: ./abis/StakeStarETH.json
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
       eventHandlers:
         - event: UpdateRate(uint256)
           handler: handleUpdateRate
@@ -47,7 +47,7 @@ dataSources:
         - RemoveOperatorFromAllowList
       abis:
         - name: StakeStarRegistry
-          file: ./abis/StakeStarRegistry.json
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarRegistry.sol/StakeStarRegistry.json
       eventHandlers:
         - event: AddOperatorToAllowList(uint32)
           handler: handleAddOperatorToAllowList

@@ -259,6 +259,29 @@ export class StakeStarETH extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  STAKE_STAR_ROLE(): Bytes {
+    let result = super.call(
+      "STAKE_STAR_ROLE",
+      "STAKE_STAR_ROLE():(bytes32)",
+      []
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_STAKE_STAR_ROLE(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "STAKE_STAR_ROLE",
+      "STAKE_STAR_ROLE():(bytes32)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
   allowance(owner: Address, spender: Address): BigInt {
     let result = super.call(
       "allowance",

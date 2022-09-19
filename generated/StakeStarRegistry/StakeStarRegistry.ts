@@ -28,6 +28,42 @@ export class AddOperatorToAllowList__Params {
   }
 }
 
+export class CreateValidator extends ethereum.Event {
+  get params(): CreateValidator__Params {
+    return new CreateValidator__Params(this);
+  }
+}
+
+export class CreateValidator__Params {
+  _event: CreateValidator;
+
+  constructor(event: CreateValidator) {
+    this._event = event;
+  }
+
+  get publicKey(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+}
+
+export class DestroyValidator extends ethereum.Event {
+  get params(): DestroyValidator__Params {
+    return new DestroyValidator__Params(this);
+  }
+}
+
+export class DestroyValidator__Params {
+  _event: DestroyValidator;
+
+  constructor(event: DestroyValidator) {
+    this._event = event;
+  }
+
+  get publicKey(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+}
+
 export class Initialized extends ethereum.Event {
   get params(): Initialized__Params {
     return new Initialized__Params(this);
@@ -170,6 +206,29 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
+  STAKE_STAR_ROLE(): Bytes {
+    let result = super.call(
+      "STAKE_STAR_ROLE",
+      "STAKE_STAR_ROLE():(bytes32)",
+      []
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_STAKE_STAR_ROLE(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "STAKE_STAR_ROLE",
+      "STAKE_STAR_ROLE():(bytes32)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
   allowListOfOperators(param0: BigInt): boolean {
     let result = super.call(
       "allowListOfOperators",
@@ -193,6 +252,29 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
+  countValidatorPublicKeys(status: i32): BigInt {
+    let result = super.call(
+      "countValidatorPublicKeys",
+      "countValidatorPublicKeys(uint8):(uint32)",
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_countValidatorPublicKeys(status: i32): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "countValidatorPublicKeys",
+      "countValidatorPublicKeys(uint8):(uint32)",
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
       ethereum.Value.fromFixedBytes(role)
@@ -214,6 +296,29 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
+  getValidatorPublicKeys(status: i32): Array<Bytes> {
+    let result = super.call(
+      "getValidatorPublicKeys",
+      "getValidatorPublicKeys(uint8):(bytes[])",
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+    );
+
+    return result[0].toBytesArray();
+  }
+
+  try_getValidatorPublicKeys(status: i32): ethereum.CallResult<Array<Bytes>> {
+    let result = super.tryCall(
+      "getValidatorPublicKeys",
+      "getValidatorPublicKeys(uint8):(bytes[])",
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytesArray());
+  }
+
   hasRole(role: Bytes, account: Address): boolean {
     let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
@@ -228,29 +333,6 @@ export class StakeStarRegistry extends ethereum.SmartContract {
       ethereum.Value.fromFixedBytes(role),
       ethereum.Value.fromAddress(account)
     ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBoolean());
-  }
-
-  isOperatorAllowListed(operatorId: BigInt): boolean {
-    let result = super.call(
-      "isOperatorAllowListed",
-      "isOperatorAllowListed(uint32):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(operatorId)]
-    );
-
-    return result[0].toBoolean();
-  }
-
-  try_isOperatorAllowListed(operatorId: BigInt): ethereum.CallResult<boolean> {
-    let result = super.tryCall(
-      "isOperatorAllowListed",
-      "isOperatorAllowListed(uint32):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(operatorId)]
-    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -280,6 +362,52 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
+
+  validatorPublicKeys(param0: BigInt): Bytes {
+    let result = super.call(
+      "validatorPublicKeys",
+      "validatorPublicKeys(uint256):(bytes)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_validatorPublicKeys(param0: BigInt): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "validatorPublicKeys",
+      "validatorPublicKeys(uint256):(bytes)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  validatorStatuses(param0: Bytes): i32 {
+    let result = super.call(
+      "validatorStatuses",
+      "validatorStatuses(bytes):(uint8)",
+      [ethereum.Value.fromBytes(param0)]
+    );
+
+    return result[0].toI32();
+  }
+
+  try_validatorStatuses(param0: Bytes): ethereum.CallResult<i32> {
+    let result = super.tryCall(
+      "validatorStatuses",
+      "validatorStatuses(bytes):(uint8)",
+      [ethereum.Value.fromBytes(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toI32());
+  }
 }
 
 export class AddOperatorToAllowListCall extends ethereum.Call {
@@ -308,6 +436,66 @@ export class AddOperatorToAllowListCall__Outputs {
   _call: AddOperatorToAllowListCall;
 
   constructor(call: AddOperatorToAllowListCall) {
+    this._call = call;
+  }
+}
+
+export class CreateValidatorCall extends ethereum.Call {
+  get inputs(): CreateValidatorCall__Inputs {
+    return new CreateValidatorCall__Inputs(this);
+  }
+
+  get outputs(): CreateValidatorCall__Outputs {
+    return new CreateValidatorCall__Outputs(this);
+  }
+}
+
+export class CreateValidatorCall__Inputs {
+  _call: CreateValidatorCall;
+
+  constructor(call: CreateValidatorCall) {
+    this._call = call;
+  }
+
+  get publicKey(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+}
+
+export class CreateValidatorCall__Outputs {
+  _call: CreateValidatorCall;
+
+  constructor(call: CreateValidatorCall) {
+    this._call = call;
+  }
+}
+
+export class DestroyValidatorCall extends ethereum.Call {
+  get inputs(): DestroyValidatorCall__Inputs {
+    return new DestroyValidatorCall__Inputs(this);
+  }
+
+  get outputs(): DestroyValidatorCall__Outputs {
+    return new DestroyValidatorCall__Outputs(this);
+  }
+}
+
+export class DestroyValidatorCall__Inputs {
+  _call: DestroyValidatorCall;
+
+  constructor(call: DestroyValidatorCall) {
+    this._call = call;
+  }
+
+  get publicKey(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+}
+
+export class DestroyValidatorCall__Outputs {
+  _call: DestroyValidatorCall;
+
+  constructor(call: DestroyValidatorCall) {
     this._call = call;
   }
 }
