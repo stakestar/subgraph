@@ -1,0 +1,7 @@
+query getStakerAtMomentRate($stakerId: ID!) {
+  stakerAtMomentRate(id: $stakerId) {
+    id
+    date
+    atMomentRate
+  }
+}
