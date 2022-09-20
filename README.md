@@ -18,6 +18,6 @@ yarn prepare:goerli
 yarn deploy:hosted
 ```
 
-### @stakestar/subgraph-client
+## @stakestar/subgraph-client package
 
-This package located in the [client](client/) dir
+See [client/](client/) dir
