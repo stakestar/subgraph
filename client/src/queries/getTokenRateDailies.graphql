@@ -1,5 +1,5 @@
-query getTokenRateDailies {
-  tokenRateDailies {
+query getTokenRateDailies($first: Int = 5) {
+  tokenRateDailies(first: $first, orderBy: date, orderDirection: desc) {
     id
     date
     rate
