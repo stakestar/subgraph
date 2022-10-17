@@ -1,3 +1,9 @@
+type StakeStarTvlTotal @entity {
+  id: ID!
+
+  totalETH: BigInt!
+}
+
 type StakeStarTvl @entity {
   # timestamp rounded to current day by dividing by 86400
   id: ID!
@@ -23,4 +29,19 @@ type StakerAtMomentRate @entity {
   date: Int!
 
   atMomentRate: BigInt!
+}
+
+type StakeStarRewardsTotal @entity {
+  id: ID!
+
+  rewards: BigInt!
+}
+
+
+type StakeStarRewardsDaily @entity {
+  # timestamp rounded to current day by dividing by 86400
+  id: ID!
+  date: Int!
+
+  rewards: BigInt!
 }

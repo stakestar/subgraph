@@ -54,4 +54,23 @@ dataSources:
         - event: RemoveOperatorFromAllowList(uint32)
           handler: handleRemoveOperatorFromAllowList
       file: ./src/stake-star-registry.ts
-
+  - kind: ethereum
+    name: StakeStarRewards
+    network: {{ network }}
+    source:
+      address: "{{ stakeStarETHAddress }}"
+      abi: StakeStarRewards
+      startBlock: 7514873
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Pull
+      abis:
+        - name: StakeStarRewards
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarRewards.sol/StakeStarRewards.json
+      eventHandlers:
+        - event: Pull(address,uint256)
+          handler: handlePullEvent
+      file: ./src/stake-star-rewards.ts

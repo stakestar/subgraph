@@ -54,4 +54,23 @@ dataSources:
         - event: RemoveOperatorFromAllowList(uint32)
           handler: handleRemoveOperatorFromAllowList
       file: ./src/stake-star-registry.ts
-
+  - kind: ethereum
+    name: StakeStarRewards
+    network: goerli
+    source:
+      address: "0xF64C685E968B24f1CAC166361684613DeaBa47C3"
+      abi: StakeStarRewards
+      startBlock: 7514873
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Pull
+      abis:
+        - name: StakeStarRewards
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarRewards.sol/StakeStarRewards.json
+      eventHandlers:
+        - event: Pull(address,uint256)
+          handler: handlePull
+      file: ./src/stake-star-rewards.ts

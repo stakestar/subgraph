@@ -8,11 +8,13 @@ import {
 import {
   TokenRateDaily,
   StakeStarTvl,
+  StakeStarTvlTotal,
   StakerAtMomentRate
 } from "../generated/schema"
 import { BigInt } from "@graphprotocol/graph-ts"
 import { weightedAverage } from "./utils"
 import { log } from "matchstick-as/assembly/log";
+import { DEFAULT_ID } from "./consts";
 
 export function handleUpdateRate(event: UpdateRateEvent): void {
   const timestamp = event.block.timestamp.toI32()
@@ -34,25 +36,26 @@ function saveStakeStarTvl(event: MintEvent): void {
   const dayID = timestamp / 86400
   const dayStartTimestamp = dayID * 86400
 
-  const prevDayTimestamp = timestamp - 86400
-  const prevDayID = prevDayTimestamp / 86400
+  let stakeStarTotalTvl = StakeStarTvlTotal.load(DEFAULT_ID)
 
-  let prevDayEntity = StakeStarTvl.load(prevDayID.toString())
-  let prevDayTotalETH = BigInt.fromI32(0)
-  if (prevDayEntity !== null) {
-    prevDayTotalETH = prevDayEntity.totalETH
+  if (stakeStarTotalTvl === null) {
+    stakeStarTotalTvl = new StakeStarTvlTotal(DEFAULT_ID)
+    stakeStarTotalTvl.totalETH = BigInt.fromI32(0)
   }
+  const totalTvl = stakeStarTotalTvl.totalETH
 
   let entity = StakeStarTvl.load(dayID.toString())
   if (entity === null) {
     entity = new StakeStarTvl(dayID.toString())
     entity.date = dayStartTimestamp
-    entity.totalETH = prevDayTotalETH
+    entity.totalETH = totalTvl
   }
 
   entity.totalETH = entity.totalETH.plus(event.params.ssETH)
+  stakeStarTotalTvl.totalETH = stakeStarTotalTvl.totalETH.plus(event.params.ssETH)
 
   entity.save()
+  stakeStarTotalTvl.save()
 }
 
 function saveStakerAtMomentRate(event: MintEvent): void {

@@ -11,6 +11,49 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class StakeStarTvlTotal extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save StakeStarTvlTotal entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type StakeStarTvlTotal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("StakeStarTvlTotal", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakeStarTvlTotal | null {
+    return changetype<StakeStarTvlTotal | null>(
+      store.get("StakeStarTvlTotal", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get totalETH(): BigInt {
+    let value = this.get("totalETH");
+    return value!.toBigInt();
+  }
+
+  set totalETH(value: BigInt) {
+    this.set("totalETH", Value.fromBigInt(value));
+  }
+}
+
 export class StakeStarTvl extends Entity {
   constructor(id: string) {
     super();
@@ -192,5 +235,106 @@ export class StakerAtMomentRate extends Entity {
 
   set atMomentRate(value: BigInt) {
     this.set("atMomentRate", Value.fromBigInt(value));
+  }
+}
+
+export class StakeStarRewardsTotal extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save StakeStarRewardsTotal entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type StakeStarRewardsTotal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("StakeStarRewardsTotal", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakeStarRewardsTotal | null {
+    return changetype<StakeStarRewardsTotal | null>(
+      store.get("StakeStarRewardsTotal", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get rewards(): BigInt {
+    let value = this.get("rewards");
+    return value!.toBigInt();
+  }
+
+  set rewards(value: BigInt) {
+    this.set("rewards", Value.fromBigInt(value));
+  }
+}
+
+export class StakeStarRewardsDaily extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save StakeStarRewardsDaily entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type StakeStarRewardsDaily must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("StakeStarRewardsDaily", id.toString(), this);
+    }
+  }
+
+  static load(id: string): StakeStarRewardsDaily | null {
+    return changetype<StakeStarRewardsDaily | null>(
+      store.get("StakeStarRewardsDaily", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get date(): i32 {
+    let value = this.get("date");
+    return value!.toI32();
+  }
+
+  set date(value: i32) {
+    this.set("date", Value.fromI32(value));
+  }
+
+  get rewards(): BigInt {
+    let value = this.get("rewards");
+    return value!.toBigInt();
+  }
+
+  set rewards(value: BigInt) {
+    this.set("rewards", Value.fromBigInt(value));
   }
 }

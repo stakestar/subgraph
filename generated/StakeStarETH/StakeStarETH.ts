@@ -238,19 +238,19 @@ export class StakeStarETH extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  ETH_to_ssETH(ETH: BigInt): BigInt {
+  ETH_to_ssETH(eth: BigInt): BigInt {
     let result = super.call("ETH_to_ssETH", "ETH_to_ssETH(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(ETH)
+      ethereum.Value.fromUnsignedBigInt(eth)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_ETH_to_ssETH(ETH: BigInt): ethereum.CallResult<BigInt> {
+  try_ETH_to_ssETH(eth: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "ETH_to_ssETH",
       "ETH_to_ssETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(ETH)]
+      [ethereum.Value.fromUnsignedBigInt(eth)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -712,7 +712,7 @@ export class BurnCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get ETH(): BigInt {
+  get eth(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -856,7 +856,7 @@ export class MintCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get ETH(): BigInt {
+  get eth(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1034,7 +1034,7 @@ export class UpdateRateCall__Inputs {
     this._call = call;
   }
 
-  get ETHChange(): BigInt {
+  get ethChange(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 
