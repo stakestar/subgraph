@@ -58,7 +58,7 @@ dataSources:
     name: StakeStarRewards
     network: {{ network }}
     source:
-      address: "{{ stakeStarETHAddress }}"
+      address: "{{ stakeStarRewardsAddress }}"
       abi: StakeStarRewards
       startBlock: 7514873
     mapping:
@@ -74,3 +74,23 @@ dataSources:
         - event: Pull(address,uint256)
           handler: handlePullEvent
       file: ./src/stake-star-rewards.ts
+  - kind: ethereum
+    name: StakeStar
+    network: {{ network }}
+    source:
+      address: "{{ stakeStarAddress }}"
+      abi: StakeStar
+      startBlock: 7514873
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateValidator
+      abis:
+        - name: StakeStar
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStar.sol/StakeStar.json
+      eventHandlers:
+        - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
+          handler: handleCreateValidator
+      file: ./src/stake-star.ts

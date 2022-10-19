@@ -21,6 +21,7 @@ type TokenRateDaily @entity {
 }
 
 type Operator @entity {
+  # operator ID
   id: ID!
 }
 
@@ -44,4 +45,9 @@ type StakeStarRewardsDaily @entity {
   date: Int!
 
   rewards: BigInt!
+}
+
+type Validator @entity {
+  # Validator public key
+  id: ID!
 }

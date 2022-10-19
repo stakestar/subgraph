@@ -4,7 +4,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "prepare:goerli": "mustache config/goerli.json subgraph.template.yaml > subgraph.yaml",
+    "cli": "ts-node cli/cli.ts",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ stakestar-test",
     "deploy:hosted": "graph deploy --node https://api.thegraph.com/deploy/ arsoba/stakestar-test",
     "create-local": "graph create --node http://localhost:8020/ stakestar-test",
@@ -20,10 +20,13 @@
     "typescript": "^4.8.2"
   },
   "devDependencies": {
+    "@types/mustache": "^4.2.1",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
+    "commander": "^9.4.1",
     "eslint": "^8.23.0",
     "matchstick-as": "0.5.0",
-    "mustache": "^4.2.0"
+    "mustache": "^4.2.0",
+    "ts-node": "^10.9.1"
   }
 }

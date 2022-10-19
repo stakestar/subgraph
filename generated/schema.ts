@@ -338,3 +338,35 @@ export class StakeStarRewardsDaily extends Entity {
     this.set("rewards", Value.fromBigInt(value));
   }
 }
+
+export class Validator extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Validator entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Validator must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Validator", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Validator | null {
+    return changetype<Validator | null>(store.get("Validator", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+}

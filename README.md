@@ -9,7 +9,7 @@ yarn test
 ## Prepare goerli config
 
 ```
-yarn prepare:goerli
+yarn cli prepare -n goerli -t subgraph.template.yaml
 ```
 
 ## Deploy hosted
