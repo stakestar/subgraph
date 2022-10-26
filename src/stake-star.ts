@@ -10,12 +10,12 @@ export function handleCreateValidator(
   event: CreateValidatorEvent
 ): void {
   const publicKey = event.params.params.publicKey
-  if (Validator.load(publicKey.toString()) !== null) {
-    log.warning("Validator {} is already registered", [publicKey.toString()])
+  if (Validator.load(publicKey.toHexString()) !== null) {
+    log.warning("Validator {} is already registered", [publicKey.toHexString()])
     return
   }
 
-  const entity = new Validator(publicKey.toString())
+  const entity = new Validator(publicKey.toHexString())
 
   entity.save()
 }
