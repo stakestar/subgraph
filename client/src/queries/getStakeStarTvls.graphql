@@ -1,5 +1,5 @@
-query getStakeStarTvls {
-  stakeStarTvls {
+query getStakeStarTvls($first: Int = 5) {
+  stakeStarTvls(first: $first, orderBy: date, orderDirection: asc) {
     id
     totalETH
   }
