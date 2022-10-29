@@ -1,0 +1,5 @@
+query getOperatorIds($first: Int = 20) {
+  operators(first: $first) {
+    id
+  }
+}
