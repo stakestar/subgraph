@@ -6,7 +6,7 @@ dataSources:
     name: StakeStarETH
     network: goerli
     source:
-      address: "0x1f28824d247d808F6950522C10d6C14ba7d0bA5D"
+      address: "0x1643acE56113B95d35CB4256764f29E61746F991"
       abi: StakeStarETH
       startBlock: 7514873
     mapping:
@@ -35,7 +35,7 @@ dataSources:
     name: StakeStarRegistry
     network: goerli
     source:
-      address: "0x0577ED190f8bD26Ee7c9709ae160a0E80b669C75"
+      address: "0x981D1B3e33d78e1Af39Fc3CBb232Aa863324935c"
       abi: StakeStarRegistry
       startBlock: 7514873
     mapping:
@@ -58,7 +58,7 @@ dataSources:
     name: StakeStarRewards
     network: goerli
     source:
-      address: "0x3e2F13C8CfB5951180Eb14bcBd1bfADaC72794d6"
+      address: "0xbB551b50632789d7115D19423440832E5665151B"
       abi: StakeStarRewards
       startBlock: 7514873
     mapping:
@@ -78,7 +78,7 @@ dataSources:
     name: StakeStar
     network: goerli
     source:
-      address: "0x1724357253751A4c6c703642784128bB9Cf90e7A"
+      address: "0x4A4Aa5C43ce5E9d2dD3BeebeaD8762C3d408A7cD"
       abi: StakeStar
       startBlock: 7514873
     mapping:
