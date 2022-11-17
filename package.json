@@ -1,5 +1,5 @@
 {
-  "name": "stakestar-goerli",
+  "name": "@stakestar/subgraph",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
