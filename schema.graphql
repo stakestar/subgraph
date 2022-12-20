@@ -26,6 +26,7 @@ type Operator @entity {
 }
 
 type StakerAtMomentRate @entity {
+  # Staker address
   id: ID!
   date: Int!
 
