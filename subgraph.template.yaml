@@ -22,7 +22,7 @@ dataSources:
         - name: StakeStarETH
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
       eventHandlers:
-        - event: UpdateRate(uint256)
+        - event: UpdateRate(uint256,int256)
           handler: handleUpdateRate
         - event: Mint(indexed address,uint256,uint256)
           handler: handleMint
