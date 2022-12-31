@@ -12,6 +12,13 @@ type StakeStarTvl @entity {
   totalETH: BigInt!
 }
 
+type TokenRate @entity {
+  # timestamp
+  id: ID!
+
+  rate: BigInt!
+}
+
 type TokenRateDaily @entity {
   # timestamp rounded to current day by dividing by 86400
   id: ID!

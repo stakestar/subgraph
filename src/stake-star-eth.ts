@@ -9,7 +9,8 @@ import {
   TokenRateDaily,
   StakeStarTvl,
   StakeStarTvlTotal,
-  StakerAtMomentRate
+  StakerAtMomentRate,
+  TokenRate
 } from "../generated/schema"
 import { BigInt } from "@graphprotocol/graph-ts"
 import { weightedAverage } from "./utils"
@@ -29,6 +30,16 @@ export function handleUpdateRate(event: UpdateRateEvent): void {
   entity.rate = event.params.rate
 
   entity.save()
+
+
+  // Save each rate
+  let tokenRate = TokenRate.load(timestamp.toString())
+  if (tokenRate === null) {
+    tokenRate = new TokenRate(timestamp.toString())
+  }
+
+  tokenRate.rate = event.params.rate
+  tokenRate.save()
 }
 
 function saveStakeStarTvl(event: MintEvent): void {

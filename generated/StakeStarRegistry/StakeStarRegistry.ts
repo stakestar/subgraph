@@ -28,42 +28,6 @@ export class AddOperatorToAllowList__Params {
   }
 }
 
-export class CreateValidator extends ethereum.Event {
-  get params(): CreateValidator__Params {
-    return new CreateValidator__Params(this);
-  }
-}
-
-export class CreateValidator__Params {
-  _event: CreateValidator;
-
-  constructor(event: CreateValidator) {
-    this._event = event;
-  }
-
-  get publicKey(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-}
-
-export class DestroyValidator extends ethereum.Event {
-  get params(): DestroyValidator__Params {
-    return new DestroyValidator__Params(this);
-  }
-}
-
-export class DestroyValidator__Params {
-  _event: DestroyValidator;
-
-  constructor(event: DestroyValidator) {
-    this._event = event;
-  }
-
-  get publicKey(): Bytes {
-    return this._event.parameters[0].value.toBytes();
-  }
-}
-
 export class Initialized extends ethereum.Event {
   get params(): Initialized__Params {
     return new Initialized__Params(this);
@@ -178,6 +142,32 @@ export class RoleRevoked__Params {
   }
 }
 
+export class ValidatorStatusChange extends ethereum.Event {
+  get params(): ValidatorStatusChange__Params {
+    return new ValidatorStatusChange__Params(this);
+  }
+}
+
+export class ValidatorStatusChange__Params {
+  _event: ValidatorStatusChange;
+
+  constructor(event: ValidatorStatusChange) {
+    this._event = event;
+  }
+
+  get publicKey(): Bytes {
+    return this._event.parameters[0].value.toBytes();
+  }
+
+  get statusFrom(): i32 {
+    return this._event.parameters[1].value.toI32();
+  }
+
+  get statusTo(): i32 {
+    return this._event.parameters[2].value.toI32();
+  }
+}
+
 export class StakeStarRegistry extends ethereum.SmartContract {
   static bind(address: Address): StakeStarRegistry {
     return new StakeStarRegistry("StakeStarRegistry", address);
@@ -199,6 +189,21 @@ export class StakeStarRegistry extends ethereum.SmartContract {
       "DEFAULT_ADMIN_ROLE():(bytes32)",
       []
     );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  MANAGER_ROLE(): Bytes {
+    let result = super.call("MANAGER_ROLE", "MANAGER_ROLE():(bytes32)", []);
+
+    return result[0].toBytes();
+  }
+
+  try_MANAGER_ROLE(): ethereum.CallResult<Bytes> {
+    let result = super.tryCall("MANAGER_ROLE", "MANAGER_ROLE():(bytes32)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -255,7 +260,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   countValidatorPublicKeys(status: i32): BigInt {
     let result = super.call(
       "countValidatorPublicKeys",
-      "countValidatorPublicKeys(uint8):(uint32)",
+      "countValidatorPublicKeys(uint8):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
     );
 
@@ -265,8 +270,63 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   try_countValidatorPublicKeys(status: i32): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "countValidatorPublicKeys",
-      "countValidatorPublicKeys(uint8):(uint32)",
+      "countValidatorPublicKeys(uint8):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getPoRAddressList(startIndex: BigInt, endIndex: BigInt): Array<string> {
+    let result = super.call(
+      "getPoRAddressList",
+      "getPoRAddressList(uint256,uint256):(string[])",
+      [
+        ethereum.Value.fromUnsignedBigInt(startIndex),
+        ethereum.Value.fromUnsignedBigInt(endIndex)
+      ]
+    );
+
+    return result[0].toStringArray();
+  }
+
+  try_getPoRAddressList(
+    startIndex: BigInt,
+    endIndex: BigInt
+  ): ethereum.CallResult<Array<string>> {
+    let result = super.tryCall(
+      "getPoRAddressList",
+      "getPoRAddressList(uint256,uint256):(string[])",
+      [
+        ethereum.Value.fromUnsignedBigInt(startIndex),
+        ethereum.Value.fromUnsignedBigInt(endIndex)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toStringArray());
+  }
+
+  getPoRAddressListLength(): BigInt {
+    let result = super.call(
+      "getPoRAddressListLength",
+      "getPoRAddressListLength():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getPoRAddressListLength(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getPoRAddressListLength",
+      "getPoRAddressListLength():(uint256)",
+      []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -317,6 +377,29 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytesArray());
+  }
+
+  getValidatorPublicKeysLength(): BigInt {
+    let result = super.call(
+      "getValidatorPublicKeysLength",
+      "getValidatorPublicKeysLength():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getValidatorPublicKeysLength(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getValidatorPublicKeysLength",
+      "getValidatorPublicKeysLength():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   hasRole(role: Bytes, account: Address): boolean {
@@ -408,6 +491,31 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toI32());
   }
+
+  verifyOperators(operatorIds: Array<BigInt>): boolean {
+    let result = super.call(
+      "verifyOperators",
+      "verifyOperators(uint32[]):(bool)",
+      [ethereum.Value.fromUnsignedBigIntArray(operatorIds)]
+    );
+
+    return result[0].toBoolean();
+  }
+
+  try_verifyOperators(
+    operatorIds: Array<BigInt>
+  ): ethereum.CallResult<boolean> {
+    let result = super.tryCall(
+      "verifyOperators",
+      "verifyOperators(uint32[]):(bool)",
+      [ethereum.Value.fromUnsignedBigIntArray(operatorIds)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
 }
 
 export class AddOperatorToAllowListCall extends ethereum.Call {
@@ -440,20 +548,20 @@ export class AddOperatorToAllowListCall__Outputs {
   }
 }
 
-export class CreateValidatorCall extends ethereum.Call {
-  get inputs(): CreateValidatorCall__Inputs {
-    return new CreateValidatorCall__Inputs(this);
+export class ConfirmActivatingValidatorCall extends ethereum.Call {
+  get inputs(): ConfirmActivatingValidatorCall__Inputs {
+    return new ConfirmActivatingValidatorCall__Inputs(this);
   }
 
-  get outputs(): CreateValidatorCall__Outputs {
-    return new CreateValidatorCall__Outputs(this);
+  get outputs(): ConfirmActivatingValidatorCall__Outputs {
+    return new ConfirmActivatingValidatorCall__Outputs(this);
   }
 }
 
-export class CreateValidatorCall__Inputs {
-  _call: CreateValidatorCall;
+export class ConfirmActivatingValidatorCall__Inputs {
+  _call: ConfirmActivatingValidatorCall;
 
-  constructor(call: CreateValidatorCall) {
+  constructor(call: ConfirmActivatingValidatorCall) {
     this._call = call;
   }
 
@@ -462,28 +570,28 @@ export class CreateValidatorCall__Inputs {
   }
 }
 
-export class CreateValidatorCall__Outputs {
-  _call: CreateValidatorCall;
+export class ConfirmActivatingValidatorCall__Outputs {
+  _call: ConfirmActivatingValidatorCall;
 
-  constructor(call: CreateValidatorCall) {
+  constructor(call: ConfirmActivatingValidatorCall) {
     this._call = call;
   }
 }
 
-export class DestroyValidatorCall extends ethereum.Call {
-  get inputs(): DestroyValidatorCall__Inputs {
-    return new DestroyValidatorCall__Inputs(this);
+export class ConfirmExitingValidatorCall extends ethereum.Call {
+  get inputs(): ConfirmExitingValidatorCall__Inputs {
+    return new ConfirmExitingValidatorCall__Inputs(this);
   }
 
-  get outputs(): DestroyValidatorCall__Outputs {
-    return new DestroyValidatorCall__Outputs(this);
+  get outputs(): ConfirmExitingValidatorCall__Outputs {
+    return new ConfirmExitingValidatorCall__Outputs(this);
   }
 }
 
-export class DestroyValidatorCall__Inputs {
-  _call: DestroyValidatorCall;
+export class ConfirmExitingValidatorCall__Inputs {
+  _call: ConfirmExitingValidatorCall;
 
-  constructor(call: DestroyValidatorCall) {
+  constructor(call: ConfirmExitingValidatorCall) {
     this._call = call;
   }
 
@@ -492,10 +600,10 @@ export class DestroyValidatorCall__Inputs {
   }
 }
 
-export class DestroyValidatorCall__Outputs {
-  _call: DestroyValidatorCall;
+export class ConfirmExitingValidatorCall__Outputs {
+  _call: ConfirmExitingValidatorCall;
 
-  constructor(call: DestroyValidatorCall) {
+  constructor(call: ConfirmExitingValidatorCall) {
     this._call = call;
   }
 }
@@ -556,6 +664,66 @@ export class InitializeCall__Outputs {
   _call: InitializeCall;
 
   constructor(call: InitializeCall) {
+    this._call = call;
+  }
+}
+
+export class InitiateActivatingValidatorCall extends ethereum.Call {
+  get inputs(): InitiateActivatingValidatorCall__Inputs {
+    return new InitiateActivatingValidatorCall__Inputs(this);
+  }
+
+  get outputs(): InitiateActivatingValidatorCall__Outputs {
+    return new InitiateActivatingValidatorCall__Outputs(this);
+  }
+}
+
+export class InitiateActivatingValidatorCall__Inputs {
+  _call: InitiateActivatingValidatorCall;
+
+  constructor(call: InitiateActivatingValidatorCall) {
+    this._call = call;
+  }
+
+  get publicKey(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+}
+
+export class InitiateActivatingValidatorCall__Outputs {
+  _call: InitiateActivatingValidatorCall;
+
+  constructor(call: InitiateActivatingValidatorCall) {
+    this._call = call;
+  }
+}
+
+export class InitiateExitingValidatorCall extends ethereum.Call {
+  get inputs(): InitiateExitingValidatorCall__Inputs {
+    return new InitiateExitingValidatorCall__Inputs(this);
+  }
+
+  get outputs(): InitiateExitingValidatorCall__Outputs {
+    return new InitiateExitingValidatorCall__Outputs(this);
+  }
+}
+
+export class InitiateExitingValidatorCall__Inputs {
+  _call: InitiateExitingValidatorCall;
+
+  constructor(call: InitiateExitingValidatorCall) {
+    this._call = call;
+  }
+
+  get publicKey(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+}
+
+export class InitiateExitingValidatorCall__Outputs {
+  _call: InitiateExitingValidatorCall;
+
+  constructor(call: InitiateExitingValidatorCall) {
     this._call = call;
   }
 }
