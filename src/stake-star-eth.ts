@@ -27,6 +27,7 @@ export function handleUpdateRate(event: UpdateRateEvent): void {
   }
 
   entity.rate = event.params.rate
+  entity.date = timestamp
 
   entity.save()
 
