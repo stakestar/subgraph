@@ -20,11 +20,10 @@ import { DEFAULT_ID } from "./consts";
 export function handleUpdateRate(event: UpdateRateEvent): void {
   const timestamp = event.block.timestamp.toI32()
   const dayID = timestamp / 86400
-  const dayStartTimestamp = dayID * 86400
   let entity = TokenRateDaily.load(dayID.toString())
   if (entity === null) {
     entity = new TokenRateDaily(dayID.toString())
-    entity.date = dayStartTimestamp
+    entity.date = timestamp
   }
 
   entity.rate = event.params.rate
