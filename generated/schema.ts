@@ -410,4 +410,13 @@ export class Validator extends Entity {
   set id(value: string) {
     this.set("id", Value.fromString(value));
   }
+
+  get crearedAt(): BigInt {
+    let value = this.get("crearedAt");
+    return value!.toBigInt();
+  }
+
+  set crearedAt(value: BigInt) {
+    this.set("crearedAt", Value.fromBigInt(value));
+  }
 }

@@ -58,4 +58,6 @@ type StakeStarRewardsDaily @entity {
 type Validator @entity {
   # Validator public key
   id: ID!
+
+  crearedAt: BigInt!
 }

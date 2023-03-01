@@ -16,6 +16,7 @@ export function handleCreateValidator(
   }
 
   const entity = new Validator(publicKey.toHexString())
+  entity.crearedAt = event.block.timestamp
 
   entity.save()
 }
