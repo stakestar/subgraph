@@ -6,6 +6,12 @@
 yarn test
 ```
 
+## Copy deps
+
+```
+yarn cli copy-addresses -n goerli
+```
+
 ## Prepare goerli config
 
 ```

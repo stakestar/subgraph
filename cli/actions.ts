@@ -1,14 +1,15 @@
 import * as fs from 'fs';
 import * as Mustache from 'mustache';
 import {
-  ADDRESSES,
-  Network
+  ADDRESSES
 } from '@stakestar/contracts'
 
 interface Options {
   network: string
   template: string
 }
+
+const START_BLOCK = 7514873
 
 export const prepareConfig = (options: Options) => {
   const { stakeStar, stakeStarETH, stakeStarRegistry, stakeStarRewards } = ADDRESSES[options.network]
@@ -19,8 +20,22 @@ export const prepareConfig = (options: Options) => {
     stakeStarETHAddress: stakeStarETH,
     stakeStarRegistryAddress: stakeStarRegistry,
     stakeStarRewardsAddress: stakeStarRewards,
-    stakeStarAddress: stakeStar
+    stakeStarAddress: stakeStar,
+    startBlock: START_BLOCK
   });
 
   fs.writeFileSync('subgraph.yaml', rendered);
+}
+
+export const copyAddresses = (options: Options) => {
+  const { stakeStar, stakeStarETH } = ADDRESSES[options.network]
+
+  const templateString = fs.readFileSync('src/generated-consts.templete');
+
+  const rendered = Mustache.render(templateString.toString(), {
+    stakeStarETHAddress: stakeStarETH,
+    stakeStarAddress: stakeStar,
+  });
+
+  fs.writeFileSync('src/generated-consts.ts', rendered);
 }

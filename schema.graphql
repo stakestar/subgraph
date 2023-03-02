@@ -40,21 +40,6 @@ type StakerAtMomentRate @entity {
   atMomentRate: BigInt!
 }
 
-type StakeStarRewardsTotal @entity {
-  id: ID!
-
-  rewards: BigInt!
-}
-
-
-type StakeStarRewardsDaily @entity {
-  # timestamp rounded to current day by dividing by 86400
-  id: ID!
-  date: Int!
-
-  rewards: BigInt!
-}
-
 type Validator @entity {
   # Validator public key
   id: ID!

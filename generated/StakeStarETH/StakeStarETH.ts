@@ -53,12 +53,8 @@ export class Burn__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get ssETH(): BigInt {
+  get value(): BigInt {
     return this._event.parameters[1].value.toBigInt();
-  }
-
-  get rate(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
   }
 }
 
@@ -79,12 +75,8 @@ export class Mint__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get ssETH(): BigInt {
+  get value(): BigInt {
     return this._event.parameters[1].value.toBigInt();
-  }
-
-  get rate(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
   }
 }
 
@@ -192,28 +184,6 @@ export class Transfer__Params {
   }
 }
 
-export class UpdateRate extends ethereum.Event {
-  get params(): UpdateRate__Params {
-    return new UpdateRate__Params(this);
-  }
-}
-
-export class UpdateRate__Params {
-  _event: UpdateRate;
-
-  constructor(event: UpdateRate) {
-    this._event = event;
-  }
-
-  get rate(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get ethChange(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
 export class StakeStarETH extends ethereum.SmartContract {
   static bind(address: Address): StakeStarETH {
     return new StakeStarETH("StakeStarETH", address);
@@ -240,27 +210,6 @@ export class StakeStarETH extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
-  }
-
-  ETH_to_ssETH(eth: BigInt): BigInt {
-    let result = super.call("ETH_to_ssETH", "ETH_to_ssETH(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(eth)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_ETH_to_ssETH(eth: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "ETH_to_ssETH",
-      "ETH_to_ssETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(eth)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   STAKE_STAR_ROLE(): Bytes {
@@ -396,27 +345,6 @@ export class StakeStarETH extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  estimateRate(ethChange: BigInt): BigInt {
-    let result = super.call("estimateRate", "estimateRate(int256):(uint256)", [
-      ethereum.Value.fromSignedBigInt(ethChange)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_estimateRate(ethChange: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "estimateRate",
-      "estimateRate(int256):(uint256)",
-      [ethereum.Value.fromSignedBigInt(ethChange)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
       ethereum.Value.fromFixedBytes(role)
@@ -506,42 +434,6 @@ export class StakeStarETH extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  rate(): BigInt {
-    let result = super.call("rate", "rate():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_rate(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("rate", "rate():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  ssETH_to_ETH(ssETH: BigInt): BigInt {
-    let result = super.call("ssETH_to_ETH", "ssETH_to_ETH(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(ssETH)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_ssETH_to_ETH(ssETH: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "ssETH_to_ETH",
-      "ssETH_to_ETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(ssETH)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
   supportsInterface(interfaceId: Bytes): boolean {
     let result = super.call(
       "supportsInterface",
@@ -588,25 +480,6 @@ export class StakeStarETH extends ethereum.SmartContract {
 
   try_totalSupply(): ethereum.CallResult<BigInt> {
     let result = super.tryCall("totalSupply", "totalSupply():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  totalSupplyEth(): BigInt {
-    let result = super.call("totalSupplyEth", "totalSupplyEth():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_totalSupplyEth(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "totalSupplyEth",
-      "totalSupplyEth():(uint256)",
-      []
-    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -752,11 +625,11 @@ export class BurnCall__Inputs {
     this._call = call;
   }
 
-  get account(): Address {
+  get from(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get ssETH(): BigInt {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -896,11 +769,11 @@ export class MintCall__Inputs {
     this._call = call;
   }
 
-  get account(): Address {
+  get to(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get ssETH(): BigInt {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 }
@@ -1058,35 +931,5 @@ export class TransferFromCall__Outputs {
 
   get value0(): boolean {
     return this._call.outputValues[0].value.toBoolean();
-  }
-}
-
-export class UpdateRateCall extends ethereum.Call {
-  get inputs(): UpdateRateCall__Inputs {
-    return new UpdateRateCall__Inputs(this);
-  }
-
-  get outputs(): UpdateRateCall__Outputs {
-    return new UpdateRateCall__Outputs(this);
-  }
-}
-
-export class UpdateRateCall__Inputs {
-  _call: UpdateRateCall;
-
-  constructor(call: UpdateRateCall) {
-    this._call = call;
-  }
-
-  get ethChange(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class UpdateRateCall__Outputs {
-  _call: UpdateRateCall;
-
-  constructor(call: UpdateRateCall) {
-    this._call = call;
   }
 }

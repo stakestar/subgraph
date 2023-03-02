@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "{{ stakeStarETHAddress }}"
       abi: StakeStarETH
-      startBlock: 7514873
+      startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -22,12 +22,6 @@ dataSources:
         - name: StakeStarETH
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
       eventHandlers:
-        - event: UpdateRate(uint256,int256)
-          handler: handleUpdateRate
-        - event: Mint(indexed address,uint256,uint256)
-          handler: handleMint
-        - event: Burn(indexed address,uint256,uint256)
-          handler: handleBurn
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/stake-star-eth.ts
@@ -37,7 +31,7 @@ dataSources:
     source:
       address: "{{ stakeStarRegistryAddress }}"
       abi: StakeStarRegistry
-      startBlock: 7514873
+      startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -55,32 +49,12 @@ dataSources:
           handler: handleRemoveOperatorFromAllowList
       file: ./src/stake-star-registry.ts
   - kind: ethereum
-    name: StakeStarRewards
-    network: {{ network }}
-    source:
-      address: "{{ stakeStarRewardsAddress }}"
-      abi: StakeStarRewards
-      startBlock: 7514873
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - Pull
-      abis:
-        - name: StakeStarRewards
-          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarRewards.sol/StakeStarRewards.json
-      eventHandlers:
-        - event: Pull(address,uint256)
-          handler: handlePullEvent
-      file: ./src/stake-star-rewards.ts
-  - kind: ethereum
     name: StakeStar
     network: {{ network }}
     source:
       address: "{{ stakeStarAddress }}"
       abi: StakeStar
-      startBlock: 7514873
+      startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -93,4 +67,10 @@ dataSources:
       eventHandlers:
         - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
           handler: handleCreateValidator
+        - event: CommitSnapshot(uint256,uint256,uint256,uint256)
+          handler: handleCommitSnapshot
+        - event: Stake(indexed address,uint256,uint256)
+          handler: handleStake
+        - event: Unstake(indexed address,uint256,uint256)
+          handler: handleUnstake
       file: ./src/stake-star.ts
