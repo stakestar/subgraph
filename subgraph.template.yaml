@@ -64,6 +64,8 @@ dataSources:
       abis:
         - name: StakeStar
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStar.sol/StakeStar.json
+        - name: StakeStarETH
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
       eventHandlers:
         - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
           handler: handleCreateValidator
