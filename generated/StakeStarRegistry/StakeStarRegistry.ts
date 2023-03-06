@@ -196,44 +196,6 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  MANAGER_ROLE(): Bytes {
-    let result = super.call("MANAGER_ROLE", "MANAGER_ROLE():(bytes32)", []);
-
-    return result[0].toBytes();
-  }
-
-  try_MANAGER_ROLE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall("MANAGER_ROLE", "MANAGER_ROLE():(bytes32)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBytes());
-  }
-
-  STAKE_STAR_ROLE(): Bytes {
-    let result = super.call(
-      "STAKE_STAR_ROLE",
-      "STAKE_STAR_ROLE():(bytes32)",
-      []
-    );
-
-    return result[0].toBytes();
-  }
-
-  try_STAKE_STAR_ROLE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall(
-      "STAKE_STAR_ROLE",
-      "STAKE_STAR_ROLE():(bytes32)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBytes());
-  }
-
   allowListOfOperators(param0: BigInt): boolean {
     let result = super.call(
       "allowListOfOperators",

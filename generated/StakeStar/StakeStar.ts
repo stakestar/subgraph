@@ -178,6 +178,28 @@ export class LocalPoolUnstake__Params {
   }
 }
 
+export class RateDiff extends ethereum.Event {
+  get params(): RateDiff__Params {
+    return new RateDiff__Params(this);
+  }
+}
+
+export class RateDiff__Params {
+  _event: RateDiff;
+
+  constructor(event: RateDiff) {
+    this._event = event;
+  }
+
+  get rate(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get approxRate(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class RoleAdminChanged extends ethereum.Event {
   get params(): RoleAdminChanged__Params {
     return new RoleAdminChanged__Params(this);
@@ -327,11 +349,11 @@ export class SetLocalPoolParameters__Params {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get lpuLimit(): BigInt {
+  get limit(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get lpuFrequencyLimit(): BigInt {
+  get frequencyLimit(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -367,12 +389,12 @@ export class SetRateParameters__Params {
     this._event = event;
   }
 
-  get rateBottomLimit(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get maxRateDeviation(): i32 {
+    return this._event.parameters[0].value.toI32();
   }
 
-  get rateTopLimit(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
+  get rateDeviationCheck(): boolean {
+    return this._event.parameters[1].value.toBoolean();
   }
 }
 
@@ -402,16 +424,16 @@ export class Stake__Params {
   }
 }
 
-export class TreasurySwap extends ethereum.Event {
-  get params(): TreasurySwap__Params {
-    return new TreasurySwap__Params(this);
+export class TreasuryPayback extends ethereum.Event {
+  get params(): TreasuryPayback__Params {
+    return new TreasuryPayback__Params(this);
   }
 }
 
-export class TreasurySwap__Params {
-  _event: TreasurySwap;
+export class TreasuryPayback__Params {
+  _event: TreasuryPayback;
 
-  constructor(event: TreasurySwap) {
+  constructor(event: TreasuryPayback) {
     this._event = event;
   }
 
@@ -585,21 +607,6 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  MANAGER_ROLE(): Bytes {
-    let result = super.call("MANAGER_ROLE", "MANAGER_ROLE():(bytes32)", []);
-
-    return result[0].toBytes();
-  }
-
-  try_MANAGER_ROLE(): ethereum.CallResult<Bytes> {
-    let result = super.tryCall("MANAGER_ROLE", "MANAGER_ROLE():(bytes32)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBytes());
-  }
-
   depositContract(): Address {
     let result = super.call(
       "depositContract",
@@ -737,6 +744,75 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  localPoolUnstakeFrequencyLimit(): BigInt {
+    let result = super.call(
+      "localPoolUnstakeFrequencyLimit",
+      "localPoolUnstakeFrequencyLimit():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_localPoolUnstakeFrequencyLimit(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "localPoolUnstakeFrequencyLimit",
+      "localPoolUnstakeFrequencyLimit():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  localPoolUnstakeHistory(param0: Address): BigInt {
+    let result = super.call(
+      "localPoolUnstakeHistory",
+      "localPoolUnstakeHistory(address):(uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_localPoolUnstakeHistory(param0: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "localPoolUnstakeHistory",
+      "localPoolUnstakeHistory(address):(uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  localPoolUnstakeLimit(): BigInt {
+    let result = super.call(
+      "localPoolUnstakeLimit",
+      "localPoolUnstakeLimit():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_localPoolUnstakeLimit(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "localPoolUnstakeLimit",
+      "localPoolUnstakeLimit():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   loopLimit(): BigInt {
     let result = super.call("loopLimit", "loopLimit():(uint32)", []);
 
@@ -752,61 +828,27 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  lpuFrequencyLimit(): BigInt {
+  maxRateDeviation(): i32 {
     let result = super.call(
-      "lpuFrequencyLimit",
-      "lpuFrequencyLimit():(uint256)",
+      "maxRateDeviation",
+      "maxRateDeviation():(uint24)",
       []
     );
 
-    return result[0].toBigInt();
+    return result[0].toI32();
   }
 
-  try_lpuFrequencyLimit(): ethereum.CallResult<BigInt> {
+  try_maxRateDeviation(): ethereum.CallResult<i32> {
     let result = super.tryCall(
-      "lpuFrequencyLimit",
-      "lpuFrequencyLimit():(uint256)",
+      "maxRateDeviation",
+      "maxRateDeviation():(uint24)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  lpuHistory(param0: Address): BigInt {
-    let result = super.call("lpuHistory", "lpuHistory(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_lpuHistory(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("lpuHistory", "lpuHistory(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  lpuLimit(): BigInt {
-    let result = super.call("lpuLimit", "lpuLimit():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_lpuLimit(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("lpuLimit", "lpuLimit():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toI32());
   }
 
   mevRecipient(): Address {
@@ -1003,65 +1045,27 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  rateBottomLimit(): BigInt {
+  rateDeviationCheck(): boolean {
     let result = super.call(
-      "rateBottomLimit",
-      "rateBottomLimit():(uint256)",
+      "rateDeviationCheck",
+      "rateDeviationCheck():(bool)",
       []
     );
 
-    return result[0].toBigInt();
+    return result[0].toBoolean();
   }
 
-  try_rateBottomLimit(): ethereum.CallResult<BigInt> {
+  try_rateDeviationCheck(): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "rateBottomLimit",
-      "rateBottomLimit():(uint256)",
+      "rateDeviationCheck",
+      "rateDeviationCheck():(bool)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  rateTopLimit(): BigInt {
-    let result = super.call("rateTopLimit", "rateTopLimit():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_rateTopLimit(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("rateTopLimit", "rateTopLimit():(uint256)", []);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  reservedTreasuryCommission(): BigInt {
-    let result = super.call(
-      "reservedTreasuryCommission",
-      "reservedTreasuryCommission():(uint256)",
-      []
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_reservedTreasuryCommission(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "reservedTreasuryCommission",
-      "reservedTreasuryCommission():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
   right(): BigInt {
@@ -1806,11 +1810,11 @@ export class SetLocalPoolParametersCall__Inputs {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _lpuLimit(): BigInt {
+  get _localPoolUnstakeLimit(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 
-  get _lpuFrequencyLimit(): BigInt {
+  get _localPoolUnstakeFrequencyLimit(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1870,12 +1874,12 @@ export class SetRateParametersCall__Inputs {
     this._call = call;
   }
 
-  get _rateBottomLimit(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
+  get _maxRateDeviation(): i32 {
+    return this._call.inputValues[0].value.toI32();
   }
 
-  get _rateTopLimit(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
+  get _rateDeviationCheck(): boolean {
+    return this._call.inputValues[1].value.toBoolean();
   }
 }
 
