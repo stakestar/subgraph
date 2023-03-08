@@ -20,7 +20,7 @@
   },
   "scripts": {
     "bump": "bump --commit '[client] Release subgraph-client v' --tag 'subgraph-client-v'",
-    "build": "yarn build:graphclient && yarn build:package",
+    "build": "yarn codegen && yarn build:package",
     "build:graphclient": "cd ./src && graphclient build",
     "build:package": "rollup -c",
     "codegen": "graphql-codegen --config codegen.ts"
