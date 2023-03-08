@@ -8,7 +8,7 @@
     "url": "git+https://github.com/stakestar/subgraph.git"
   },
   "license": "UNLICENSED",
-  "source": "src/.graphclient/index.ts",
+  "source": "sdk/index.ts",
   "main": "dist/main.js",
   "module": "dist/module.mjs",
   "typings": "dist/types.d.ts",
