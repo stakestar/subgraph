@@ -18,7 +18,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: yarn
         working-directory: ./client
-      - run: yarn build
+      - run: yarn codegen
         working-directory: ./client
       - run: yarn publish
         working-directory: ./client

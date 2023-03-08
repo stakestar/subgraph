@@ -4,6 +4,7 @@
 # production
 .graphclient
 dist
+sdk
 
 # misc
 .DS_Store

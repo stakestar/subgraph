@@ -1,5 +1,9 @@
 sources:
-  - name: StakeStar
+  - name: StakeStarTestnet
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/arsoba/stakestar-test
+  - name: StakeStarMainnet
     handler:
       graphql:
         endpoint: https://api.thegraph.com/subgraphs/name/arsoba/stakestar-test

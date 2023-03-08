@@ -7,7 +7,7 @@ const packageJson = require('./package.json')
 
 const bundle = config => ({
   ...config,
-  input: 'src/.graphclient/index.ts'
+  input: 'sdk/index.ts'
 })
 
 export default [
