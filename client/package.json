@@ -26,7 +26,6 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "devDependencies": {
-    "@graphprotocol/client-cli": "^2.2.9",
     "@graphql-codegen/cli": "3.2.2",
     "@graphql-codegen/client-preset": "2.1.1",
     "@graphql-codegen/typescript": "^3.0.2",
