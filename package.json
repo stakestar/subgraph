@@ -16,7 +16,7 @@
   "dependencies": {
     "@graphprotocol/graph-cli": "0.33.0",
     "@graphprotocol/graph-ts": "0.27.0",
-    "@stakestar/contracts": "0.15.0",
+    "@stakestar/contracts": "0.16.0",
     "as-wasi": "^0.5.1",
     "typescript": "^4.8.2"
   },
