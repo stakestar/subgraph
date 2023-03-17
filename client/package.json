@@ -1,7 +1,7 @@
 {
   "name": "@stakestar/subgraph-client",
   "description": "GraphQL client for consuming StakeStar's The Graph GraphQL API",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "StakeStar",
   "repository": {
     "type": "git",
