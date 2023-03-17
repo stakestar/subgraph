@@ -27,7 +27,7 @@ export class Claim__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get amount(): BigInt {
+  get eth(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 }
@@ -49,7 +49,7 @@ export class CommitSnapshot__Params {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get total_ssETH(): BigInt {
+  get total_sstarETH(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
@@ -116,6 +116,28 @@ export class CreateValidatorParamsStruct extends ethereum.Tuple {
   }
 }
 
+export class Deposit extends ethereum.Event {
+  get params(): Deposit__Params {
+    return new Deposit__Params(this);
+  }
+}
+
+export class Deposit__Params {
+  _event: Deposit;
+
+  constructor(event: Deposit) {
+    this._event = event;
+  }
+
+  get who(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get eth(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class DestroyValidator extends ethereum.Event {
   get params(): DestroyValidator__Params {
     return new DestroyValidator__Params(this);
@@ -131,6 +153,24 @@ export class DestroyValidator__Params {
 
   get publicKey(): Bytes {
     return this._event.parameters[0].value.toBytes();
+  }
+}
+
+export class ExtractCommission extends ethereum.Event {
+  get params(): ExtractCommission__Params {
+    return new ExtractCommission__Params(this);
+  }
+}
+
+export class ExtractCommission__Params {
+  _event: ExtractCommission;
+
+  constructor(event: ExtractCommission) {
+    this._event = event;
+  }
+
+  get ssETH(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 }
 
@@ -152,16 +192,16 @@ export class Initialized__Params {
   }
 }
 
-export class LocalPoolUnstake extends ethereum.Event {
-  get params(): LocalPoolUnstake__Params {
-    return new LocalPoolUnstake__Params(this);
+export class LocalPoolWithdraw extends ethereum.Event {
+  get params(): LocalPoolWithdraw__Params {
+    return new LocalPoolWithdraw__Params(this);
   }
 }
 
-export class LocalPoolUnstake__Params {
-  _event: LocalPoolUnstake;
+export class LocalPoolWithdraw__Params {
+  _event: LocalPoolWithdraw;
 
-  constructor(event: LocalPoolUnstake) {
+  constructor(event: LocalPoolWithdraw) {
     this._event = event;
   }
 
@@ -169,12 +209,30 @@ export class LocalPoolUnstake__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get eth(): BigInt {
+  get starETH(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class OptimizeCapitalEfficiency extends ethereum.Event {
+  get params(): OptimizeCapitalEfficiency__Params {
+    return new OptimizeCapitalEfficiency__Params(this);
+  }
+}
+
+export class OptimizeCapitalEfficiency__Params {
+  _event: OptimizeCapitalEfficiency;
+
+  constructor(event: OptimizeCapitalEfficiency) {
+    this._event = event;
   }
 
   get ssETH(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get eth(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -191,11 +249,11 @@ export class RateDiff__Params {
     this._event = event;
   }
 
-  get rate(): BigInt {
+  get realRate(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get approxRate(): BigInt {
+  get calculatedRate(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 }
@@ -307,28 +365,32 @@ export class SetAddresses__Params {
     return this._event.parameters[3].value.toAddress();
   }
 
-  get stakeStarETH(): Address {
+  get sstarETH(): Address {
     return this._event.parameters[4].value.toAddress();
   }
 
-  get stakeStarRegistry(): Address {
+  get starETH(): Address {
     return this._event.parameters[5].value.toAddress();
   }
 
-  get stakeStarTreasury(): Address {
+  get stakeStarRegistry(): Address {
     return this._event.parameters[6].value.toAddress();
   }
 
-  get withdrawalAddress(): Address {
+  get stakeStarTreasury(): Address {
     return this._event.parameters[7].value.toAddress();
   }
 
-  get feeRecipient(): Address {
+  get withdrawalAddress(): Address {
     return this._event.parameters[8].value.toAddress();
   }
 
-  get mevRecipient(): Address {
+  get feeRecipient(): Address {
     return this._event.parameters[9].value.toAddress();
+  }
+
+  get mevRecipient(): Address {
+    return this._event.parameters[10].value.toAddress();
   }
 }
 
@@ -398,6 +460,24 @@ export class SetRateParameters__Params {
   }
 }
 
+export class SetValidatorWithdrawalThreshold extends ethereum.Event {
+  get params(): SetValidatorWithdrawalThreshold__Params {
+    return new SetValidatorWithdrawalThreshold__Params(this);
+  }
+}
+
+export class SetValidatorWithdrawalThreshold__Params {
+  _event: SetValidatorWithdrawalThreshold;
+
+  constructor(event: SetValidatorWithdrawalThreshold) {
+    this._event = event;
+  }
+
+  get threshold(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+}
+
 export class Stake extends ethereum.Event {
   get params(): Stake__Params {
     return new Stake__Params(this);
@@ -415,34 +495,12 @@ export class Stake__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get eth(): BigInt {
+  get starETH(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get ssETH(): BigInt {
+  get sstarETH(): BigInt {
     return this._event.parameters[2].value.toBigInt();
-  }
-}
-
-export class TreasuryPayback extends ethereum.Event {
-  get params(): TreasuryPayback__Params {
-    return new TreasuryPayback__Params(this);
-  }
-}
-
-export class TreasuryPayback__Params {
-  _event: TreasuryPayback;
-
-  constructor(event: TreasuryPayback) {
-    this._event = event;
-  }
-
-  get ssETH(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get ETH(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
   }
 }
 
@@ -463,11 +521,11 @@ export class Unstake__Params {
     return this._event.parameters[0].value.toAddress();
   }
 
-  get eth(): BigInt {
+  get sstarETH(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get ssETH(): BigInt {
+  get starETH(): BigInt {
     return this._event.parameters[2].value.toBigInt();
   }
 }
@@ -526,6 +584,28 @@ export class UpdateValidatorParamsStruct extends ethereum.Tuple {
   }
 }
 
+export class Withdraw extends ethereum.Event {
+  get params(): Withdraw__Params {
+    return new Withdraw__Params(this);
+  }
+}
+
+export class Withdraw__Params {
+  _event: Withdraw;
+
+  constructor(event: Withdraw) {
+    this._event = event;
+  }
+
+  get who(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get starETH(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+}
+
 export class StakeStar__snapshotsResult {
   value0: BigInt;
   value1: BigInt;
@@ -549,7 +629,7 @@ export class StakeStar__snapshotsResult {
     return this.value0;
   }
 
-  getTotal_ssETH(): BigInt {
+  getTotal_sstarETH(): BigInt {
     return this.value1;
   }
 
@@ -586,18 +666,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  ETH_to_ssETH(eth: BigInt): BigInt {
-    let result = super.call("ETH_to_ssETH", "ETH_to_ssETH(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(eth)
-    ]);
+  ETH_to_sstarETH(eth: BigInt): BigInt {
+    let result = super.call(
+      "ETH_to_sstarETH",
+      "ETH_to_sstarETH(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(eth)]
+    );
 
     return result[0].toBigInt();
   }
 
-  try_ETH_to_ssETH(eth: BigInt): ethereum.CallResult<BigInt> {
+  try_ETH_to_sstarETH(eth: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "ETH_to_ssETH",
-      "ETH_to_ssETH(uint256):(uint256)",
+      "ETH_to_sstarETH",
+      "ETH_to_sstarETH(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(eth)]
     );
     if (result.reverted) {
@@ -744,20 +826,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  localPoolUnstakeFrequencyLimit(): BigInt {
+  localPoolWithdrawalFrequencyLimit(): BigInt {
     let result = super.call(
-      "localPoolUnstakeFrequencyLimit",
-      "localPoolUnstakeFrequencyLimit():(uint256)",
+      "localPoolWithdrawalFrequencyLimit",
+      "localPoolWithdrawalFrequencyLimit():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_localPoolUnstakeFrequencyLimit(): ethereum.CallResult<BigInt> {
+  try_localPoolWithdrawalFrequencyLimit(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "localPoolUnstakeFrequencyLimit",
-      "localPoolUnstakeFrequencyLimit():(uint256)",
+      "localPoolWithdrawalFrequencyLimit",
+      "localPoolWithdrawalFrequencyLimit():(uint256)",
       []
     );
     if (result.reverted) {
@@ -767,20 +849,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  localPoolUnstakeHistory(param0: Address): BigInt {
+  localPoolWithdrawalHistory(param0: Address): BigInt {
     let result = super.call(
-      "localPoolUnstakeHistory",
-      "localPoolUnstakeHistory(address):(uint256)",
+      "localPoolWithdrawalHistory",
+      "localPoolWithdrawalHistory(address):(uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
 
     return result[0].toBigInt();
   }
 
-  try_localPoolUnstakeHistory(param0: Address): ethereum.CallResult<BigInt> {
+  try_localPoolWithdrawalHistory(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "localPoolUnstakeHistory",
-      "localPoolUnstakeHistory(address):(uint256)",
+      "localPoolWithdrawalHistory",
+      "localPoolWithdrawalHistory(address):(uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -790,20 +872,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  localPoolUnstakeLimit(): BigInt {
+  localPoolWithdrawalLimit(): BigInt {
     let result = super.call(
-      "localPoolUnstakeLimit",
-      "localPoolUnstakeLimit():(uint256)",
+      "localPoolWithdrawalLimit",
+      "localPoolWithdrawalLimit():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_localPoolUnstakeLimit(): ethereum.CallResult<BigInt> {
+  try_localPoolWithdrawalLimit(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "localPoolUnstakeLimit",
-      "localPoolUnstakeLimit():(uint256)",
+      "localPoolWithdrawalLimit",
+      "localPoolWithdrawalLimit():(uint256)",
       []
     );
     if (result.reverted) {
@@ -904,20 +986,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  pendingUnstake(param0: Address): BigInt {
+  pendingWithdrawal(param0: Address): BigInt {
     let result = super.call(
-      "pendingUnstake",
-      "pendingUnstake(address):(uint256)",
+      "pendingWithdrawal",
+      "pendingWithdrawal(address):(uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
 
     return result[0].toBigInt();
   }
 
-  try_pendingUnstake(param0: Address): ethereum.CallResult<BigInt> {
+  try_pendingWithdrawal(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "pendingUnstake",
-      "pendingUnstake(address):(uint256)",
+      "pendingWithdrawal",
+      "pendingWithdrawal(address):(uint256)",
       [ethereum.Value.fromAddress(param0)]
     );
     if (result.reverted) {
@@ -927,20 +1009,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  pendingUnstakeQueue(param0: BigInt): Address {
+  pendingWithdrawalQueue(param0: BigInt): Address {
     let result = super.call(
-      "pendingUnstakeQueue",
-      "pendingUnstakeQueue(uint32):(address)",
+      "pendingWithdrawalQueue",
+      "pendingWithdrawalQueue(uint32):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
     return result[0].toAddress();
   }
 
-  try_pendingUnstakeQueue(param0: BigInt): ethereum.CallResult<Address> {
+  try_pendingWithdrawalQueue(param0: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "pendingUnstakeQueue",
-      "pendingUnstakeQueue(uint32):(address)",
+      "pendingWithdrawalQueue",
+      "pendingWithdrawalQueue(uint32):(address)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -950,20 +1032,20 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  pendingUnstakeSum(): BigInt {
+  pendingWithdrawalSum(): BigInt {
     let result = super.call(
-      "pendingUnstakeSum",
-      "pendingUnstakeSum():(uint256)",
+      "pendingWithdrawalSum",
+      "pendingWithdrawalSum():(uint256)",
       []
     );
 
     return result[0].toBigInt();
   }
 
-  try_pendingUnstakeSum(): ethereum.CallResult<BigInt> {
+  try_pendingWithdrawalSum(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "pendingUnstakeSum",
-      "pendingUnstakeSum():(uint256)",
+      "pendingWithdrawalSum",
+      "pendingWithdrawalSum():(uint256)",
       []
     );
     if (result.reverted) {
@@ -1045,6 +1127,29 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
+  rateCorrectionFactor(): BigInt {
+    let result = super.call(
+      "rateCorrectionFactor",
+      "rateCorrectionFactor():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_rateCorrectionFactor(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "rateCorrectionFactor",
+      "rateCorrectionFactor():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   rateDeviationCheck(): boolean {
     let result = super.call(
       "rateDeviationCheck",
@@ -1066,6 +1171,21 @@ export class StakeStar extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBoolean());
+  }
+
+  rateEC(): BigInt {
+    let result = super.call("rateEC", "rateEC():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_rateEC(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("rateEC", "rateEC():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   right(): BigInt {
@@ -1118,18 +1238,35 @@ export class StakeStar extends ethereum.SmartContract {
     );
   }
 
-  ssETH_to_ETH(ssETH: BigInt): BigInt {
-    let result = super.call("ssETH_to_ETH", "ssETH_to_ETH(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(ssETH)
-    ]);
+  sstarETH(): Address {
+    let result = super.call("sstarETH", "sstarETH():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_sstarETH(): ethereum.CallResult<Address> {
+    let result = super.tryCall("sstarETH", "sstarETH():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  sstarETH_to_ETH(ssETH: BigInt): BigInt {
+    let result = super.call(
+      "sstarETH_to_ETH",
+      "sstarETH_to_ETH(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(ssETH)]
+    );
 
     return result[0].toBigInt();
   }
 
-  try_ssETH_to_ETH(ssETH: BigInt): ethereum.CallResult<BigInt> {
+  try_sstarETH_to_ETH(ssETH: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "ssETH_to_ETH",
-      "ssETH_to_ETH(uint256):(uint256)",
+      "sstarETH_to_ETH",
+      "sstarETH_to_ETH(uint256):(uint256)",
       [ethereum.Value.fromUnsignedBigInt(ssETH)]
     );
     if (result.reverted) {
@@ -1169,19 +1306,23 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  stakeStarETH(): Address {
-    let result = super.call("stakeStarETH", "stakeStarETH():(address)", []);
+  stake(starETHAmount: BigInt): BigInt {
+    let result = super.call("stake", "stake(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(starETHAmount)
+    ]);
 
-    return result[0].toAddress();
+    return result[0].toBigInt();
   }
 
-  try_stakeStarETH(): ethereum.CallResult<Address> {
-    let result = super.tryCall("stakeStarETH", "stakeStarETH():(address)", []);
+  try_stake(starETHAmount: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("stake", "stake(uint256):(uint256)", [
+      ethereum.Value.fromUnsignedBigInt(starETHAmount)
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   stakeStarRegistry(): Address {
@@ -1230,6 +1371,21 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
+  starETH(): Address {
+    let result = super.call("starETH", "starETH():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_starETH(): ethereum.CallResult<Address> {
+    let result = super.tryCall("starETH", "starETH():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
   supportsInterface(interfaceId: Bytes): boolean {
     let result = super.call(
       "supportsInterface",
@@ -1253,17 +1409,17 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  unstake(ssETH: BigInt): BigInt {
+  unstake(sstarETHAmount: BigInt): BigInt {
     let result = super.call("unstake", "unstake(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(ssETH)
+      ethereum.Value.fromUnsignedBigInt(sstarETHAmount)
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_unstake(ssETH: BigInt): ethereum.CallResult<BigInt> {
+  try_unstake(sstarETHAmount: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("unstake", "unstake(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(ssETH)
+      ethereum.Value.fromUnsignedBigInt(sstarETHAmount)
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1339,6 +1495,29 @@ export class StakeStar extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  validatorWithdrawalThreshold(): BigInt {
+    let result = super.call(
+      "validatorWithdrawalThreshold",
+      "validatorWithdrawalThreshold():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_validatorWithdrawalThreshold(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "validatorWithdrawalThreshold",
+      "validatorWithdrawalThreshold():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   withdrawalAddress(): Address {
@@ -1483,6 +1662,58 @@ export class CreateValidatorCallValidatorParamsStruct extends ethereum.Tuple {
   }
 }
 
+export class DepositCall extends ethereum.Call {
+  get inputs(): DepositCall__Inputs {
+    return new DepositCall__Inputs(this);
+  }
+
+  get outputs(): DepositCall__Outputs {
+    return new DepositCall__Outputs(this);
+  }
+}
+
+export class DepositCall__Inputs {
+  _call: DepositCall;
+
+  constructor(call: DepositCall) {
+    this._call = call;
+  }
+}
+
+export class DepositCall__Outputs {
+  _call: DepositCall;
+
+  constructor(call: DepositCall) {
+    this._call = call;
+  }
+}
+
+export class DepositAndStakeCall extends ethereum.Call {
+  get inputs(): DepositAndStakeCall__Inputs {
+    return new DepositAndStakeCall__Inputs(this);
+  }
+
+  get outputs(): DepositAndStakeCall__Outputs {
+    return new DepositAndStakeCall__Outputs(this);
+  }
+}
+
+export class DepositAndStakeCall__Inputs {
+  _call: DepositAndStakeCall;
+
+  constructor(call: DepositAndStakeCall) {
+    this._call = call;
+  }
+}
+
+export class DepositAndStakeCall__Outputs {
+  _call: DepositAndStakeCall;
+
+  constructor(call: DepositAndStakeCall) {
+    this._call = call;
+  }
+}
+
 export class DestroyValidatorCall extends ethereum.Call {
   get inputs(): DestroyValidatorCall__Inputs {
     return new DestroyValidatorCall__Inputs(this);
@@ -1509,6 +1740,32 @@ export class DestroyValidatorCall__Outputs {
   _call: DestroyValidatorCall;
 
   constructor(call: DestroyValidatorCall) {
+    this._call = call;
+  }
+}
+
+export class ExtractCommissionCall extends ethereum.Call {
+  get inputs(): ExtractCommissionCall__Inputs {
+    return new ExtractCommissionCall__Inputs(this);
+  }
+
+  get outputs(): ExtractCommissionCall__Outputs {
+    return new ExtractCommissionCall__Outputs(this);
+  }
+}
+
+export class ExtractCommissionCall__Inputs {
+  _call: ExtractCommissionCall;
+
+  constructor(call: ExtractCommissionCall) {
+    this._call = call;
+  }
+}
+
+export class ExtractCommissionCall__Outputs {
+  _call: ExtractCommissionCall;
+
+  constructor(call: ExtractCommissionCall) {
     this._call = call;
   }
 }
@@ -1599,32 +1856,32 @@ export class InitializeCall__Outputs {
   }
 }
 
-export class LocalPoolUnstakeCall extends ethereum.Call {
-  get inputs(): LocalPoolUnstakeCall__Inputs {
-    return new LocalPoolUnstakeCall__Inputs(this);
+export class LocalPoolWithdrawCall extends ethereum.Call {
+  get inputs(): LocalPoolWithdrawCall__Inputs {
+    return new LocalPoolWithdrawCall__Inputs(this);
   }
 
-  get outputs(): LocalPoolUnstakeCall__Outputs {
-    return new LocalPoolUnstakeCall__Outputs(this);
+  get outputs(): LocalPoolWithdrawCall__Outputs {
+    return new LocalPoolWithdrawCall__Outputs(this);
   }
 }
 
-export class LocalPoolUnstakeCall__Inputs {
-  _call: LocalPoolUnstakeCall;
+export class LocalPoolWithdrawCall__Inputs {
+  _call: LocalPoolWithdrawCall;
 
-  constructor(call: LocalPoolUnstakeCall) {
+  constructor(call: LocalPoolWithdrawCall) {
     this._call = call;
   }
 
-  get ssETH(): BigInt {
+  get starETHAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
 
-export class LocalPoolUnstakeCall__Outputs {
-  _call: LocalPoolUnstakeCall;
+export class LocalPoolWithdrawCall__Outputs {
+  _call: LocalPoolWithdrawCall;
 
-  constructor(call: LocalPoolUnstakeCall) {
+  constructor(call: LocalPoolWithdrawCall) {
     this._call = call;
   }
 }
@@ -1756,28 +2013,32 @@ export class SetAddressesCall__Inputs {
     return this._call.inputValues[3].value.toAddress();
   }
 
-  get stakeStarETHAddress(): Address {
+  get sstarETHAddress(): Address {
     return this._call.inputValues[4].value.toAddress();
   }
 
-  get stakeStarRegistryAddress(): Address {
+  get starETHAddress(): Address {
     return this._call.inputValues[5].value.toAddress();
   }
 
-  get stakeStarTreasuryAddress(): Address {
+  get stakeStarRegistryAddress(): Address {
     return this._call.inputValues[6].value.toAddress();
   }
 
-  get withdrawalCredentialsAddress(): Address {
+  get stakeStarTreasuryAddress(): Address {
     return this._call.inputValues[7].value.toAddress();
   }
 
-  get feeRecipientAddress(): Address {
+  get withdrawalCredentialsAddress(): Address {
     return this._call.inputValues[8].value.toAddress();
   }
 
-  get mevRecipientAddress(): Address {
+  get feeRecipientAddress(): Address {
     return this._call.inputValues[9].value.toAddress();
+  }
+
+  get mevRecipientAddress(): Address {
+    return this._call.inputValues[10].value.toAddress();
   }
 }
 
@@ -1810,11 +2071,11 @@ export class SetLocalPoolParametersCall__Inputs {
     return this._call.inputValues[0].value.toBigInt();
   }
 
-  get _localPoolUnstakeLimit(): BigInt {
+  get _localPoolWithdrawalLimit(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
 
-  get _localPoolUnstakeFrequencyLimit(): BigInt {
+  get _localPoolWithdrawalFrequencyLimit(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -1891,6 +2152,36 @@ export class SetRateParametersCall__Outputs {
   }
 }
 
+export class SetValidatorWithdrawalThresholdCall extends ethereum.Call {
+  get inputs(): SetValidatorWithdrawalThresholdCall__Inputs {
+    return new SetValidatorWithdrawalThresholdCall__Inputs(this);
+  }
+
+  get outputs(): SetValidatorWithdrawalThresholdCall__Outputs {
+    return new SetValidatorWithdrawalThresholdCall__Outputs(this);
+  }
+}
+
+export class SetValidatorWithdrawalThresholdCall__Inputs {
+  _call: SetValidatorWithdrawalThresholdCall;
+
+  constructor(call: SetValidatorWithdrawalThresholdCall) {
+    this._call = call;
+  }
+
+  get threshold(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetValidatorWithdrawalThresholdCall__Outputs {
+  _call: SetValidatorWithdrawalThresholdCall;
+
+  constructor(call: SetValidatorWithdrawalThresholdCall) {
+    this._call = call;
+  }
+}
+
 export class StakeCall extends ethereum.Call {
   get inputs(): StakeCall__Inputs {
     return new StakeCall__Inputs(this);
@@ -1907,6 +2198,10 @@ export class StakeCall__Inputs {
   constructor(call: StakeCall) {
     this._call = call;
   }
+
+  get starETHAmount(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
 }
 
 export class StakeCall__Outputs {
@@ -1914,6 +2209,10 @@ export class StakeCall__Outputs {
 
   constructor(call: StakeCall) {
     this._call = call;
+  }
+
+  get sstarETHAmount(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
   }
 }
 
@@ -1934,7 +2233,7 @@ export class UnstakeCall__Inputs {
     this._call = call;
   }
 
-  get ssETH(): BigInt {
+  get sstarETHAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -1946,8 +2245,68 @@ export class UnstakeCall__Outputs {
     this._call = call;
   }
 
-  get eth(): BigInt {
+  get starETHAmount(): BigInt {
     return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class UnstakeAndLocalPoolWithdrawCall extends ethereum.Call {
+  get inputs(): UnstakeAndLocalPoolWithdrawCall__Inputs {
+    return new UnstakeAndLocalPoolWithdrawCall__Inputs(this);
+  }
+
+  get outputs(): UnstakeAndLocalPoolWithdrawCall__Outputs {
+    return new UnstakeAndLocalPoolWithdrawCall__Outputs(this);
+  }
+}
+
+export class UnstakeAndLocalPoolWithdrawCall__Inputs {
+  _call: UnstakeAndLocalPoolWithdrawCall;
+
+  constructor(call: UnstakeAndLocalPoolWithdrawCall) {
+    this._call = call;
+  }
+
+  get sstarETHAmount(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class UnstakeAndLocalPoolWithdrawCall__Outputs {
+  _call: UnstakeAndLocalPoolWithdrawCall;
+
+  constructor(call: UnstakeAndLocalPoolWithdrawCall) {
+    this._call = call;
+  }
+}
+
+export class UnstakeAndWithdrawCall extends ethereum.Call {
+  get inputs(): UnstakeAndWithdrawCall__Inputs {
+    return new UnstakeAndWithdrawCall__Inputs(this);
+  }
+
+  get outputs(): UnstakeAndWithdrawCall__Outputs {
+    return new UnstakeAndWithdrawCall__Outputs(this);
+  }
+}
+
+export class UnstakeAndWithdrawCall__Inputs {
+  _call: UnstakeAndWithdrawCall;
+
+  constructor(call: UnstakeAndWithdrawCall) {
+    this._call = call;
+  }
+
+  get sstarETHAmount(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class UnstakeAndWithdrawCall__Outputs {
+  _call: UnstakeAndWithdrawCall;
+
+  constructor(call: UnstakeAndWithdrawCall) {
+    this._call = call;
   }
 }
 
@@ -2014,5 +2373,35 @@ export class UpdateValidatorCallValidatorParamsStruct extends ethereum.Tuple {
 
   get sharesEncrypted(): Array<Bytes> {
     return this[6].toBytesArray();
+  }
+}
+
+export class WithdrawCall extends ethereum.Call {
+  get inputs(): WithdrawCall__Inputs {
+    return new WithdrawCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawCall__Outputs {
+    return new WithdrawCall__Outputs(this);
+  }
+}
+
+export class WithdrawCall__Inputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
+    this._call = call;
+  }
+
+  get starETHAmount(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class WithdrawCall__Outputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
+    this._call = call;
   }
 }

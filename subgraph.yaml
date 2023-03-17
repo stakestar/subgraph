@@ -6,7 +6,7 @@ dataSources:
     name: StakeStarETH
     network: goerli
     source:
-      address: "0x91b0f813D36Cd9C9f0E9BBCbC11cF3a04c13ad73"
+      address: "0x53DC4158307ee56FD457277c3b8f52C5f9C8aC23"
       abi: StakeStarETH
       startBlock: 8588980
     mapping:
@@ -20,7 +20,7 @@ dataSources:
         - Transfer
       abis:
         - name: StakeStarETH
-          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/tokens/SStarETH.sol/SStarETH.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -29,7 +29,7 @@ dataSources:
     name: StakeStarRegistry
     network: goerli
     source:
-      address: "0xDF2c9fd8aC9e5958c39cE35F2c6e11651493F37F"
+      address: "0x8d95D336710708E499dadb5D6C798432B31E6FA7"
       abi: StakeStarRegistry
       startBlock: 8588980
     mapping:
@@ -52,7 +52,7 @@ dataSources:
     name: StakeStar
     network: goerli
     source:
-      address: "0x5D478501b183BdB8cebf543Da1fc88378aa3b0Cf"
+      address: "0x141756fAA3AF03e65B60A67aeb4D35d01BF18908"
       abi: StakeStar
       startBlock: 8588980
     mapping:
@@ -65,7 +65,7 @@ dataSources:
         - name: StakeStar
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStar.sol/StakeStar.json
         - name: StakeStarETH
-          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/tokens/SStarETH.sol/SStarETH.json
       eventHandlers:
         - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
           handler: handleCreateValidator

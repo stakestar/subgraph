@@ -6,7 +6,7 @@ dataSources:
     name: StakeStarETH
     network: {{ network }}
     source:
-      address: "{{ stakeStarETHAddress }}"
+      address: "{{ sstarETHAddress }}"
       abi: StakeStarETH
       startBlock: {{ startBlock }}
     mapping:
@@ -20,7 +20,7 @@ dataSources:
         - Transfer
       abis:
         - name: StakeStarETH
-          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/tokens/SStarETH.sol/SStarETH.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -65,7 +65,7 @@ dataSources:
         - name: StakeStar
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStar.sol/StakeStar.json
         - name: StakeStarETH
-          file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarETH.sol/StakeStarETH.json
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/tokens/SStarETH.sol/SStarETH.json
       eventHandlers:
         - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
           handler: handleCreateValidator

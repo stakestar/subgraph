@@ -4,11 +4,11 @@ import {
   clearStore,
   createMockedFunction
 } from "matchstick-as/assembly/index"
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts"
+import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts"
 import { handleCommitSnapshot, handleStake, handleUnstake } from "../src/stake-star"
 import { createCommitSnapshotEvent, createStakeEvent, createUnstakeEvent } from "./stake-star-utils"
 import { weightedAverage } from "../src/utils"
-import { stakeStarAddress, stakeStarETHAddress } from '../src/generated-consts'
+import { stakeStarAddress, sstarETHAddress } from '../src/generated-consts'
 
 const staker = Address.fromString("0x1234568e888922556c47d0365AA31BD32f566092")
 
@@ -19,7 +19,7 @@ test("Stake and unstake events emited", () => {
   const amountSsEth1 = BigInt.fromI32(123)
   const rate1 = amountEth1.div(amountSsEth1)
 
-  createMockedFunction(Address.fromString(stakeStarETHAddress), 'balanceOf', 'balanceOf(address):(uint256)')
+  createMockedFunction(Address.fromString(sstarETHAddress), 'balanceOf', 'balanceOf(address):(uint256)')
     .withArgs([ethereum.Value.fromAddress(staker)])
     .returns([ethereum.Value.fromI32(amountSsEth1.toI32())])
 
@@ -54,7 +54,7 @@ test("Stake and unstake events emited", () => {
 
   const rate2 = amountEthSum1.div(amountSsEthSum2)
 
-  createMockedFunction(Address.fromString(stakeStarETHAddress), 'balanceOf', 'balanceOf(address):(uint256)')
+  createMockedFunction(Address.fromString(sstarETHAddress), 'balanceOf', 'balanceOf(address):(uint256)')
     .withArgs([ethereum.Value.fromAddress(staker)])
     .returns([ethereum.Value.fromI32(amountEthSum1.toI32())])
 

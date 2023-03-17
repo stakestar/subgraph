@@ -12,12 +12,12 @@ interface Options {
 const START_BLOCK = 8588980
 
 export const prepareConfig = (options: Options) => {
-  const { stakeStar, stakeStarETH, stakeStarRegistry, stakeStarRewards } = ADDRESSES[options.network]
+  const { stakeStar, sstarETH, stakeStarRegistry, stakeStarRewards } = ADDRESSES[options.network]
   const templateString = fs.readFileSync(options.template);
 
   const rendered = Mustache.render(templateString.toString(), {
     network: options.network,
-    stakeStarETHAddress: stakeStarETH,
+    sstarETHAddress: sstarETH,
     stakeStarRegistryAddress: stakeStarRegistry,
     stakeStarRewardsAddress: stakeStarRewards,
     stakeStarAddress: stakeStar,
@@ -28,12 +28,12 @@ export const prepareConfig = (options: Options) => {
 }
 
 export const copyAddresses = (options: Options) => {
-  const { stakeStar, stakeStarETH } = ADDRESSES[options.network]
+  const { stakeStar, sstarETH } = ADDRESSES[options.network]
 
   const templateString = fs.readFileSync('src/generated-consts.templete');
 
   const rendered = Mustache.render(templateString.toString(), {
-    stakeStarETHAddress: stakeStarETH,
+    sstarETHAddress: sstarETH,
     stakeStarAddress: stakeStar,
   });
 

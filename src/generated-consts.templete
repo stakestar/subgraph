@@ -1,2 +1,2 @@
 export const stakeStarAddress = "{{ stakeStarAddress }}"
-export const stakeStarETHAddress = "{{ stakeStarETHAddress }}"
+export const sstarETHAddress = "{{ sstarETHAddress }}"

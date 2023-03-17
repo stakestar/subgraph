@@ -15,7 +15,7 @@ import {
   Validator
 } from "../generated/schema"
 import { DEFAULT_ID } from './consts'
-import { stakeStarAddress, stakeStarETHAddress } from './generated-consts'
+import { stakeStarAddress, sstarETHAddress } from './generated-consts'
 import { StakeStarETH } from '../generated/StakeStarETH/StakeStarETH'
 import { weightedAverage } from './utils'
 
@@ -87,8 +87,8 @@ function saveStakeStarTvl(event: StakeEvent): void {
     entity.totalETH = totalTvl
   }
 
-  entity.totalETH = entity.totalETH.plus(event.params.eth)
-  stakeStarTotalTvl.totalETH = stakeStarTotalTvl.totalETH.plus(event.params.eth)
+  entity.totalETH = entity.totalETH.plus(event.params.starETH)
+  stakeStarTotalTvl.totalETH = stakeStarTotalTvl.totalETH.plus(event.params.starETH)
 
   entity.save()
   stakeStarTotalTvl.save()
@@ -98,8 +98,8 @@ function saveStakerAtMomentRate(event: StakeEvent): void {
   const stakerAddress = event.params.who
   const timestamp = event.block.timestamp.toI32()
 
-  const stakeStarETH = StakeStarETH.bind(Address.fromString(stakeStarETHAddress))
-  const balance = stakeStarETH.balanceOf(stakerAddress)
+  const ssETH = StakeStarETH.bind(Address.fromString(sstarETHAddress))
+  const balance = ssETH.balanceOf(stakerAddress)
 
   const stakeStar = StakeStar.bind(Address.fromString(stakeStarAddress))
   const rate = stakeStar.rate()
@@ -111,7 +111,7 @@ function saveStakerAtMomentRate(event: StakeEvent): void {
     return
   }
 
-  if (stakerAtMomentRate === null || balance.minus(event.params.ssETH).equals(new BigInt(0))) {
+  if (stakerAtMomentRate === null || balance.minus(event.params.sstarETH).equals(new BigInt(0))) {
     stakerAtMomentRate = new StakerAtMomentRate(stakerAddress.toHexString())
     stakerAtMomentRate.atMomentRate = rate
     stakerAtMomentRate.date = timestamp
@@ -120,7 +120,7 @@ function saveStakerAtMomentRate(event: StakeEvent): void {
     return
   }
 
-  stakerAtMomentRate.atMomentRate = weightedAverage([stakerAtMomentRate.atMomentRate, rate], [balance.minus(event.params.ssETH), event.params.ssETH])
+  stakerAtMomentRate.atMomentRate = weightedAverage([stakerAtMomentRate.atMomentRate, rate], [balance.minus(event.params.sstarETH), event.params.sstarETH])
   stakerAtMomentRate.date = timestamp
   stakerAtMomentRate.save()
 }
@@ -140,8 +140,8 @@ export function handleUnstake(
     return
   }
 
-  entity.totalETH = entity.totalETH.minus(event.params.eth)
-  stakeStarTotalTvl.totalETH = stakeStarTotalTvl.totalETH.minus(event.params.eth)
+  entity.totalETH = entity.totalETH.minus(event.params.starETH)
+  stakeStarTotalTvl.totalETH = stakeStarTotalTvl.totalETH.minus(event.params.starETH)
 
   entity.save()
   stakeStarTotalTvl.save()
