@@ -8,10 +8,15 @@ import {
 import { BigInt } from "@graphprotocol/graph-ts"
 import { weightedAverage } from "./utils"
 import { log } from "matchstick-as/assembly/log"
+import { ZERO_ADDR } from "./consts"
 
 export function handleTransfer(event: Transfer): void {
   const timestamp = event.block.timestamp.toI32()
   const fromAddress = event.params.from
+
+  if (fromAddress.toHexString() === ZERO_ADDR) {
+    return
+  }
 
   const stakerAtMomentRateFrom = StakerAtMomentRate.load(fromAddress.toHexString())
 
@@ -39,6 +44,7 @@ export function handleTransfer(event: Transfer): void {
     [stakerAtMomentRateTo.atMomentRate, stakerAtMomentRateFrom.atMomentRate],
     [balance.minus(amount), amount]
     )
+
   stakerAtMomentRateTo.date = timestamp
   stakerAtMomentRateTo.save()
 }
