@@ -14,7 +14,10 @@ export function handleTransfer(event: Transfer): void {
   const timestamp = event.block.timestamp.toI32()
   const fromAddress = event.params.from
 
-  if (fromAddress.toHexString() === ZERO_ADDR) {
+  const toAddress = event.params.to
+  const amount = event.params.value
+
+  if (fromAddress.toHexString() == ZERO_ADDR || toAddress.toHexString() == ZERO_ADDR) {
     return
   }
 
@@ -25,8 +28,6 @@ export function handleTransfer(event: Transfer): void {
     return
   }
 
-  const toAddress = event.params.to
-  const amount = event.params.value
   const stakeStarETH = StakeStarETH.bind(event.address)
   const balance = stakeStarETH.balanceOf(toAddress)
 
