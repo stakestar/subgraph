@@ -44,5 +44,5 @@ type Validator @entity {
   # Validator public key
   id: ID!
 
-  crearedAt: BigInt!
+  createdAt: BigInt!
 }
