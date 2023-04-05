@@ -1,5 +1,0 @@
-query getValidatorIds($first: Int = 50) {
-  validators(first: $first) {
-    id
-  }
-}
