@@ -43,9 +43,9 @@ dataSources:
         - name: StakeStarRegistry
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarRegistry.sol/StakeStarRegistry.json
       eventHandlers:
-        - event: AddOperatorToAllowList(uint32)
+        - event: AddOperatorToAllowList(uint64)
           handler: handleAddOperatorToAllowList
-        - event: RemoveOperatorFromAllowList(uint32)
+        - event: RemoveOperatorFromAllowList(uint64)
           handler: handleRemoveOperatorFromAllowList
       file: ./src/stake-star-registry.ts
   - kind: ethereum
@@ -67,7 +67,7 @@ dataSources:
         - name: StakeStarETH
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/tokens/SStarETH.sol/SStarETH.json
       eventHandlers:
-        - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
+        - event: CreateValidator((bytes,bytes,bytes,bytes32,uint64[],bytes),uint256)
           handler: handleCreateValidator
         - event: CommitSnapshot(uint256,uint256,uint256,uint256)
           handler: handleCommitSnapshot

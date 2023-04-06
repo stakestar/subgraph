@@ -107,12 +107,8 @@ export class CreateValidatorParamsStruct extends ethereum.Tuple {
     return this[4].toBigIntArray();
   }
 
-  get sharesPublicKeys(): Array<Bytes> {
-    return this[5].toBytesArray();
-  }
-
-  get sharesEncrypted(): Array<Bytes> {
-    return this[6].toBytesArray();
+  get sharesEncrypted(): Bytes {
+    return this[5].toBytes();
   }
 }
 
@@ -255,6 +251,24 @@ export class RateDiff__Params {
 
   get calculatedRate(): BigInt {
     return this._event.parameters[1].value.toBigInt();
+  }
+}
+
+export class RateEC extends ethereum.Event {
+  get params(): RateEC__Params {
+    return new RateEC__Params(this);
+  }
+}
+
+export class RateEC__Params {
+  _event: RateEC;
+
+  constructor(event: RateEC) {
+    this._event = event;
+  }
+
+  get rateEC(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 }
 
@@ -575,12 +589,8 @@ export class UpdateValidatorParamsStruct extends ethereum.Tuple {
     return this[4].toBigIntArray();
   }
 
-  get sharesPublicKeys(): Array<Bytes> {
-    return this[5].toBytesArray();
-  }
-
-  get sharesEncrypted(): Array<Bytes> {
-    return this[6].toBytesArray();
+  get sharesEncrypted(): Bytes {
+    return this[5].toBytes();
   }
 }
 
@@ -1619,8 +1629,14 @@ export class CreateValidatorCall__Inputs {
     );
   }
 
-  get ssvDepositAmount(): BigInt {
+  get amount(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get cluster(): CreateValidatorCallClusterStruct {
+    return changetype<CreateValidatorCallClusterStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
   }
 }
 
@@ -1653,12 +1669,30 @@ export class CreateValidatorCallValidatorParamsStruct extends ethereum.Tuple {
     return this[4].toBigIntArray();
   }
 
-  get sharesPublicKeys(): Array<Bytes> {
-    return this[5].toBytesArray();
+  get sharesEncrypted(): Bytes {
+    return this[5].toBytes();
+  }
+}
+
+export class CreateValidatorCallClusterStruct extends ethereum.Tuple {
+  get validatorCount(): BigInt {
+    return this[0].toBigInt();
   }
 
-  get sharesEncrypted(): Array<Bytes> {
-    return this[6].toBytesArray();
+  get networkFeeIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get index(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get balance(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get active(): boolean {
+    return this[4].toBoolean();
   }
 }
 
@@ -1734,6 +1768,16 @@ export class DestroyValidatorCall__Inputs {
   get publicKey(): Bytes {
     return this._call.inputValues[0].value.toBytes();
   }
+
+  get operatorIds(): Array<BigInt> {
+    return this._call.inputValues[1].value.toBigIntArray();
+  }
+
+  get cluster(): DestroyValidatorCallClusterStruct {
+    return changetype<DestroyValidatorCallClusterStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
 }
 
 export class DestroyValidatorCall__Outputs {
@@ -1741,6 +1785,28 @@ export class DestroyValidatorCall__Outputs {
 
   constructor(call: DestroyValidatorCall) {
     this._call = call;
+  }
+}
+
+export class DestroyValidatorCallClusterStruct extends ethereum.Tuple {
+  get validatorCount(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get networkFeeIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get index(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get balance(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get active(): boolean {
+    return this[4].toBoolean();
   }
 }
 
@@ -1886,29 +1952,65 @@ export class LocalPoolWithdrawCall__Outputs {
   }
 }
 
-export class ReactivateAccountCall extends ethereum.Call {
-  get inputs(): ReactivateAccountCall__Inputs {
-    return new ReactivateAccountCall__Inputs(this);
+export class ReactivateCall extends ethereum.Call {
+  get inputs(): ReactivateCall__Inputs {
+    return new ReactivateCall__Inputs(this);
   }
 
-  get outputs(): ReactivateAccountCall__Outputs {
-    return new ReactivateAccountCall__Outputs(this);
+  get outputs(): ReactivateCall__Outputs {
+    return new ReactivateCall__Outputs(this);
   }
 }
 
-export class ReactivateAccountCall__Inputs {
-  _call: ReactivateAccountCall;
+export class ReactivateCall__Inputs {
+  _call: ReactivateCall;
 
-  constructor(call: ReactivateAccountCall) {
+  constructor(call: ReactivateCall) {
+    this._call = call;
+  }
+
+  get operatorIds(): Array<BigInt> {
+    return this._call.inputValues[0].value.toBigIntArray();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get cluster(): ReactivateCallClusterStruct {
+    return changetype<ReactivateCallClusterStruct>(
+      this._call.inputValues[2].value.toTuple()
+    );
+  }
+}
+
+export class ReactivateCall__Outputs {
+  _call: ReactivateCall;
+
+  constructor(call: ReactivateCall) {
     this._call = call;
   }
 }
 
-export class ReactivateAccountCall__Outputs {
-  _call: ReactivateAccountCall;
+export class ReactivateCallClusterStruct extends ethereum.Tuple {
+  get validatorCount(): BigInt {
+    return this[0].toBigInt();
+  }
 
-  constructor(call: ReactivateAccountCall) {
-    this._call = call;
+  get networkFeeIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get index(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get balance(): BigInt {
+    return this[3].toBigInt();
+  }
+
+  get active(): boolean {
+    return this[4].toBoolean();
   }
 }
 
@@ -2307,72 +2409,6 @@ export class UnstakeAndWithdrawCall__Outputs {
 
   constructor(call: UnstakeAndWithdrawCall) {
     this._call = call;
-  }
-}
-
-export class UpdateValidatorCall extends ethereum.Call {
-  get inputs(): UpdateValidatorCall__Inputs {
-    return new UpdateValidatorCall__Inputs(this);
-  }
-
-  get outputs(): UpdateValidatorCall__Outputs {
-    return new UpdateValidatorCall__Outputs(this);
-  }
-}
-
-export class UpdateValidatorCall__Inputs {
-  _call: UpdateValidatorCall;
-
-  constructor(call: UpdateValidatorCall) {
-    this._call = call;
-  }
-
-  get validatorParams(): UpdateValidatorCallValidatorParamsStruct {
-    return changetype<UpdateValidatorCallValidatorParamsStruct>(
-      this._call.inputValues[0].value.toTuple()
-    );
-  }
-
-  get ssvDepositAmount(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-}
-
-export class UpdateValidatorCall__Outputs {
-  _call: UpdateValidatorCall;
-
-  constructor(call: UpdateValidatorCall) {
-    this._call = call;
-  }
-}
-
-export class UpdateValidatorCallValidatorParamsStruct extends ethereum.Tuple {
-  get publicKey(): Bytes {
-    return this[0].toBytes();
-  }
-
-  get withdrawalCredentials(): Bytes {
-    return this[1].toBytes();
-  }
-
-  get signature(): Bytes {
-    return this[2].toBytes();
-  }
-
-  get depositDataRoot(): Bytes {
-    return this[3].toBytes();
-  }
-
-  get operatorIds(): Array<BigInt> {
-    return this[4].toBigIntArray();
-  }
-
-  get sharesPublicKeys(): Array<Bytes> {
-    return this[5].toBytesArray();
-  }
-
-  get sharesEncrypted(): Array<Bytes> {
-    return this[6].toBytesArray();
   }
 }
 

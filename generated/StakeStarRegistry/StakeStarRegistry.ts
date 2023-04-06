@@ -199,7 +199,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   allowListOfOperators(param0: BigInt): boolean {
     let result = super.call(
       "allowListOfOperators",
-      "allowListOfOperators(uint32):(bool)",
+      "allowListOfOperators(uint64):(bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
@@ -209,7 +209,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   try_allowListOfOperators(param0: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "allowListOfOperators",
-      "allowListOfOperators(uint32):(bool)",
+      "allowListOfOperators(uint64):(bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -318,7 +318,39 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  getValidatorPublicKeys(status: i32): Array<Bytes> {
+  getValidatorPublicKeys(offset: BigInt, count: BigInt): Array<Bytes> {
+    let result = super.call(
+      "getValidatorPublicKeys",
+      "getValidatorPublicKeys(uint32,uint32):(bytes[])",
+      [
+        ethereum.Value.fromUnsignedBigInt(offset),
+        ethereum.Value.fromUnsignedBigInt(count)
+      ]
+    );
+
+    return result[0].toBytesArray();
+  }
+
+  try_getValidatorPublicKeys(
+    offset: BigInt,
+    count: BigInt
+  ): ethereum.CallResult<Array<Bytes>> {
+    let result = super.tryCall(
+      "getValidatorPublicKeys",
+      "getValidatorPublicKeys(uint32,uint32):(bytes[])",
+      [
+        ethereum.Value.fromUnsignedBigInt(offset),
+        ethereum.Value.fromUnsignedBigInt(count)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytesArray());
+  }
+
+  getValidatorPublicKeys1(status: i32): Array<Bytes> {
     let result = super.call(
       "getValidatorPublicKeys",
       "getValidatorPublicKeys(uint8):(bytes[])",
@@ -328,7 +360,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     return result[0].toBytesArray();
   }
 
-  try_getValidatorPublicKeys(status: i32): ethereum.CallResult<Array<Bytes>> {
+  try_getValidatorPublicKeys1(status: i32): ethereum.CallResult<Array<Bytes>> {
     let result = super.tryCall(
       "getValidatorPublicKeys",
       "getValidatorPublicKeys(uint8):(bytes[])",
@@ -457,7 +489,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   verifyOperators(operatorIds: Array<BigInt>): boolean {
     let result = super.call(
       "verifyOperators",
-      "verifyOperators(uint32[]):(bool)",
+      "verifyOperators(uint64[]):(bool)",
       [ethereum.Value.fromUnsignedBigIntArray(operatorIds)]
     );
 
@@ -469,7 +501,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "verifyOperators",
-      "verifyOperators(uint32[]):(bool)",
+      "verifyOperators(uint64[]):(bool)",
       [ethereum.Value.fromUnsignedBigIntArray(operatorIds)]
     );
     if (result.reverted) {

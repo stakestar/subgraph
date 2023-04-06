@@ -6,7 +6,7 @@ dataSources:
     name: StakeStarETH
     network: goerli
     source:
-      address: "0x53DC4158307ee56FD457277c3b8f52C5f9C8aC23"
+      address: "0xE87047c94e27bb83D89Ae95430b57008721C6b4F"
       abi: StakeStarETH
       startBlock: 8588980
     mapping:
@@ -29,7 +29,7 @@ dataSources:
     name: StakeStarRegistry
     network: goerli
     source:
-      address: "0x8d95D336710708E499dadb5D6C798432B31E6FA7"
+      address: "0xF78266a93e645F40c1c0BF7f8BEB019f1709601C"
       abi: StakeStarRegistry
       startBlock: 8588980
     mapping:
@@ -43,16 +43,16 @@ dataSources:
         - name: StakeStarRegistry
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/StakeStarRegistry.sol/StakeStarRegistry.json
       eventHandlers:
-        - event: AddOperatorToAllowList(uint32)
+        - event: AddOperatorToAllowList(uint64)
           handler: handleAddOperatorToAllowList
-        - event: RemoveOperatorFromAllowList(uint32)
+        - event: RemoveOperatorFromAllowList(uint64)
           handler: handleRemoveOperatorFromAllowList
       file: ./src/stake-star-registry.ts
   - kind: ethereum
     name: StakeStar
     network: goerli
     source:
-      address: "0x141756fAA3AF03e65B60A67aeb4D35d01BF18908"
+      address: "0xE083BeA19632c44B7890e5c414C509CC3E485Bb1"
       abi: StakeStar
       startBlock: 8588980
     mapping:
@@ -67,7 +67,7 @@ dataSources:
         - name: StakeStarETH
           file: ./node_modules/@stakestar/contracts/artifacts/contracts/tokens/SStarETH.sol/SStarETH.json
       eventHandlers:
-        - event: CreateValidator((bytes,bytes,bytes,bytes32,uint32[],bytes[],bytes[]),uint256)
+        - event: CreateValidator((bytes,bytes,bytes,bytes32,uint64[],bytes),uint256)
           handler: handleCreateValidator
         - event: CommitSnapshot(uint256,uint256,uint256,uint256)
           handler: handleCommitSnapshot
