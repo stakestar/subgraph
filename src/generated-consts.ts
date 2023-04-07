@@ -1,2 +1,2 @@
-export const stakeStarAddress = "0xE083BeA19632c44B7890e5c414C509CC3E485Bb1"
-export const sstarETHAddress = "0xE87047c94e27bb83D89Ae95430b57008721C6b4F"
+export const stakeStarAddress = "0xb0eD9C5af9e929145c6092b03494daa103abF3B1"
+export const sstarETHAddress = "0xF9Df1adB79Cc67B2e3d86e584b14f751038dA38e"
