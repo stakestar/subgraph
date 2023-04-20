@@ -320,7 +320,7 @@ export class Validator extends Entity {
   }
 }
 
-export class SnapshotCommits extends Entity {
+export class SnapshotCommit extends Entity {
   constructor(id: Bytes) {
     super();
     this.set("id", Value.fromBytes(id));
@@ -328,19 +328,19 @@ export class SnapshotCommits extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save SnapshotCommits entity without an ID");
+    assert(id != null, "Cannot save SnapshotCommit entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.BYTES,
-        `Entities of type SnapshotCommits must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type SnapshotCommit must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("SnapshotCommits", id.toBytes().toHexString(), this);
+      store.set("SnapshotCommit", id.toBytes().toHexString(), this);
     }
   }
 
-  static load(id: Bytes): SnapshotCommits | null {
-    return changetype<SnapshotCommits | null>(
-      store.get("SnapshotCommits", id.toHexString())
+  static load(id: Bytes): SnapshotCommit | null {
+    return changetype<SnapshotCommit | null>(
+      store.get("SnapshotCommit", id.toHexString())
     );
   }
 

@@ -47,7 +47,7 @@ type Validator @entity {
   createdAt: BigInt!
 }
 
-type SnapshotCommits @entity {
+type SnapshotCommit @entity {
   # tx hash
   id: Bytes!
 
