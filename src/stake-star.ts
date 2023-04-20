@@ -144,14 +144,22 @@ export function handleUnstake(
 ): void {
   const timestamp = event.block.timestamp.toI32()
   const dayID = timestamp / 86400
+  const dayStartTimestamp = dayID * 86400
 
   let stakeStarTotalTvl = StakeStarTvlTotal.load(DEFAULT_ID)
 
-  let entity = StakeStarTvl.load(dayID.toString())
-
-  if (stakeStarTotalTvl === null || entity === null) {
-    log.info("StakeStarTvlTotal or StakeStarTvl is null", [])
+  if (stakeStarTotalTvl === null) {
+    log.error("StakeStarTvlTotal is null", [])
     return
+  }
+
+  const totalTvl = stakeStarTotalTvl.totalETH
+
+  let entity = StakeStarTvl.load(dayID.toString())
+  if (entity === null) {
+    entity = new StakeStarTvl(dayID.toString())
+    entity.date = dayStartTimestamp
+    entity.totalETH = totalTvl
   }
 
   entity.totalETH = entity.totalETH.minus(event.params.starETH)
