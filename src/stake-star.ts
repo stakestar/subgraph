@@ -7,6 +7,7 @@ import {
   CommitSnapshot
 } from "../generated/StakeStar/StakeStar"
 import {
+  SnapshotCommits,
   StakeStarTvl,
   StakeStarTvlTotal,
   StakerAtMomentRate,
@@ -58,6 +59,19 @@ export function handleCommitSnapshot(
 
   tokenRate.rate = event.params.rate
   tokenRate.save()
+
+  let snapshotCommit = SnapshotCommits.load(event.transaction.hash)
+  if (snapshotCommit === null) {
+    snapshotCommit = new SnapshotCommits(event.transaction.hash)
+
+    snapshotCommit.sender = event.transaction.from
+    snapshotCommit.total_ETH = event.params.total_ETH
+    snapshotCommit.total_sstarETH = event.params.total_sstarETH
+    snapshotCommit.timestamp = event.params.timestamp
+    snapshotCommit.rate = event.params.rate
+
+    snapshotCommit.save()
+  }
 }
 
 export function handleStake(

@@ -319,3 +319,159 @@ export class Validator extends Entity {
     this.set("createdAt", Value.fromBigInt(value));
   }
 }
+
+export class SnapshotCommits extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save SnapshotCommits entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type SnapshotCommits must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("SnapshotCommits", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static load(id: Bytes): SnapshotCommits | null {
+    return changetype<SnapshotCommits | null>(
+      store.get("SnapshotCommits", id.toHexString())
+    );
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    return value!.toBytes();
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get sender(): Bytes {
+    let value = this.get("sender");
+    return value!.toBytes();
+  }
+
+  set sender(value: Bytes) {
+    this.set("sender", Value.fromBytes(value));
+  }
+
+  get total_ETH(): BigInt {
+    let value = this.get("total_ETH");
+    return value!.toBigInt();
+  }
+
+  set total_ETH(value: BigInt) {
+    this.set("total_ETH", Value.fromBigInt(value));
+  }
+
+  get total_sstarETH(): BigInt {
+    let value = this.get("total_sstarETH");
+    return value!.toBigInt();
+  }
+
+  set total_sstarETH(value: BigInt) {
+    this.set("total_sstarETH", Value.fromBigInt(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get rate(): BigInt {
+    let value = this.get("rate");
+    return value!.toBigInt();
+  }
+
+  set rate(value: BigInt) {
+    this.set("rate", Value.fromBigInt(value));
+  }
+}
+
+export class Propose extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Propose entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type Propose must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Propose", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static load(id: Bytes): Propose | null {
+    return changetype<Propose | null>(store.get("Propose", id.toHexString()));
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
+    return value!.toBytes();
+  }
+
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get sender(): Bytes {
+    let value = this.get("sender");
+    return value!.toBytes();
+  }
+
+  set sender(value: Bytes) {
+    this.set("sender", Value.fromBytes(value));
+  }
+
+  get epoch(): BigInt {
+    let value = this.get("epoch");
+    return value!.toBigInt();
+  }
+
+  set epoch(value: BigInt) {
+    this.set("epoch", Value.fromBigInt(value));
+  }
+
+  get totalBalance(): BigInt {
+    let value = this.get("totalBalance");
+    return value!.toBigInt();
+  }
+
+  set totalBalance(value: BigInt) {
+    this.set("totalBalance", Value.fromBigInt(value));
+  }
+
+  get oracleBit(): BigInt {
+    let value = this.get("oracleBit");
+    return value!.toBigInt();
+  }
+
+  set oracleBit(value: BigInt) {
+    this.set("oracleBit", Value.fromBigInt(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+}

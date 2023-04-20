@@ -76,3 +76,24 @@ dataSources:
         - event: Unstake(indexed address,uint256,uint256)
           handler: handleUnstake
       file: ./src/stake-star.ts
+
+  - kind: ethereum
+    name: StakeStarOracleStrict
+    network: goerli
+    source:
+      address: "0x2F321aa20EF8fE4163f1e7c930e39EB6bAF43B09"
+      abi: StakeStarOracleStrict
+      startBlock: 8588980
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateValidator
+      abis:
+        - name: StakeStarOracleStrict
+          file: ./node_modules/@stakestar/contracts/artifacts/contracts/oracle-network/StakeStarOracleStrict.sol/StakeStarOracleStrict.json
+      eventHandlers:
+        - event: Proposed(uint32,uint256,uint32)
+          handler: handleProposed
+      file: ./src/stake-star-oracle.ts

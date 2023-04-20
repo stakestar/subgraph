@@ -12,7 +12,7 @@ interface Options {
 const START_BLOCK = 8588980
 
 export const prepareConfig = (options: Options) => {
-  const { stakeStar, sstarETH, stakeStarRegistry, stakeStarRewards } = ADDRESSES[options.network]
+  const { stakeStar, sstarETH, stakeStarRegistry, stakeStarRewards, stakeStarOracleStrict } = ADDRESSES[options.network]
   const templateString = fs.readFileSync(options.template);
 
   const rendered = Mustache.render(templateString.toString(), {
@@ -21,6 +21,7 @@ export const prepareConfig = (options: Options) => {
     stakeStarRegistryAddress: stakeStarRegistry,
     stakeStarRewardsAddress: stakeStarRewards,
     stakeStarAddress: stakeStar,
+    stakeStarOracleStrict: stakeStarOracleStrict,
     startBlock: START_BLOCK
   });
 

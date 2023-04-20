@@ -46,3 +46,28 @@ type Validator @entity {
 
   createdAt: BigInt!
 }
+
+type SnapshotCommits @entity {
+  # tx hash
+  id: Bytes!
+
+  sender: Bytes!
+
+  total_ETH: BigInt!
+  total_sstarETH: BigInt!
+  timestamp: BigInt!
+  rate: BigInt!
+}
+
+type Propose @entity {
+  # tx hash
+  id: Bytes!
+
+  sender: Bytes!
+
+  epoch: BigInt!
+  totalBalance: BigInt!
+  oracleBit: BigInt!
+
+  timestamp: BigInt!
+}
