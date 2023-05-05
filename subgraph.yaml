@@ -69,6 +69,8 @@ dataSources:
       eventHandlers:
         - event: CreateValidator((bytes,bytes,bytes,bytes32,uint64[],bytes),uint256)
           handler: handleCreateValidator
+        - event: DestroyValidator(bytes)
+          handler: handleDestroyValidator
         - event: CommitSnapshot(uint256,uint256,uint256,uint256)
           handler: handleCommitSnapshot
         - event: Stake(indexed address,uint256,uint256)

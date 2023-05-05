@@ -30,7 +30,22 @@ export function handleCreateValidator(
   }
 
   const entity = new Validator(publicKey.toHexString())
-  entity.createdAt = event.block.timestamp
+  entity.createdAt = event.block.timestamp.toI32()
+
+  entity.save()
+}
+
+export function handleDestroyValidator(
+  event: CreateValidatorEvent
+): void {
+  const publicKey = event.params.params.publicKey
+  const entity = Validator.load(publicKey.toHexString())
+  if (entity === null) {
+    log.warning("Validator {} is not registered", [publicKey.toHexString()])
+    return
+  }
+
+  entity.destroyedAt = event.block.timestamp.toI32()
 
   entity.save()
 }
@@ -67,7 +82,7 @@ export function handleCommitSnapshot(
     snapshotCommit.sender = event.transaction.from
     snapshotCommit.total_ETH = event.params.total_ETH
     snapshotCommit.total_sstarETH = event.params.total_sstarETH
-    snapshotCommit.timestamp = event.params.timestamp
+    snapshotCommit.timestamp = event.params.timestamp.toI32()
     snapshotCommit.rate = event.params.rate
 
     snapshotCommit.save()

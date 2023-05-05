@@ -44,7 +44,8 @@ type Validator @entity {
   # Validator public key
   id: ID!
 
-  createdAt: BigInt!
+  createdAt: Int!
+  destroyedAt: Int!
 }
 
 type SnapshotCommit @entity {
@@ -55,7 +56,7 @@ type SnapshotCommit @entity {
 
   total_ETH: BigInt!
   total_sstarETH: BigInt!
-  timestamp: BigInt!
+  timestamp: Int!
   rate: BigInt!
 }
 
@@ -69,5 +70,5 @@ type Propose @entity {
   totalBalance: BigInt!
   oracleBit: BigInt!
 
-  timestamp: BigInt!
+  timestamp: Int!
 }

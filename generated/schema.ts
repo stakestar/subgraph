@@ -310,13 +310,22 @@ export class Validator extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get createdAt(): BigInt {
+  get createdAt(): i32 {
     let value = this.get("createdAt");
-    return value!.toBigInt();
+    return value!.toI32();
   }
 
-  set createdAt(value: BigInt) {
-    this.set("createdAt", Value.fromBigInt(value));
+  set createdAt(value: i32) {
+    this.set("createdAt", Value.fromI32(value));
+  }
+
+  get destroyedAt(): i32 {
+    let value = this.get("destroyedAt");
+    return value!.toI32();
+  }
+
+  set destroyedAt(value: i32) {
+    this.set("destroyedAt", Value.fromI32(value));
   }
 }
 
@@ -380,13 +389,13 @@ export class SnapshotCommit extends Entity {
     this.set("total_sstarETH", Value.fromBigInt(value));
   }
 
-  get timestamp(): BigInt {
+  get timestamp(): i32 {
     let value = this.get("timestamp");
-    return value!.toBigInt();
+    return value!.toI32();
   }
 
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
+  set timestamp(value: i32) {
+    this.set("timestamp", Value.fromI32(value));
   }
 
   get rate(): BigInt {
@@ -466,12 +475,12 @@ export class Propose extends Entity {
     this.set("oracleBit", Value.fromBigInt(value));
   }
 
-  get timestamp(): BigInt {
+  get timestamp(): i32 {
     let value = this.get("timestamp");
-    return value!.toBigInt();
+    return value!.toI32();
   }
 
-  set timestamp(value: BigInt) {
-    this.set("timestamp", Value.fromBigInt(value));
+  set timestamp(value: i32) {
+    this.set("timestamp", Value.fromI32(value));
   }
 }

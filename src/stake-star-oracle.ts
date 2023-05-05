@@ -16,7 +16,7 @@ export function handleProposed(
     propose.epoch = event.params.epoch
     propose.totalBalance = event.params.totalBalance
     propose.oracleBit = event.params.oracleBit
-    propose.timestamp = event.block.timestamp
+    propose.timestamp = event.block.timestamp.toI32()
 
     propose.save()
   }
