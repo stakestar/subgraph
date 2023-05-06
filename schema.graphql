@@ -45,7 +45,7 @@ type Validator @entity {
   id: ID!
 
   createdAt: Int!
-  destroyedAt: Int!
+  destroyedAt: Int
 }
 
 type SnapshotCommit @entity {
