@@ -1,0 +1,6 @@
+query getActiveValidators($first: Int = 100) {
+  validators(first: $first, where: { destroyedAt: null }) {
+    id,
+    createdAt
+  }
+}

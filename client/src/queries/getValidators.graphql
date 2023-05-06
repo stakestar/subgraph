@@ -2,5 +2,6 @@ query getValidators($first: Int = 100) {
   validators(first: $first) {
     id
     createdAt
+    destroyedAt
   }
 }
