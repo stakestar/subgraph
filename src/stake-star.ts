@@ -4,7 +4,8 @@ import {
   Stake as StakeEvent,
   Unstake as UnstakeEvent,
   StakeStar,
-  CommitSnapshot
+  CommitSnapshot,
+  DestroyValidator
 } from "../generated/StakeStar/StakeStar"
 import {
   SnapshotCommit,
@@ -36,9 +37,9 @@ export function handleCreateValidator(
 }
 
 export function handleDestroyValidator(
-  event: CreateValidatorEvent
+  event: DestroyValidator
 ): void {
-  const publicKey = event.params.params.publicKey
+  const publicKey = event.params.publicKey
   const entity = Validator.load(publicKey.toHexString())
   if (entity === null) {
     log.warning("Validator {} is not registered", [publicKey.toHexString()])
