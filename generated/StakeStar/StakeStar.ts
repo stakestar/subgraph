@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class Claim extends ethereum.Event {
@@ -49,7 +49,7 @@ export class CommitSnapshot__Params {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get total_sstarETH(): BigInt {
+  get total_stakedStar(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
 
@@ -77,7 +77,7 @@ export class CreateValidator__Params {
 
   get params(): CreateValidatorParamsStruct {
     return changetype<CreateValidatorParamsStruct>(
-      this._event.parameters[0].value.toTuple()
+      this._event.parameters[0].value.toTuple(),
     );
   }
 
@@ -107,7 +107,7 @@ export class CreateValidatorParamsStruct extends ethereum.Tuple {
     return this[4].toBigIntArray();
   }
 
-  get sharesEncrypted(): Bytes {
+  get sharesData(): Bytes {
     return this[5].toBytes();
   }
 }
@@ -272,6 +272,52 @@ export class RateEC__Params {
   }
 }
 
+export class RegisterValidator extends ethereum.Event {
+  get params(): RegisterValidator__Params {
+    return new RegisterValidator__Params(this);
+  }
+}
+
+export class RegisterValidator__Params {
+  _event: RegisterValidator;
+
+  constructor(event: RegisterValidator) {
+    this._event = event;
+  }
+
+  get params(): RegisterValidatorParamsStruct {
+    return changetype<RegisterValidatorParamsStruct>(
+      this._event.parameters[0].value.toTuple(),
+    );
+  }
+}
+
+export class RegisterValidatorParamsStruct extends ethereum.Tuple {
+  get publicKey(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get withdrawalCredentials(): Bytes {
+    return this[1].toBytes();
+  }
+
+  get signature(): Bytes {
+    return this[2].toBytes();
+  }
+
+  get depositDataRoot(): Bytes {
+    return this[3].toBytes();
+  }
+
+  get operatorIds(): Array<BigInt> {
+    return this[4].toBigIntArray();
+  }
+
+  get sharesData(): Bytes {
+    return this[5].toBytes();
+  }
+}
+
 export class RoleAdminChanged extends ethereum.Event {
   get params(): RoleAdminChanged__Params {
     return new RoleAdminChanged__Params(this);
@@ -408,6 +454,24 @@ export class SetAddresses__Params {
   }
 }
 
+export class SetCommissionParameters extends ethereum.Event {
+  get params(): SetCommissionParameters__Params {
+    return new SetCommissionParameters__Params(this);
+  }
+}
+
+export class SetCommissionParameters__Params {
+  _event: SetCommissionParameters;
+
+  constructor(event: SetCommissionParameters) {
+    this._event = event;
+  }
+
+  get rateDiffThreshold(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+}
+
 export class SetLocalPoolParameters extends ethereum.Event {
   get params(): SetLocalPoolParameters__Params {
     return new SetLocalPoolParameters__Params(this);
@@ -474,6 +538,24 @@ export class SetRateParameters__Params {
   }
 }
 
+export class SetUnstakeParameters extends ethereum.Event {
+  get params(): SetUnstakeParameters__Params {
+    return new SetUnstakeParameters__Params(this);
+  }
+}
+
+export class SetUnstakeParameters__Params {
+  _event: SetUnstakeParameters;
+
+  constructor(event: SetUnstakeParameters) {
+    this._event = event;
+  }
+
+  get ustakePeriodLimit(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+}
+
 export class SetValidatorWithdrawalThreshold extends ethereum.Event {
   get params(): SetValidatorWithdrawalThreshold__Params {
     return new SetValidatorWithdrawalThreshold__Params(this);
@@ -488,6 +570,24 @@ export class SetValidatorWithdrawalThreshold__Params {
   }
 
   get threshold(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+}
+
+export class SetWithdrawalParameters extends ethereum.Event {
+  get params(): SetWithdrawalParameters__Params {
+    return new SetWithdrawalParameters__Params(this);
+  }
+}
+
+export class SetWithdrawalParameters__Params {
+  _event: SetWithdrawalParameters;
+
+  constructor(event: SetWithdrawalParameters) {
+    this._event = event;
+  }
+
+  get withdrawalMinLimit(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 }
@@ -515,6 +615,24 @@ export class Stake__Params {
 
   get sstarETH(): BigInt {
     return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class UnregisterValidator extends ethereum.Event {
+  get params(): UnregisterValidator__Params {
+    return new UnregisterValidator__Params(this);
+  }
+}
+
+export class UnregisterValidator__Params {
+  _event: UnregisterValidator;
+
+  constructor(event: UnregisterValidator) {
+    this._event = event;
+  }
+
+  get publicKey(): Bytes {
+    return this._event.parameters[0].value.toBytes();
   }
 }
 
@@ -559,7 +677,7 @@ export class UpdateValidator__Params {
 
   get params(): UpdateValidatorParamsStruct {
     return changetype<UpdateValidatorParamsStruct>(
-      this._event.parameters[0].value.toTuple()
+      this._event.parameters[0].value.toTuple(),
     );
   }
 
@@ -589,7 +707,7 @@ export class UpdateValidatorParamsStruct extends ethereum.Tuple {
     return this[4].toBigIntArray();
   }
 
-  get sharesEncrypted(): Bytes {
+  get sharesData(): Bytes {
     return this[5].toBytes();
   }
 }
@@ -616,6 +734,31 @@ export class Withdraw__Params {
   }
 }
 
+export class StakeStar__queueResult {
+  value0: Address;
+  value1: BigInt;
+
+  constructor(value0: Address, value1: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromAddress(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    return map;
+  }
+
+  getNext(): Address {
+    return this.value0;
+  }
+
+  getPendingAmount(): BigInt {
+    return this.value1;
+  }
+}
+
 export class StakeStar__snapshotsResult {
   value0: BigInt;
   value1: BigInt;
@@ -639,7 +782,7 @@ export class StakeStar__snapshotsResult {
     return this.value0;
   }
 
-  getTotal_sstarETH(): BigInt {
+  getTotal_stakedStar(): BigInt {
     return this.value1;
   }
 
@@ -657,7 +800,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -667,7 +810,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -676,21 +819,21 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  ETH_to_sstarETH(eth: BigInt): BigInt {
+  ETHToStakedStar(eth: BigInt): BigInt {
     let result = super.call(
-      "ETH_to_sstarETH",
-      "ETH_to_sstarETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(eth)]
+      "ETHToStakedStar",
+      "ETHToStakedStar(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(eth)],
     );
 
     return result[0].toBigInt();
   }
 
-  try_ETH_to_sstarETH(eth: BigInt): ethereum.CallResult<BigInt> {
+  try_ETHToStakedStar(eth: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "ETH_to_sstarETH",
-      "ETH_to_sstarETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(eth)]
+      "ETHToStakedStar",
+      "ETHToStakedStar(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(eth)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -703,7 +846,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "depositContract",
       "depositContract():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -713,7 +856,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "depositContract",
       "depositContract():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -739,7 +882,7 @@ export class StakeStar extends ethereum.SmartContract {
 
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
-      ethereum.Value.fromFixedBytes(role)
+      ethereum.Value.fromFixedBytes(role),
     ]);
 
     return result[0].toBytes();
@@ -749,7 +892,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "getRoleAdmin",
       "getRoleAdmin(bytes32):(bytes32)",
-      [ethereum.Value.fromFixedBytes(role)]
+      [ethereum.Value.fromFixedBytes(role)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -761,7 +904,7 @@ export class StakeStar extends ethereum.SmartContract {
   hasRole(role: Bytes, account: Address): boolean {
     let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBoolean();
@@ -770,7 +913,7 @@ export class StakeStar extends ethereum.SmartContract {
   try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -779,26 +922,26 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  left(): BigInt {
-    let result = super.call("left", "left():(uint32)", []);
+  head(): Address {
+    let result = super.call("head", "head():(address)", []);
 
-    return result[0].toBigInt();
+    return result[0].toAddress();
   }
 
-  try_left(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("left", "left():(uint32)", []);
+  try_head(): ethereum.CallResult<Address> {
+    let result = super.tryCall("head", "head():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   localPoolMaxSize(): BigInt {
     let result = super.call(
       "localPoolMaxSize",
-      "localPoolMaxSize():(uint256)",
-      []
+      "localPoolMaxSize():(uint96)",
+      [],
     );
 
     return result[0].toBigInt();
@@ -807,8 +950,8 @@ export class StakeStar extends ethereum.SmartContract {
   try_localPoolMaxSize(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "localPoolMaxSize",
-      "localPoolMaxSize():(uint256)",
-      []
+      "localPoolMaxSize():(uint96)",
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -818,40 +961,13 @@ export class StakeStar extends ethereum.SmartContract {
   }
 
   localPoolSize(): BigInt {
-    let result = super.call("localPoolSize", "localPoolSize():(uint256)", []);
+    let result = super.call("localPoolSize", "localPoolSize():(uint96)", []);
 
     return result[0].toBigInt();
   }
 
   try_localPoolSize(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "localPoolSize",
-      "localPoolSize():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  localPoolWithdrawalFrequencyLimit(): BigInt {
-    let result = super.call(
-      "localPoolWithdrawalFrequencyLimit",
-      "localPoolWithdrawalFrequencyLimit():(uint256)",
-      []
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_localPoolWithdrawalFrequencyLimit(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "localPoolWithdrawalFrequencyLimit",
-      "localPoolWithdrawalFrequencyLimit():(uint256)",
-      []
-    );
+    let result = super.tryCall("localPoolSize", "localPoolSize():(uint96)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -862,8 +978,8 @@ export class StakeStar extends ethereum.SmartContract {
   localPoolWithdrawalHistory(param0: Address): BigInt {
     let result = super.call(
       "localPoolWithdrawalHistory",
-      "localPoolWithdrawalHistory(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      "localPoolWithdrawalHistory(address):(uint32)",
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -872,8 +988,8 @@ export class StakeStar extends ethereum.SmartContract {
   try_localPoolWithdrawalHistory(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "localPoolWithdrawalHistory",
-      "localPoolWithdrawalHistory(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      "localPoolWithdrawalHistory(address):(uint32)",
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -885,8 +1001,8 @@ export class StakeStar extends ethereum.SmartContract {
   localPoolWithdrawalLimit(): BigInt {
     let result = super.call(
       "localPoolWithdrawalLimit",
-      "localPoolWithdrawalLimit():(uint256)",
-      []
+      "localPoolWithdrawalLimit():(uint96)",
+      [],
     );
 
     return result[0].toBigInt();
@@ -895,8 +1011,31 @@ export class StakeStar extends ethereum.SmartContract {
   try_localPoolWithdrawalLimit(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "localPoolWithdrawalLimit",
-      "localPoolWithdrawalLimit():(uint256)",
-      []
+      "localPoolWithdrawalLimit():(uint96)",
+      [],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  localPoolWithdrawalPeriodLimit(): BigInt {
+    let result = super.call(
+      "localPoolWithdrawalPeriodLimit",
+      "localPoolWithdrawalPeriodLimit():(uint32)",
+      [],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_localPoolWithdrawalPeriodLimit(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "localPoolWithdrawalPeriodLimit",
+      "localPoolWithdrawalPeriodLimit():(uint32)",
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -924,7 +1063,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "maxRateDeviation",
       "maxRateDeviation():(uint24)",
-      []
+      [],
     );
 
     return result[0].toI32();
@@ -934,7 +1073,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "maxRateDeviation",
       "maxRateDeviation():(uint24)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -958,25 +1097,6 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  next(param0: BigInt): BigInt {
-    let result = super.call("next", "next(uint32):(uint32)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_next(param0: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("next", "next(uint32):(uint32)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
   oracleNetwork(): Address {
     let result = super.call("oracleNetwork", "oracleNetwork():(address)", []);
 
@@ -987,53 +1107,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "oracleNetwork",
       "oracleNetwork():(address)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  pendingWithdrawal(param0: Address): BigInt {
-    let result = super.call(
-      "pendingWithdrawal",
-      "pendingWithdrawal(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_pendingWithdrawal(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "pendingWithdrawal",
-      "pendingWithdrawal(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  pendingWithdrawalQueue(param0: BigInt): Address {
-    let result = super.call(
-      "pendingWithdrawalQueue",
-      "pendingWithdrawalQueue(uint32):(address)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
-    );
-
-    return result[0].toAddress();
-  }
-
-  try_pendingWithdrawalQueue(param0: BigInt): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "pendingWithdrawalQueue",
-      "pendingWithdrawalQueue(uint32):(address)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1045,8 +1119,8 @@ export class StakeStar extends ethereum.SmartContract {
   pendingWithdrawalSum(): BigInt {
     let result = super.call(
       "pendingWithdrawalSum",
-      "pendingWithdrawalSum():(uint256)",
-      []
+      "pendingWithdrawalSum():(uint96)",
+      [],
     );
 
     return result[0].toBigInt();
@@ -1055,8 +1129,8 @@ export class StakeStar extends ethereum.SmartContract {
   try_pendingWithdrawalSum(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "pendingWithdrawalSum",
-      "pendingWithdrawalSum():(uint256)",
-      []
+      "pendingWithdrawalSum():(uint96)",
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1065,28 +1139,33 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  previous(param0: BigInt): BigInt {
-    let result = super.call("previous", "previous(uint32):(uint32)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
+  queue(param0: Address): StakeStar__queueResult {
+    let result = super.call("queue", "queue(address):(address,uint96)", [
+      ethereum.Value.fromAddress(param0),
     ]);
 
-    return result[0].toBigInt();
+    return new StakeStar__queueResult(
+      result[0].toAddress(),
+      result[1].toBigInt(),
+    );
   }
 
-  try_previous(param0: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("previous", "previous(uint32):(uint32)", [
-      ethereum.Value.fromUnsignedBigInt(param0)
+  try_queue(param0: Address): ethereum.CallResult<StakeStar__queueResult> {
+    let result = super.tryCall("queue", "queue(address):(address,uint96)", [
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(
+      new StakeStar__queueResult(value[0].toAddress(), value[1].toBigInt()),
+    );
   }
 
   queueIndex(msgSender: Address): BigInt {
     let result = super.call("queueIndex", "queueIndex(address):(uint32)", [
-      ethereum.Value.fromAddress(msgSender)
+      ethereum.Value.fromAddress(msgSender),
     ]);
 
     return result[0].toBigInt();
@@ -1094,7 +1173,7 @@ export class StakeStar extends ethereum.SmartContract {
 
   try_queueIndex(msgSender: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("queueIndex", "queueIndex(address):(uint32)", [
-      ethereum.Value.fromAddress(msgSender)
+      ethereum.Value.fromAddress(msgSender),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1120,7 +1199,7 @@ export class StakeStar extends ethereum.SmartContract {
 
   rate1(timestamp: BigInt): BigInt {
     let result = super.call("rate", "rate(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(timestamp)
+      ethereum.Value.fromUnsignedBigInt(timestamp),
     ]);
 
     return result[0].toBigInt();
@@ -1128,7 +1207,7 @@ export class StakeStar extends ethereum.SmartContract {
 
   try_rate1(timestamp: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("rate", "rate(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(timestamp)
+      ethereum.Value.fromUnsignedBigInt(timestamp),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1140,8 +1219,8 @@ export class StakeStar extends ethereum.SmartContract {
   rateCorrectionFactor(): BigInt {
     let result = super.call(
       "rateCorrectionFactor",
-      "rateCorrectionFactor():(uint256)",
-      []
+      "rateCorrectionFactor():(uint96)",
+      [],
     );
 
     return result[0].toBigInt();
@@ -1150,8 +1229,8 @@ export class StakeStar extends ethereum.SmartContract {
   try_rateCorrectionFactor(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "rateCorrectionFactor",
-      "rateCorrectionFactor():(uint256)",
-      []
+      "rateCorrectionFactor():(uint96)",
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1164,7 +1243,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "rateDeviationCheck",
       "rateDeviationCheck():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -1174,7 +1253,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "rateDeviationCheck",
       "rateDeviationCheck():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1183,14 +1262,22 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  rateEC(): BigInt {
-    let result = super.call("rateEC", "rateEC():(uint256)", []);
+  rateDiffThreshold(): BigInt {
+    let result = super.call(
+      "rateDiffThreshold",
+      "rateDiffThreshold():(uint64)",
+      [],
+    );
 
     return result[0].toBigInt();
   }
 
-  try_rateEC(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("rateEC", "rateEC():(uint256)", []);
+  try_rateDiffThreshold(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "rateDiffThreshold",
+      "rateDiffThreshold():(uint64)",
+      [],
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1198,14 +1285,22 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  right(): BigInt {
-    let result = super.call("right", "right():(uint32)", []);
+  rateForExtractCommision(): BigInt {
+    let result = super.call(
+      "rateForExtractCommision",
+      "rateForExtractCommision():(uint96)",
+      [],
+    );
 
     return result[0].toBigInt();
   }
 
-  try_right(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("right", "right():(uint32)", []);
+  try_rateForExtractCommision(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "rateForExtractCommision",
+      "rateForExtractCommision():(uint96)",
+      [],
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1216,24 +1311,24 @@ export class StakeStar extends ethereum.SmartContract {
   snapshots(param0: BigInt): StakeStar__snapshotsResult {
     let result = super.call(
       "snapshots",
-      "snapshots(uint256):(uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      "snapshots(uint256):(uint96,uint96,uint64)",
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new StakeStar__snapshotsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
   try_snapshots(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<StakeStar__snapshotsResult> {
     let result = super.tryCall(
       "snapshots",
-      "snapshots(uint256):(uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      "snapshots(uint256):(uint96,uint96,uint64)",
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1243,8 +1338,8 @@ export class StakeStar extends ethereum.SmartContract {
       new StakeStar__snapshotsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
@@ -1261,29 +1356,6 @@ export class StakeStar extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
-  }
-
-  sstarETH_to_ETH(ssETH: BigInt): BigInt {
-    let result = super.call(
-      "sstarETH_to_ETH",
-      "sstarETH_to_ETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(ssETH)]
-    );
-
-    return result[0].toBigInt();
-  }
-
-  try_sstarETH_to_ETH(ssETH: BigInt): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "sstarETH_to_ETH",
-      "sstarETH_to_ETH(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(ssETH)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   ssvNetwork(): Address {
@@ -1316,18 +1388,39 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  stake(starETHAmount: BigInt): BigInt {
+  stake(starAmount: BigInt): BigInt {
     let result = super.call("stake", "stake(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(starETHAmount)
+      ethereum.Value.fromUnsignedBigInt(starAmount),
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_stake(starETHAmount: BigInt): ethereum.CallResult<BigInt> {
+  try_stake(starAmount: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("stake", "stake(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(starETHAmount)
+      ethereum.Value.fromUnsignedBigInt(starAmount),
     ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  stakeHistory(param0: Address): BigInt {
+    let result = super.call("stakeHistory", "stakeHistory(address):(uint32)", [
+      ethereum.Value.fromAddress(param0),
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_stakeHistory(param0: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "stakeHistory",
+      "stakeHistory(address):(uint32)",
+      [ethereum.Value.fromAddress(param0)],
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1339,7 +1432,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "stakeStarRegistry",
       "stakeStarRegistry():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1349,7 +1442,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "stakeStarRegistry",
       "stakeStarRegistry():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1362,7 +1455,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "stakeStarTreasury",
       "stakeStarTreasury():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1372,13 +1465,36 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "stakeStarTreasury",
       "stakeStarTreasury():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  stakedStarToETH(ssETH: BigInt): BigInt {
+    let result = super.call(
+      "stakedStarToETH",
+      "stakedStarToETH(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(ssETH)],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_stakedStarToETH(ssETH: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "stakedStarToETH",
+      "stakedStarToETH(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(ssETH)],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   starETH(): Address {
@@ -1400,7 +1516,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
 
     return result[0].toBoolean();
@@ -1410,7 +1526,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1419,18 +1535,56 @@ export class StakeStar extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  unstake(sstarETHAmount: BigInt): BigInt {
+  tail(): Address {
+    let result = super.call("tail", "tail():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_tail(): ethereum.CallResult<Address> {
+    let result = super.tryCall("tail", "tail():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  unstake(stakedStarAmount: BigInt): BigInt {
     let result = super.call("unstake", "unstake(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(sstarETHAmount)
+      ethereum.Value.fromUnsignedBigInt(stakedStarAmount),
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_unstake(sstarETHAmount: BigInt): ethereum.CallResult<BigInt> {
+  try_unstake(stakedStarAmount: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("unstake", "unstake(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(sstarETHAmount)
+      ethereum.Value.fromUnsignedBigInt(stakedStarAmount),
     ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  unstakePeriodLimit(): BigInt {
+    let result = super.call(
+      "unstakePeriodLimit",
+      "unstakePeriodLimit():(uint32)",
+      [],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_unstakePeriodLimit(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "unstakePeriodLimit",
+      "unstakePeriodLimit():(uint32)",
+      [],
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1442,7 +1596,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "validatorCreationAvailability",
       "validatorCreationAvailability():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -1452,7 +1606,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "validatorCreationAvailability",
       "validatorCreationAvailability():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1465,7 +1619,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "validatorDestructionAvailability",
       "validatorDestructionAvailability():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -1475,7 +1629,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "validatorDestructionAvailability",
       "validatorDestructionAvailability():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1488,7 +1642,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "validatorToDestroy",
       "validatorToDestroy():(bytes)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -1498,7 +1652,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "validatorToDestroy",
       "validatorToDestroy():(bytes)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1510,8 +1664,8 @@ export class StakeStar extends ethereum.SmartContract {
   validatorWithdrawalThreshold(): BigInt {
     let result = super.call(
       "validatorWithdrawalThreshold",
-      "validatorWithdrawalThreshold():(uint256)",
-      []
+      "validatorWithdrawalThreshold():(uint96)",
+      [],
     );
 
     return result[0].toBigInt();
@@ -1520,8 +1674,8 @@ export class StakeStar extends ethereum.SmartContract {
   try_validatorWithdrawalThreshold(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "validatorWithdrawalThreshold",
-      "validatorWithdrawalThreshold():(uint256)",
-      []
+      "validatorWithdrawalThreshold():(uint96)",
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1534,7 +1688,7 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.call(
       "withdrawalAddress",
       "withdrawalAddress():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1544,13 +1698,36 @@ export class StakeStar extends ethereum.SmartContract {
     let result = super.tryCall(
       "withdrawalAddress",
       "withdrawalAddress():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  withdrawalMinLimit(): BigInt {
+    let result = super.call(
+      "withdrawalMinLimit",
+      "withdrawalMinLimit():(uint96)",
+      [],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_withdrawalMinLimit(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "withdrawalMinLimit",
+      "withdrawalMinLimit():(uint96)",
+      [],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 }
 
@@ -1625,7 +1802,7 @@ export class CreateValidatorCall__Inputs {
 
   get validatorParams(): CreateValidatorCallValidatorParamsStruct {
     return changetype<CreateValidatorCallValidatorParamsStruct>(
-      this._call.inputValues[0].value.toTuple()
+      this._call.inputValues[0].value.toTuple(),
     );
   }
 
@@ -1635,7 +1812,7 @@ export class CreateValidatorCall__Inputs {
 
   get cluster(): CreateValidatorCallClusterStruct {
     return changetype<CreateValidatorCallClusterStruct>(
-      this._call.inputValues[2].value.toTuple()
+      this._call.inputValues[2].value.toTuple(),
     );
   }
 }
@@ -1669,7 +1846,7 @@ export class CreateValidatorCallValidatorParamsStruct extends ethereum.Tuple {
     return this[4].toBigIntArray();
   }
 
-  get sharesEncrypted(): Bytes {
+  get sharesData(): Bytes {
     return this[5].toBytes();
   }
 }
@@ -1687,12 +1864,12 @@ export class CreateValidatorCallClusterStruct extends ethereum.Tuple {
     return this[2].toBigInt();
   }
 
-  get balance(): BigInt {
-    return this[3].toBigInt();
+  get active(): boolean {
+    return this[3].toBoolean();
   }
 
-  get active(): boolean {
-    return this[4].toBoolean();
+  get balance(): BigInt {
+    return this[4].toBigInt();
   }
 }
 
@@ -1775,7 +1952,7 @@ export class DestroyValidatorCall__Inputs {
 
   get cluster(): DestroyValidatorCallClusterStruct {
     return changetype<DestroyValidatorCallClusterStruct>(
-      this._call.inputValues[2].value.toTuple()
+      this._call.inputValues[2].value.toTuple(),
     );
   }
 }
@@ -1801,12 +1978,12 @@ export class DestroyValidatorCallClusterStruct extends ethereum.Tuple {
     return this[2].toBigInt();
   }
 
-  get balance(): BigInt {
-    return this[3].toBigInt();
+  get active(): boolean {
+    return this[3].toBoolean();
   }
 
-  get active(): boolean {
-    return this[4].toBoolean();
+  get balance(): BigInt {
+    return this[4].toBigInt();
   }
 }
 
@@ -1832,6 +2009,36 @@ export class ExtractCommissionCall__Outputs {
   _call: ExtractCommissionCall;
 
   constructor(call: ExtractCommissionCall) {
+    this._call = call;
+  }
+}
+
+export class ForceClaimCall extends ethereum.Call {
+  get inputs(): ForceClaimCall__Inputs {
+    return new ForceClaimCall__Inputs(this);
+  }
+
+  get outputs(): ForceClaimCall__Outputs {
+    return new ForceClaimCall__Outputs(this);
+  }
+}
+
+export class ForceClaimCall__Inputs {
+  _call: ForceClaimCall;
+
+  constructor(call: ForceClaimCall) {
+    this._call = call;
+  }
+
+  get n(): i32 {
+    return this._call.inputValues[0].value.toI32();
+  }
+}
+
+export class ForceClaimCall__Outputs {
+  _call: ForceClaimCall;
+
+  constructor(call: ForceClaimCall) {
     this._call = call;
   }
 }
@@ -1939,7 +2146,7 @@ export class LocalPoolWithdrawCall__Inputs {
     this._call = call;
   }
 
-  get starETHAmount(): BigInt {
+  get starAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -1979,7 +2186,7 @@ export class ReactivateCall__Inputs {
 
   get cluster(): ReactivateCallClusterStruct {
     return changetype<ReactivateCallClusterStruct>(
-      this._call.inputValues[2].value.toTuple()
+      this._call.inputValues[2].value.toTuple(),
     );
   }
 }
@@ -2005,12 +2212,102 @@ export class ReactivateCallClusterStruct extends ethereum.Tuple {
     return this[2].toBigInt();
   }
 
+  get active(): boolean {
+    return this[3].toBoolean();
+  }
+
   get balance(): BigInt {
-    return this[3].toBigInt();
+    return this[4].toBigInt();
+  }
+}
+
+export class RegisterValidatorCall extends ethereum.Call {
+  get inputs(): RegisterValidatorCall__Inputs {
+    return new RegisterValidatorCall__Inputs(this);
+  }
+
+  get outputs(): RegisterValidatorCall__Outputs {
+    return new RegisterValidatorCall__Outputs(this);
+  }
+}
+
+export class RegisterValidatorCall__Inputs {
+  _call: RegisterValidatorCall;
+
+  constructor(call: RegisterValidatorCall) {
+    this._call = call;
+  }
+
+  get validatorParams(): RegisterValidatorCallValidatorParamsStruct {
+    return changetype<RegisterValidatorCallValidatorParamsStruct>(
+      this._call.inputValues[0].value.toTuple(),
+    );
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get cluster(): RegisterValidatorCallClusterStruct {
+    return changetype<RegisterValidatorCallClusterStruct>(
+      this._call.inputValues[2].value.toTuple(),
+    );
+  }
+}
+
+export class RegisterValidatorCall__Outputs {
+  _call: RegisterValidatorCall;
+
+  constructor(call: RegisterValidatorCall) {
+    this._call = call;
+  }
+}
+
+export class RegisterValidatorCallValidatorParamsStruct extends ethereum.Tuple {
+  get publicKey(): Bytes {
+    return this[0].toBytes();
+  }
+
+  get withdrawalCredentials(): Bytes {
+    return this[1].toBytes();
+  }
+
+  get signature(): Bytes {
+    return this[2].toBytes();
+  }
+
+  get depositDataRoot(): Bytes {
+    return this[3].toBytes();
+  }
+
+  get operatorIds(): Array<BigInt> {
+    return this[4].toBigIntArray();
+  }
+
+  get sharesData(): Bytes {
+    return this[5].toBytes();
+  }
+}
+
+export class RegisterValidatorCallClusterStruct extends ethereum.Tuple {
+  get validatorCount(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get networkFeeIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get index(): BigInt {
+    return this[2].toBigInt();
   }
 
   get active(): boolean {
-    return this[4].toBoolean();
+    return this[3].toBoolean();
+  }
+
+  get balance(): BigInt {
+    return this[4].toBigInt();
   }
 }
 
@@ -2152,6 +2449,36 @@ export class SetAddressesCall__Outputs {
   }
 }
 
+export class SetCommissionParametersCall extends ethereum.Call {
+  get inputs(): SetCommissionParametersCall__Inputs {
+    return new SetCommissionParametersCall__Inputs(this);
+  }
+
+  get outputs(): SetCommissionParametersCall__Outputs {
+    return new SetCommissionParametersCall__Outputs(this);
+  }
+}
+
+export class SetCommissionParametersCall__Inputs {
+  _call: SetCommissionParametersCall;
+
+  constructor(call: SetCommissionParametersCall) {
+    this._call = call;
+  }
+
+  get _rateDiffThreshold(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetCommissionParametersCall__Outputs {
+  _call: SetCommissionParametersCall;
+
+  constructor(call: SetCommissionParametersCall) {
+    this._call = call;
+  }
+}
+
 export class SetLocalPoolParametersCall extends ethereum.Call {
   get inputs(): SetLocalPoolParametersCall__Inputs {
     return new SetLocalPoolParametersCall__Inputs(this);
@@ -2177,7 +2504,7 @@ export class SetLocalPoolParametersCall__Inputs {
     return this._call.inputValues[1].value.toBigInt();
   }
 
-  get _localPoolWithdrawalFrequencyLimit(): BigInt {
+  get _localPoolWithdrawalPeriodLimit(): BigInt {
     return this._call.inputValues[2].value.toBigInt();
   }
 }
@@ -2254,6 +2581,36 @@ export class SetRateParametersCall__Outputs {
   }
 }
 
+export class SetUnstakeParametersCall extends ethereum.Call {
+  get inputs(): SetUnstakeParametersCall__Inputs {
+    return new SetUnstakeParametersCall__Inputs(this);
+  }
+
+  get outputs(): SetUnstakeParametersCall__Outputs {
+    return new SetUnstakeParametersCall__Outputs(this);
+  }
+}
+
+export class SetUnstakeParametersCall__Inputs {
+  _call: SetUnstakeParametersCall;
+
+  constructor(call: SetUnstakeParametersCall) {
+    this._call = call;
+  }
+
+  get _unstakePeriodLimit(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetUnstakeParametersCall__Outputs {
+  _call: SetUnstakeParametersCall;
+
+  constructor(call: SetUnstakeParametersCall) {
+    this._call = call;
+  }
+}
+
 export class SetValidatorWithdrawalThresholdCall extends ethereum.Call {
   get inputs(): SetValidatorWithdrawalThresholdCall__Inputs {
     return new SetValidatorWithdrawalThresholdCall__Inputs(this);
@@ -2284,6 +2641,36 @@ export class SetValidatorWithdrawalThresholdCall__Outputs {
   }
 }
 
+export class SetWithdrawalParametersCall extends ethereum.Call {
+  get inputs(): SetWithdrawalParametersCall__Inputs {
+    return new SetWithdrawalParametersCall__Inputs(this);
+  }
+
+  get outputs(): SetWithdrawalParametersCall__Outputs {
+    return new SetWithdrawalParametersCall__Outputs(this);
+  }
+}
+
+export class SetWithdrawalParametersCall__Inputs {
+  _call: SetWithdrawalParametersCall;
+
+  constructor(call: SetWithdrawalParametersCall) {
+    this._call = call;
+  }
+
+  get _withdrawalMinLimit(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetWithdrawalParametersCall__Outputs {
+  _call: SetWithdrawalParametersCall;
+
+  constructor(call: SetWithdrawalParametersCall) {
+    this._call = call;
+  }
+}
+
 export class StakeCall extends ethereum.Call {
   get inputs(): StakeCall__Inputs {
     return new StakeCall__Inputs(this);
@@ -2301,7 +2688,7 @@ export class StakeCall__Inputs {
     this._call = call;
   }
 
-  get starETHAmount(): BigInt {
+  get starAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -2313,8 +2700,70 @@ export class StakeCall__Outputs {
     this._call = call;
   }
 
-  get sstarETHAmount(): BigInt {
+  get stakedStarAmount(): BigInt {
     return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class UnregisterValidatorCall extends ethereum.Call {
+  get inputs(): UnregisterValidatorCall__Inputs {
+    return new UnregisterValidatorCall__Inputs(this);
+  }
+
+  get outputs(): UnregisterValidatorCall__Outputs {
+    return new UnregisterValidatorCall__Outputs(this);
+  }
+}
+
+export class UnregisterValidatorCall__Inputs {
+  _call: UnregisterValidatorCall;
+
+  constructor(call: UnregisterValidatorCall) {
+    this._call = call;
+  }
+
+  get publicKey(): Bytes {
+    return this._call.inputValues[0].value.toBytes();
+  }
+
+  get operatorIds(): Array<BigInt> {
+    return this._call.inputValues[1].value.toBigIntArray();
+  }
+
+  get cluster(): UnregisterValidatorCallClusterStruct {
+    return changetype<UnregisterValidatorCallClusterStruct>(
+      this._call.inputValues[2].value.toTuple(),
+    );
+  }
+}
+
+export class UnregisterValidatorCall__Outputs {
+  _call: UnregisterValidatorCall;
+
+  constructor(call: UnregisterValidatorCall) {
+    this._call = call;
+  }
+}
+
+export class UnregisterValidatorCallClusterStruct extends ethereum.Tuple {
+  get validatorCount(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get networkFeeIndex(): BigInt {
+    return this[1].toBigInt();
+  }
+
+  get index(): BigInt {
+    return this[2].toBigInt();
+  }
+
+  get active(): boolean {
+    return this[3].toBoolean();
+  }
+
+  get balance(): BigInt {
+    return this[4].toBigInt();
   }
 }
 
@@ -2335,7 +2784,7 @@ export class UnstakeCall__Inputs {
     this._call = call;
   }
 
-  get sstarETHAmount(): BigInt {
+  get stakedStarAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -2347,7 +2796,7 @@ export class UnstakeCall__Outputs {
     this._call = call;
   }
 
-  get starETHAmount(): BigInt {
+  get starAmount(): BigInt {
     return this._call.outputValues[0].value.toBigInt();
   }
 }
@@ -2369,7 +2818,7 @@ export class UnstakeAndLocalPoolWithdrawCall__Inputs {
     this._call = call;
   }
 
-  get sstarETHAmount(): BigInt {
+  get stakedStarAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -2399,7 +2848,7 @@ export class UnstakeAndWithdrawCall__Inputs {
     this._call = call;
   }
 
-  get sstarETHAmount(): BigInt {
+  get stakedStarAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
@@ -2429,7 +2878,7 @@ export class WithdrawCall__Inputs {
     this._call = call;
   }
 
-  get starETHAmount(): BigInt {
+  get starAmount(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }

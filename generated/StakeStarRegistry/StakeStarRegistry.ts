@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class AddOperatorToAllowList extends ethereum.Event {
@@ -177,7 +177,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -187,7 +187,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -200,7 +200,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "allowListOfOperators",
       "allowListOfOperators(uint64):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return result[0].toBoolean();
@@ -210,7 +210,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "allowListOfOperators",
       "allowListOfOperators(uint64):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -223,7 +223,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "countValidatorPublicKeys",
       "countValidatorPublicKeys(uint8):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))],
     );
 
     return result[0].toBigInt();
@@ -233,7 +233,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "countValidatorPublicKeys",
       "countValidatorPublicKeys(uint8):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -248,8 +248,8 @@ export class StakeStarRegistry extends ethereum.SmartContract {
       "getPoRAddressList(uint256,uint256):(string[])",
       [
         ethereum.Value.fromUnsignedBigInt(startIndex),
-        ethereum.Value.fromUnsignedBigInt(endIndex)
-      ]
+        ethereum.Value.fromUnsignedBigInt(endIndex),
+      ],
     );
 
     return result[0].toStringArray();
@@ -257,15 +257,15 @@ export class StakeStarRegistry extends ethereum.SmartContract {
 
   try_getPoRAddressList(
     startIndex: BigInt,
-    endIndex: BigInt
+    endIndex: BigInt,
   ): ethereum.CallResult<Array<string>> {
     let result = super.tryCall(
       "getPoRAddressList",
       "getPoRAddressList(uint256,uint256):(string[])",
       [
         ethereum.Value.fromUnsignedBigInt(startIndex),
-        ethereum.Value.fromUnsignedBigInt(endIndex)
-      ]
+        ethereum.Value.fromUnsignedBigInt(endIndex),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -278,7 +278,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "getPoRAddressListLength",
       "getPoRAddressListLength():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -288,7 +288,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "getPoRAddressListLength",
       "getPoRAddressListLength():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -299,7 +299,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
 
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
-      ethereum.Value.fromFixedBytes(role)
+      ethereum.Value.fromFixedBytes(role),
     ]);
 
     return result[0].toBytes();
@@ -309,7 +309,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "getRoleAdmin",
       "getRoleAdmin(bytes32):(bytes32)",
-      [ethereum.Value.fromFixedBytes(role)]
+      [ethereum.Value.fromFixedBytes(role)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -324,8 +324,8 @@ export class StakeStarRegistry extends ethereum.SmartContract {
       "getValidatorPublicKeys(uint32,uint32):(bytes[])",
       [
         ethereum.Value.fromUnsignedBigInt(offset),
-        ethereum.Value.fromUnsignedBigInt(count)
-      ]
+        ethereum.Value.fromUnsignedBigInt(count),
+      ],
     );
 
     return result[0].toBytesArray();
@@ -333,15 +333,15 @@ export class StakeStarRegistry extends ethereum.SmartContract {
 
   try_getValidatorPublicKeys(
     offset: BigInt,
-    count: BigInt
+    count: BigInt,
   ): ethereum.CallResult<Array<Bytes>> {
     let result = super.tryCall(
       "getValidatorPublicKeys",
       "getValidatorPublicKeys(uint32,uint32):(bytes[])",
       [
         ethereum.Value.fromUnsignedBigInt(offset),
-        ethereum.Value.fromUnsignedBigInt(count)
-      ]
+        ethereum.Value.fromUnsignedBigInt(count),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -354,7 +354,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "getValidatorPublicKeys",
       "getValidatorPublicKeys(uint8):(bytes[])",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))],
     );
 
     return result[0].toBytesArray();
@@ -364,7 +364,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "getValidatorPublicKeys",
       "getValidatorPublicKeys(uint8):(bytes[])",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))]
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(status))],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -377,7 +377,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "getValidatorPublicKeysLength",
       "getValidatorPublicKeysLength():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -387,7 +387,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "getValidatorPublicKeysLength",
       "getValidatorPublicKeysLength():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -399,7 +399,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   hasRole(role: Bytes, account: Address): boolean {
     let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBoolean();
@@ -408,7 +408,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
   try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -421,7 +421,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
 
     return result[0].toBoolean();
@@ -431,7 +431,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -444,7 +444,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "validatorPublicKeys",
       "validatorPublicKeys(uint256):(bytes)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return result[0].toBytes();
@@ -454,7 +454,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "validatorPublicKeys",
       "validatorPublicKeys(uint256):(bytes)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -467,7 +467,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "validatorStatuses",
       "validatorStatuses(bytes):(uint8)",
-      [ethereum.Value.fromBytes(param0)]
+      [ethereum.Value.fromBytes(param0)],
     );
 
     return result[0].toI32();
@@ -477,7 +477,7 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.tryCall(
       "validatorStatuses",
       "validatorStatuses(bytes):(uint8)",
-      [ethereum.Value.fromBytes(param0)]
+      [ethereum.Value.fromBytes(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -490,19 +490,19 @@ export class StakeStarRegistry extends ethereum.SmartContract {
     let result = super.call(
       "verifyOperators",
       "verifyOperators(uint64[]):(bool)",
-      [ethereum.Value.fromUnsignedBigIntArray(operatorIds)]
+      [ethereum.Value.fromUnsignedBigIntArray(operatorIds)],
     );
 
     return result[0].toBoolean();
   }
 
   try_verifyOperators(
-    operatorIds: Array<BigInt>
+    operatorIds: Array<BigInt>,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "verifyOperators",
       "verifyOperators(uint64[]):(bool)",
-      [ethereum.Value.fromUnsignedBigIntArray(operatorIds)]
+      [ethereum.Value.fromUnsignedBigIntArray(operatorIds)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

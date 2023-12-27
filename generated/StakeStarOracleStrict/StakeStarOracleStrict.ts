@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class Proposed extends ethereum.Event {
@@ -195,7 +195,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -205,7 +205,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -218,7 +218,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "_strictEpochMode",
       "_strictEpochMode():(bool)",
-      []
+      [],
     );
 
     return result[0].toBoolean();
@@ -228,7 +228,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "_strictEpochMode",
       "_strictEpochMode():(bool)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -241,7 +241,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "_zeroEpochTimestamp",
       "_zeroEpochTimestamp():(uint64)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -251,7 +251,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "_zeroEpochTimestamp",
       "_zeroEpochTimestamp():(uint64)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -264,7 +264,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "epochToTimestamp",
       "epochToTimestamp(uint32):(uint64)",
-      [ethereum.Value.fromUnsignedBigInt(epoch)]
+      [ethereum.Value.fromUnsignedBigInt(epoch)],
     );
 
     return result[0].toBigInt();
@@ -274,7 +274,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "epochToTimestamp",
       "epochToTimestamp(uint32):(uint64)",
-      [ethereum.Value.fromUnsignedBigInt(epoch)]
+      [ethereum.Value.fromUnsignedBigInt(epoch)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -284,27 +284,27 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
   }
 
   getCurrentProposal(
-    oracle: Address
+    oracle: Address,
   ): StakeStarOracleStrict__getCurrentProposalResult {
     let result = super.call(
       "getCurrentProposal",
       "getCurrentProposal(address):(uint32,uint256)",
-      [ethereum.Value.fromAddress(oracle)]
+      [ethereum.Value.fromAddress(oracle)],
     );
 
     return new StakeStarOracleStrict__getCurrentProposalResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_getCurrentProposal(
-    oracle: Address
+    oracle: Address,
   ): ethereum.CallResult<StakeStarOracleStrict__getCurrentProposalResult> {
     let result = super.tryCall(
       "getCurrentProposal",
       "getCurrentProposal(address):(uint32,uint256)",
-      [ethereum.Value.fromAddress(oracle)]
+      [ethereum.Value.fromAddress(oracle)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -313,14 +313,14 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new StakeStarOracleStrict__getCurrentProposalResult(
         value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
-      ethereum.Value.fromFixedBytes(role)
+      ethereum.Value.fromFixedBytes(role),
     ]);
 
     return result[0].toBytes();
@@ -330,7 +330,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "getRoleAdmin",
       "getRoleAdmin(bytes32):(bytes32)",
-      [ethereum.Value.fromFixedBytes(role)]
+      [ethereum.Value.fromFixedBytes(role)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -342,7 +342,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
   hasRole(role: Bytes, account: Address): boolean {
     let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBoolean();
@@ -351,7 +351,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
   try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -364,22 +364,20 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "latestTotalBalance",
       "latestTotalBalance():(uint256,uint64)",
-      []
+      [],
     );
 
     return new StakeStarOracleStrict__latestTotalBalanceResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
-  try_latestTotalBalance(): ethereum.CallResult<
-    StakeStarOracleStrict__latestTotalBalanceResult
-  > {
+  try_latestTotalBalance(): ethereum.CallResult<StakeStarOracleStrict__latestTotalBalanceResult> {
     let result = super.tryCall(
       "latestTotalBalance",
       "latestTotalBalance():(uint256,uint64)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -388,8 +386,8 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new StakeStarOracleStrict__latestTotalBalanceResult(
         value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -397,7 +395,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "nextEpochToPublish",
       "nextEpochToPublish():(uint32)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -407,7 +405,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "nextEpochToPublish",
       "nextEpochToPublish():(uint32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -420,7 +418,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
 
     return result[0].toBoolean();
@@ -430,7 +428,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -443,7 +441,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.call(
       "timestampToEpoch",
       "timestampToEpoch(uint64):(uint32)",
-      [ethereum.Value.fromUnsignedBigInt(timestamp)]
+      [ethereum.Value.fromUnsignedBigInt(timestamp)],
     );
 
     return result[0].toBigInt();
@@ -453,7 +451,7 @@ export class StakeStarOracleStrict extends ethereum.SmartContract {
     let result = super.tryCall(
       "timestampToEpoch",
       "timestampToEpoch(uint64):(uint32)",
-      [ethereum.Value.fromUnsignedBigInt(timestamp)]
+      [ethereum.Value.fromUnsignedBigInt(timestamp)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

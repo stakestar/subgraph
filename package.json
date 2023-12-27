@@ -8,15 +8,15 @@
     "copy-addresses": "yarn cli copy-addresses",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ stakestar-test",
     "deploy:hosted": "graph deploy --node https://api.thegraph.com/deploy/ arsoba/stakestar-test",
-    "create-selfhosted": "graph create --node http://139.162.184.96:8020/ stakestar-testnet",
-    "remove-selfhosted": "graph remove --node http://139.162.184.96:8020/ stakestar-testnet",
-    "deploy-selfhosted": "graph deploy --node http://139.162.184.96:8020/ --ipfs http://139.162.184.96:5001 stakestar-testnet",
+    "create-selfhosted": "graph create --node http://139.162.184.96:8020/ stakestar",
+    "remove-selfhosted": "graph remove --node http://139.162.184.96:8020/ stakestar",
+    "deploy-selfhosted": "graph deploy --node http://139.162.184.96:8020/ --ipfs http://139.162.184.96:5001 stakestar",
     "test": "graph test"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.33.0",
-    "@graphprotocol/graph-ts": "0.27.0",
-    "@stakestar/contracts": "0.18.3",
+    "@graphprotocol/graph-cli": "^0.64.1",
+    "@graphprotocol/graph-ts": "^0.32.0",
+    "@stakestar/contracts": "0.19.0",
     "as-wasi": "^0.5.1",
     "typescript": "^4.8.2"
   },

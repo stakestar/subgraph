@@ -9,7 +9,7 @@ interface Options {
   template: string
 }
 
-const START_BLOCK = 8588980
+const START_BLOCK = 18870039
 
 export const prepareConfig = (options: Options) => {
   const { stakeStar, sstarETH, stakeStarRegistry, stakeStarRewards, stakeStarOracleStrict } = ADDRESSES[options.network]

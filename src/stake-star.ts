@@ -82,7 +82,7 @@ export function handleCommitSnapshot(
 
     snapshotCommit.sender = event.transaction.from
     snapshotCommit.total_ETH = event.params.total_ETH
-    snapshotCommit.total_sstarETH = event.params.total_sstarETH
+    snapshotCommit.total_sstarETH = event.params.total_stakedStar
     snapshotCommit.timestamp = event.params.timestamp.toI32()
     snapshotCommit.rate = event.params.rate
 
